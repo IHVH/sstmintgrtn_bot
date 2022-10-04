@@ -5,10 +5,8 @@ name: systemIntegrationBot
 trigger: 
   event:
   - push
-  #- tag
 
 steps:
-
 - name: systemIntegrationBot image publish 
   image: plugins/docker
   settings:
@@ -19,9 +17,6 @@ steps:
     registry: 192.168.1.111:5000
     dockerfile: Dockerfile
     tags: latest
-#  when:
-#    ref:
-#    - refs/heads/main
 
 - name: systemIntegrationBot ssh commands
   image: appleboy/drone-ssh
@@ -41,6 +36,3 @@ steps:
     - docker save systemintegrationbot > /systemintegrationbot/siemwebapplication.tar
   depends_on:
   - systemIntegrationBot image publish
-#  when:
-#    ref:
-#    - refs/heads/main
