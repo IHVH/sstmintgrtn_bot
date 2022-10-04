@@ -1,0 +1,46 @@
+kind: pipeline
+type: docker
+name: systemIntegrationBot
+
+trigger: 
+  event:
+  - push
+  #- tag
+
+steps:
+
+- name: systemIntegrationBot image publish 
+  image: plugins/docker
+  settings:
+    username: root
+    password: pa55word
+    insecure: true
+    repo: 192.168.1.111:5000/tvi/systemintegrationbot
+    registry: 192.168.1.111:5000
+    dockerfile: Dockerfile
+    tags: latest
+  when:
+    ref:
+    - refs/heads/main
+
+- name: systemIntegrationBot ssh commands
+  image: appleboy/drone-ssh
+  settings:
+    host: 192.168.1.121
+    username: root
+    password: 
+      from_secret: ssh_password_121
+    port: 24308
+    script:
+    - docker stop sstmintgrtnbot
+    - docker rm sstmintgrtnbot
+    - docker pull 192.168.1.111:5000/tvi/systemintegrationbot
+    - docker run -t -i --name sstmintgrtnbot --restart=always -d 192.168.1.111:5000/tvi/systemintegrationbot:latest
+    - if [[ $(docker image ls -f dangling=true -q) != '' ]]; then docker image rm $(docker image ls -f dangling=true -q); fi
+    - docker image tag 192.168.1.111:5000/tvi/systemintegrationbot:latest systemintegrationbot
+    - docker save systemintegrationbot > /systemintegrationbot/siemwebapplication.tar
+  depends_on:
+  - systemIntegrationBot image publish
+  when:
+    ref:
+    - refs/heads/main
