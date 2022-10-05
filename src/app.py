@@ -1,6 +1,7 @@
 import os
 import telebot
 from telebot import types
+from bot_command_dictionary import BOT_FUNCTIONS
 
 token = os.environ["BOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -11,11 +12,11 @@ def gen_markup():
     markup.add(types.InlineKeyboardButton("Да", callback_data="cb_yes"), types.InlineKeyboardButton("Нет", callback_data="cb_no"))
     return markup
 
-@bot.message_handler(commands=['start','help'])
+@bot.message_handler(commands=BOT_FUNCTIONS['start'].commands)
 def send_welcome(message):
     bot.reply_to(message, "Привет, как дела?")
 
-@bot.message_handler(commands=['клавиатуру','keyboard'])
+@bot.message_handler(commands=BOT_FUNCTIONS['test_keyboard'].commands)
 def send_markup(message):
     bot.send_message(message.chat.id, "Да/Нет?", reply_markup=gen_markup())
 
