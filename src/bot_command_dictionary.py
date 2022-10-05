@@ -6,7 +6,6 @@ class BotFunction:
     authors: list[str]
     about: str
     description: str
-    
 
 BOT_FUNCTIONS = {
     'start': BotFunction(
@@ -16,7 +15,7 @@ BOT_FUNCTIONS = {
             description='Функция предназначена для информирования пользователей о возможностях бота.' 
         ),
     'test_keyboard': BotFunction(
-        commands=['keyboard', 'клавиатуру'], 
+        commands=['keyboard', 'testkeyboard'], 
             authors=['IHVH'], 
             description='Тестовая клавиатура', 
             about='Тестовая клавиатура'
