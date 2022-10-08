@@ -1,0 +1,18 @@
+{
+    "args": "",
+    "author": "",
+    "bot": "",
+    "channel": "",
+    "cog": "",
+    "command": "",
+    "command_failed": "",
+    "guild": "",
+    "invoked_parents": "",
+    "invoked_subcommand": "",
+    "invoked_with": "",
+    "kwargs": "",
+    "me": "",
+    "message": "",
+    "token": "",
+    "prefix": "/"
+}
