@@ -18,6 +18,6 @@ BOT_FUNCTIONS = {
         commands=['keyboard', 'testkeyboard'], 
             authors=['IHVH'], 
             description='Тестовая клавиатура', 
-            about='Тестовая клавиатура'
+            about='Тестовая клавиатура1'
         ),
 }
