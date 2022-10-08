@@ -34,5 +34,4 @@ def text_messages(message):
     bot.reply_to(message, "Text = " + message.text)
     bot.send_message(text="Ваш запрос не обработан!", chat_id= message.chat.id)
 
-#bot.delete_webhook()
 bot.infinity_polling()
