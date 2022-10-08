@@ -20,4 +20,10 @@ BOT_FUNCTIONS = {
             description='Тестовая клавиатура', 
             about='Тестовая клавиатура'
         ),
+    'test1': BotFunction(
+            commands=['test1', 'test2'], 
+            authors=['IHVH'], 
+            about='TEST Func',
+            description='Тестовая функция!' 
+        ),
 }
