@@ -9,6 +9,6 @@ services:
   
   appsid:
     build: sid/Dockerfile
-    volumes:
-      - sid/json/cfx.json:/code/json/cfx.json
+    env_file:
+      - sid/.env
     restart: always
