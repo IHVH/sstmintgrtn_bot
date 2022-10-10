@@ -1,39 +1,33 @@
 import discord
-import json
 import os
-from pathlib import Path
 from discord import Message, message
 from discord.ext import commands
 from discord.ui import Button, View
 
-cwd = Path(__file__).parents[0]
-cwd = str(cwd)
-cfx = json.load(open('json\cfx.json', encoding='utf-8'))
-
+prefix = os.environ["PREFIX"]
+token = os.environ["DBOTTOKEN"]
 intents = discord.Intents.all()
 intents.message_content = True
 #у изменения активности есть варианты - streaming, playing, listening, watching, competing
 # + есть варианты unknown и custom - первый говорит сам за себя, а как работает второй я пока не понял
 activity = discord.Activity(name='голоса в своей голове', type=discord.ActivityType.listening)
-Bot = commands.Bot(command_prefix=cfx['prefix'], activity=activity, intents=intents)
+Bot = commands.Bot(command_prefix=prefix, activity=activity, intents=intents)
 
 # Проверка базового функционала сообщений
 # P.S. я так и не понял почему он копирует все переданное после команды сообщение только если в аргументах функции есть *, arg после контекста
 # P.S.S - по поводу контекта - https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context
 @Bot.command()
 async def tm(ctx, *, arg: str):
-    await ctx.message.delete()
     await ctx.send(arg)
 
 #TODO - базовый функционал эмодзи + callback на нажатия 
-# -- Все еще не работает
 @Bot.command()
 async def et(ctx):
-    await ctx.send("tst_msg")
+    await ctx.send(message.id)
     emoji = '🤔'
-    await Message.add_reaction(emoji)
+    await ctx.message.add_reaction(emoji)
 
-#TODO - сообщения в личку
+# Проверка базавого функционала ЛС
 @Bot.command()
 async def dm(ctx):
     user = Bot.get_user(ctx.author.id)
@@ -55,4 +49,4 @@ async def test(ctx):
 
         button.callback = button_callback
 
-Bot.run(cfx['token'])
+Bot.run(token)
