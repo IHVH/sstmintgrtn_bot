@@ -1,7 +1,14 @@
 version: '2'
 
 services:
- app:
-   build: .
-   env_file:
-    - .env
+  app:
+    build: .
+    env_file:
+      - .env
+    restart: always
+  
+  appsid:
+    build: sid/Dockerfile
+    volumes:
+      - sid/json/cfx.json:/code/json/cfx.json
+    restart: always

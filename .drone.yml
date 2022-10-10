@@ -18,6 +18,17 @@ steps:
     dockerfile: Dockerfile
     tags: latest
 
+- name: systemIntegrationBotDiscord image publish 
+  image: plugins/docker
+  settings:
+    username: root
+    password: pa55word
+    insecure: true
+    repo: 192.168.1.111:5000/tvi/systemintegrationbotdiscord
+    registry: 192.168.1.111:5000
+    dockerfile: sid/Dockerfile
+    tags: latest
+
 - name: systemIntegrationBot ssh commands
   image: appleboy/drone-ssh
   settings:
@@ -36,3 +47,23 @@ steps:
     - docker save systemintegrationbot > /systemintegrationbot/systemintegrationbot.tar
   depends_on:
   - systemIntegrationBot image publish
+
+
+  - name: systemIntegrationBotDiscord ssh commands
+  image: appleboy/drone-ssh
+  settings:
+    host: 192.168.1.121
+    username: root
+    password: 
+      from_secret: ssh_password_121
+    port: 24308
+    script:
+    - docker stop sstmintgrtnbotdiscord
+    - docker rm sstmintgrtnbotdiscord
+    - docker pull 192.168.1.111:5000/tvi/systemintegrationbotdiscord
+    - docker run -t -i --name sstmintgrtnbot --restart=always -d -v /systemintegrationbot/cfx.json:/code/json/cfx.json 192.168.1.111:5000/tvi/systemintegrationbotdiscord:latest
+    - if [[ $(docker image ls -f dangling=true -q) != '' ]]; then docker image rm $(docker image ls -f dangling=true -q); fi
+    - docker image tag 192.168.1.111:5000/tvi/systemintegrationbotdiscord:latest systemintegrationbotdiscord
+    - docker save systemintegrationbotdiscord > /systemintegrationbot/systemintegrationbotdiscord.tar
+  depends_on:
+  - systemIntegrationBotDiscord image publish
