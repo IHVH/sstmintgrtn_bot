@@ -61,7 +61,7 @@ steps:
     - docker stop sstmintgrtnbotdiscord
     - docker rm sstmintgrtnbotdiscord
     - docker pull 192.168.1.111:5000/tvi/systemintegrationbotdiscord
-    - docker run -t -i --name sstmintgrtnbot --restart=always -d -v /systemintegrationbot/cfx.json:/code/json/cfx.json 192.168.1.111:5000/tvi/systemintegrationbotdiscord:latest
+    - docker run -t -i --name sstmintgrtnbot --restart=always -d --env-file /systemintegrationbot/sid/.env 192.168.1.111:5000/tvi/systemintegrationbotdiscord:latest
     - if [[ $(docker image ls -f dangling=true -q) != '' ]]; then docker image rm $(docker image ls -f dangling=true -q); fi
     - docker image tag 192.168.1.111:5000/tvi/systemintegrationbotdiscord:latest systemintegrationbotdiscord
     - docker save systemintegrationbotdiscord > /systemintegrationbot/systemintegrationbotdiscord.tar
