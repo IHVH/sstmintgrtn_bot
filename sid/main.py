@@ -4,14 +4,14 @@ from discord import Message, message
 from discord.ext import commands
 from discord.ui import Button, View
 
-
+prefix = os.environ["PREFIX"]
 token = os.environ["TOKEN"]
 intents = discord.Intents.all()
 intents.message_content = True
 #у изменения активности есть варианты - streaming, playing, listening, watching, competing
 # + есть варианты unknown и custom - первый говорит сам за себя, а как работает второй я пока не понял
 activity = discord.Activity(name='голоса в своей голове', type=discord.ActivityType.listening)
-Bot = commands.Bot(command_prefix=os.environ["PREFIX"], activity=activity, intents=intents)
+Bot = commands.Bot(command_prefix=prefix, activity=activity, intents=intents)
 
 # Проверка базового функционала сообщений
 # P.S. я так и не понял почему он копирует все переданное после команды сообщение только если в аргументах функции есть *, arg после контекста
