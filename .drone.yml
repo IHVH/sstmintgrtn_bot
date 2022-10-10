@@ -48,8 +48,7 @@ steps:
   depends_on:
   - systemIntegrationBot image publish
 
-
-  - name: systemIntegrationBotDiscord ssh commands
+- name: systemIntegrationBotDiscord ssh commands
   image: appleboy/drone-ssh
   settings:
     host: 192.168.1.121
