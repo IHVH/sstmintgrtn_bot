@@ -5,7 +5,7 @@ from discord.ext import commands
 from discord.ui import Button, View
 
 prefix = os.environ["PREFIX"]
-token = os.environ["TOKEN"]
+token = os.environ["DBOTTOKEN"]
 intents = discord.Intents.all()
 intents.message_content = True
 #у изменения активности есть варианты - streaming, playing, listening, watching, competing

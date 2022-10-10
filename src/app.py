@@ -4,7 +4,7 @@ from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 from functions import start
 
-token = os.environ["BOTTOKEN"]
+token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
 
 def gen_markup():

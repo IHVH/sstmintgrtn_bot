@@ -5,3 +5,9 @@ The Telegram bot is designed to master the practical skills of integrating infor
 
 Link to get acquainted with the capabilities of the used library [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI)
 
+To run locally, add an `.env` file with your keys to the root of the project
+```
+TBOTTOKEN=
+PREFIX=
+DBOTTOKEN=
+```
