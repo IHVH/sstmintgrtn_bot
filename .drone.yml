@@ -33,6 +33,6 @@ steps:
     - docker run -t -i --name sstmintgrtnbot --restart=always -d --env-file /systemintegrationbot/.env 192.168.1.111:5000/tvi/systemintegrationbot:latest
     - if [[ $(docker image ls -f dangling=true -q) != '' ]]; then docker image rm $(docker image ls -f dangling=true -q); fi
     - docker image tag 192.168.1.111:5000/tvi/systemintegrationbot:latest systemintegrationbot
-    - docker save systemintegrationbot > /systemintegrationbot/siemwebapplication.tar
+    - docker save systemintegrationbot > /systemintegrationbot/systemintegrationbot.tar
   depends_on:
   - systemIntegrationBot image publish
