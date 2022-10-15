@@ -9,16 +9,16 @@ cwd = Path(__file__).parents[1]
 cwd = str(cwd)
 cfx = json.load(open(cwd+'\json\cfx.json', encoding='utf-8'))
 
-class User(commands.cog):
+class User(commands.Cog):
     def __init__(self, Bot):
         self.Bot = Bot
 
     @commands.Cog.listener()
-    async def on_ready(self, ctx):
-        await ctx.send("ready")
+    async def on_ready(self):
+        print('main cog is up')
 
     @commands.command()
-    async def tm(ctx, *, arg: str):
+    async def tm(self, ctx, *, arg: str):
         await ctx.send(arg)
 
 async def setup(Bot):

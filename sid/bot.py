@@ -31,16 +31,15 @@ async def reload(ctx, extension):
     await Bot.unload_extension(f"cogs.{extension}")
     await Bot.load_extension(f"cogs.{extension}")
 
-#TODO - этим образом оно не работает, пока подгрузка cog'ов разве что руками
 async def auto_load_extensions():
     for filename in os.listdir(cwd+"/cogs"):
         if filename.endswith(".py"):
-            # cut off the .py from the file name
             await Bot.load_extension(f"cogs.{filename[:-3]}")
 
 async def main():
     async with Bot:
         await auto_load_extensions()
-        await Bot.run(token)
+        await Bot.start(token)
 
+Bot.run(token)
 asyncio.run(main())
