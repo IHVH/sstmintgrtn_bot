@@ -15,17 +15,17 @@ activity = discord.Activity(name='голоса в своей голове', type
 Bot = commands.Bot(command_prefix=cfx['prefix'], activity=activity, intents=intents, owner_id=cfx['owner'])
 
 @Bot.command(pass_context=True)
-@commands.is_owner()
+#@commands.is_owner()
 async def load(ctx, extension):
     Bot.load_extension(f"cogs.{extension}")
 
 @Bot.command(pass_context=True)
-@commands.is_owner()
+#@commands.is_owner()
 async def unload(ctx, extension):
     Bot.unload_extension(f"cogs.{extension}")
 
 @Bot.command(pass_context=True)
-@commands.is_owner()
+#@commands.is_owner()
 async def reload(ctx, extension):
     Bot.unload_extension(f"cogs.{extension}")
     Bot.load_extension(f"cogs.{extension}")
