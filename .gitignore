@@ -134,6 +134,3 @@ __queuestorage__
 __azurite_db*__.json
 .python_packages
 .fake
-
-#cfg
-sid/json/cfx.json
