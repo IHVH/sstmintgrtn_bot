@@ -24,6 +24,6 @@ BOT_FUNCTIONS = {
             commands=['test1', 'test2'], 
             authors=['IHVH'], 
             about='TEST Func',
-            description='Тестовая функция!' 
+            description='Тестовая функция!!!' 
         ),
 }

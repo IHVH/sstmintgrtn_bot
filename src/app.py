@@ -35,6 +35,6 @@ def callback_query(call):
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
     bot.reply_to(message, "Text = " + message.text)
-    bot.send_message(text="Ваш запрос не обработан!", chat_id= message.chat.id)
+    bot.send_message(text="Ваш запрос не обработан!!!", chat_id= message.chat.id)
 
 bot.infinity_polling()
