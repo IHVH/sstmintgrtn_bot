@@ -5,9 +5,10 @@ import json
 from discord.ext import commands
 from pathlib import Path
 
-cwd = Path(__file__).parents[0]
-cwd = str(cwd)
-cfx = json.load(open(cwd+'\json\cfx.json', encoding='utf-8'))
+cogs_path = Path.cwd() / 'sid' / 'cogs'
+cfx_path = Path.cwd() / 'sid' / 'json' / 'cfx.json'
+print(cfx_path)
+cfx = json.load(open(cfx_path, encoding='utf-8'))
 
 token = os.environ["DBOTTOKEN"]
 intents = discord.Intents.all()
@@ -32,7 +33,7 @@ async def reload(ctx, extension):
     await Bot.load_extension(f"cogs.{extension}")
 
 async def auto_load_extensions():
-    for filename in os.listdir(cwd+"/cogs"):
+    for filename in os.listdir(cogs_path):
         if filename.endswith(".py"):
             await Bot.load_extension(f"cogs.{filename[:-3]}")
 
