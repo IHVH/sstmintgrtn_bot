@@ -2,9 +2,9 @@ kind: pipeline
 type: docker
 name: systemIntegrationBot
 
-trigger: 
-  event:
-  - push
+trigger:
+  branch:
+  - main
 
 steps:
 - name: systemIntegrationBot image publish 
@@ -17,9 +17,6 @@ steps:
     registry: 192.168.1.111:5000
     dockerfile: Dockerfile
     tags: latest
-  when:
-    ref:
-    - refs/heads/main
 
 - name: systemIntegrationBotDiscord image publish 
   image: plugins/docker
@@ -31,9 +28,6 @@ steps:
     registry: 192.168.1.111:5000
     dockerfile: sid/Dockerfile
     tags: latest
-  when:
-    ref:
-    - refs/heads/main
 
 - name: systemIntegrationBot ssh commands
   image: appleboy/drone-ssh
@@ -53,9 +47,6 @@ steps:
     - docker save systemintegrationbot > /systemintegrationbot/systemintegrationbot.tar
   depends_on:
   - systemIntegrationBot image publish
-  when:
-    ref:
-    - refs/heads/main
 
 - name: systemIntegrationBotDiscord ssh commands
   image: appleboy/drone-ssh
@@ -75,6 +66,3 @@ steps:
     - docker save systemintegrationbotdiscord > /systemintegrationbot/systemintegrationbotdiscord.tar
   depends_on:
   - systemIntegrationBotDiscord image publish
-  when:
-    ref:
-    - refs/heads/main
