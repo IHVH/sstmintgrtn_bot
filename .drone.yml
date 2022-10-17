@@ -17,6 +17,9 @@ steps:
     registry: 192.168.1.111:5000
     dockerfile: Dockerfile
     tags: latest
+  when:
+    ref:
+    - refs/heads/main
 
 - name: systemIntegrationBotDiscord image publish 
   image: plugins/docker
@@ -28,6 +31,9 @@ steps:
     registry: 192.168.1.111:5000
     dockerfile: sid/Dockerfile
     tags: latest
+  when:
+    ref:
+    - refs/heads/main
 
 - name: systemIntegrationBot ssh commands
   image: appleboy/drone-ssh
@@ -47,6 +53,9 @@ steps:
     - docker save systemintegrationbot > /systemintegrationbot/systemintegrationbot.tar
   depends_on:
   - systemIntegrationBot image publish
+  when:
+    ref:
+    - refs/heads/main
 
 - name: systemIntegrationBotDiscord ssh commands
   image: appleboy/drone-ssh
@@ -60,9 +69,12 @@ steps:
     - docker stop sstmintgrtnbotdiscord
     - docker rm sstmintgrtnbotdiscord
     - docker pull 192.168.1.111:5000/tvi/systemintegrationbotdiscord
-    - docker run -t -i --name sstmintgrtnbot --restart=always -d --env-file /systemintegrationbot/sid/.env 192.168.1.111:5000/tvi/systemintegrationbotdiscord:latest
+    - docker run -t -i --name sstmintgrtnbotdiscord --restart=always -d --env-file /systemintegrationbot/sid/.env 192.168.1.111:5000/tvi/systemintegrationbotdiscord:latest
     - if [[ $(docker image ls -f dangling=true -q) != '' ]]; then docker image rm $(docker image ls -f dangling=true -q); fi
     - docker image tag 192.168.1.111:5000/tvi/systemintegrationbotdiscord:latest systemintegrationbotdiscord
     - docker save systemintegrationbotdiscord > /systemintegrationbot/systemintegrationbotdiscord.tar
   depends_on:
   - systemIntegrationBotDiscord image publish
+  when:
+    ref:
+    - refs/heads/main
