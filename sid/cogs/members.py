@@ -28,7 +28,8 @@ class MembersCog(commands.Cog):
 
         embed = discord.Embed(title=f'{member.display_name} - Прибыл на сервер', description="\uFEFF", colour=Color.from_str(colour['red']))
         embed.add_field(name="Member name", value=member.mention, inline=True)
-        embed.add_field(name="Joined at", value=member.joined_at, inline=True)
+        embed.add_field(name="Joined at", value=member.joined_at.strftime("%A, %B %d %Y @ %H:%M:%S %p"), inline=False)
+        embed.add_field(name="Created at", value=member.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p"), inline=False)
 
         await channel.send(embed=embed)
 
@@ -38,16 +39,25 @@ class MembersCog(commands.Cog):
 
         embed = discord.Embed(title=f'{member.display_name} - Покинул сервер', description="\uFEFF", colour=Color.from_str(colour['red']))
         embed.add_field(name="Member name", value=member.mention, inline=True)
-        embed.add_field(name="Joined at", value=member.joined_at, inline=True)
+        embed.add_field(name="Joined at", value=member.joined_at.strftime("%A, %B %d %Y @ %H:%M:%S %p"), inline=False)
+        embed.add_field(name="Created at", value=member.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p"), inline=False)
 
         await channel.send(embed=embed)
 
     @commands.command()
-    async def test(self, ctx, member: discord.Member):
-        
-        embed = discord.Embed(title=f'{member.display_name} - info', description="\uFEFF", colour=Color.from_str(colour['green']))
-        embed.add_field(name="Member name", value=member.mention, inline=True)
-        embed.add_field(name="Joined at", value=member.joined_at, inline=True)
+    async def user(self, ctx, member: discord.Member):
+        '''
+        Позволяет посмотреть информацию о пользователе
+        формат - user <тег пользователя/ID пользователя>
+        '''
+        embed = discord.Embed(title=f'{member.display_name} - info', description="\uFEFF", colour=Color.from_str(colour['blue']))
+        embed.add_field(name="Member name", value=member.mention, inline=False)
+        embed.add_field(name="Member ID", value=member.id, inline=False)
+        embed.add_field(name="Timeout", value=member.timed_out_until, inline=False)
+        embed.add_field(name="Bot", value=member.bot, inline=False)
+        embed.add_field(name="Status", value=member.status, inline=False)
+        embed.add_field(name="Joined at", value=member.joined_at.strftime("%A, %B %d %Y @ %H:%M:%S %p"), inline=False)
+        embed.add_field(name="Created at", value=member.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p"), inline=False)
         await ctx.send(embed=embed)
 
 async def setup(Bot):
