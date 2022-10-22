@@ -15,6 +15,10 @@ def gen_markup():
     markup.add(types.InlineKeyboardButton("Да", callback_data="cb_yes"), types.InlineKeyboardButton("Нет", callback_data="cb_no"))
     return markup
 
+@bot.message_handler(commands=BOT_FUNCTIONS['commits'].commands)
+def get_commits(message):
+    bot.send_message(text=f'12123', chat_id= message.chat.id)
+
 @bot.message_handler(commands=BOT_FUNCTIONS['test1'].commands)
 def send_test(message):
     params = {"state": "all"}

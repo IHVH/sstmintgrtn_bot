@@ -20,10 +20,16 @@ BOT_FUNCTIONS = {
             description='Тестовая клавиатура', 
             about='Тестовая клавиатура'
         ),
-    'test1': BotFunction(
+        'test1': BotFunction(
             commands=['test1', 'test2'], 
             authors=['IHVH'], 
             about='TEST Func',
             description='Тестовая функция!!!' 
+        ),
+        'commits': BotFunction(
+            commands=['commits'], 
+            authors=['IHVH'], 
+            about='Получение информации о коммитах.',
+            description='Получение информации о коммитах для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT' 
         ),
 }
