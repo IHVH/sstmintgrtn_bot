@@ -20,22 +20,6 @@ Bot = commands.Bot(command_prefix=cfx['prefix'], activity=activity, intents=inte
 logging.basicConfig(filename=f'{Path.cwd()}/sid/main.log', filemode='w', encoding='utf-8', level=logging.INFO)
 logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-@Bot.command(pass_context=True)
-@commands.is_owner()
-async def load(ctx, extension):
-    await Bot.load_extension(f"cogs.{extension}")
-
-@Bot.command(pass_context=True)
-@commands.is_owner()
-async def unload(ctx, extension):
-    await Bot.unload_extension(f"cogs.{extension}")
-
-@Bot.command(pass_context=True)
-@commands.is_owner()
-async def reload(ctx, extension):
-    await Bot.unload_extension(f"cogs.{extension}")
-    await Bot.load_extension(f"cogs.{extension}")
-
 async def auto_load_extensions():
     for filename in os.listdir(cogs_path):
         if filename.endswith(".py"):
@@ -43,9 +27,10 @@ async def auto_load_extensions():
 
 async def main():
     async with Bot:
-        logging.info("Bot is up")
-        print("Bot is up")
         await auto_load_extensions()
         await Bot.start(token)
+
+        logging.info(f'Logged in as: {Bot.user.name} - {Bot.user.id}, Version: {discord.__version__}\n')
+        print(f'\n\nLogged in as: {Bot.user.name} - {Bot.user.id}\nVersion: {discord.__version__}\n')
 
 asyncio.run(main())
