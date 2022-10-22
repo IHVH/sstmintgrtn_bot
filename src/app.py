@@ -1,5 +1,7 @@
+from email import header
 import os
 import telebot
+import requests
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 from functions import start
@@ -15,7 +17,24 @@ def gen_markup():
 
 @bot.message_handler(commands=BOT_FUNCTIONS['test1'].commands)
 def send_test(message):
-    bot.send_message(text="Ваш запрос TEST обработан!", chat_id= message.chat.id)
+    params = {"state": "all"}
+    headers = {"Accept":"application/vnd.github+json", 
+    "Authorization": f'Bearer {os.environ["GITHUBTOKEN"]}'}
+    response = requests.get("https://api.github.com/repos/IHVH/OEMIB_PI01_19_TBOT/issues", headers=headers, params=params)
+    
+    if(response):
+        bot.send_message(text=f'{response}', chat_id= message.chat.id)
+        issues = response.json()
+        for iss in issues:
+            login = iss["user"]["login"]
+            state = iss["state"]
+            title = iss["title"]
+            body = iss["body"]
+            bot.send_message(text=f'{state} - {login} - {title} - {body}', chat_id= message.chat.id)
+
+    else: 
+        bot.send_message(text=f'{response}', chat_id= message.chat.id)
+    
 
 @bot.message_handler(commands=BOT_FUNCTIONS['start'].commands)
 def send_welcome(message):
