@@ -27,7 +27,7 @@ BOT_FUNCTIONS = {
             description='Тестовая функция!!!' 
         ),
         'commits': BotFunction(
-            commands=['commits'], 
+            commands=['commits', 'gc'], 
             authors=['IHVH'], 
             about='Получение информации о коммитах.',
             description='Получение информации о коммитах для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT' 

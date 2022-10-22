@@ -5,6 +5,7 @@ import requests
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 from functions import start
+from functions import github
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -17,7 +18,7 @@ def gen_markup():
 
 @bot.message_handler(commands=BOT_FUNCTIONS['commits'].commands)
 def get_commits(message):
-    bot.send_message(text=f'12123', chat_id= message.chat.id)
+    github.get_commits(message, bot)
 
 @bot.message_handler(commands=BOT_FUNCTIONS['test1'].commands)
 def send_test(message):
