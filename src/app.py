@@ -1,5 +1,6 @@
 from email import header
 import os
+from urllib import response
 import telebot
 import requests
 from telebot import types
@@ -17,7 +18,11 @@ def gen_markup():
 
 @bot.message_handler(commands=BOT_FUNCTIONS['commits'].commands)
 def get_commits(message):
-    bot.send_message(text=f'12123', chat_id= message.chat.id)
+    githubtoken = os.environ["GITHUBTOKEN"]
+    url = "https://api.github.com/repos/IHVH/OEMIB_PI01_19_TBOT_commits"
+    response = requests.get(url)
+    bot.send_message(text=f'privet', chat_id= message.chat.id)
+    bot.send_message(text=f'{response.text}', chat_id= message.chat.id)
 
 @bot.message_handler(commands=BOT_FUNCTIONS['test1'].commands)
 def send_test(message):
