@@ -2,6 +2,7 @@ import discord
 import asyncio
 import os
 import json
+import logging
 from discord.ext import commands
 from pathlib import Path
 
@@ -16,18 +17,21 @@ intents.message_content = True
 activity = discord.Activity(name='голоса в своей голове', type=discord.ActivityType.listening)
 Bot = commands.Bot(command_prefix=cfx['prefix'], activity=activity, intents=intents, owner_id=cfx['owner'])
 
+logging.basicConfig(filename=f'{Path.cwd()}/sid/main.log', filemode='w', encoding='utf-8', level=logging.INFO)
+logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
 @Bot.command(pass_context=True)
-#@commands.is_owner()
+@commands.is_owner()
 async def load(ctx, extension):
     await Bot.load_extension(f"cogs.{extension}")
 
 @Bot.command(pass_context=True)
-#@commands.is_owner()
+@commands.is_owner()
 async def unload(ctx, extension):
     await Bot.unload_extension(f"cogs.{extension}")
 
 @Bot.command(pass_context=True)
-#@commands.is_owner()
+@commands.is_owner()
 async def reload(ctx, extension):
     await Bot.unload_extension(f"cogs.{extension}")
     await Bot.load_extension(f"cogs.{extension}")
@@ -39,6 +43,8 @@ async def auto_load_extensions():
 
 async def main():
     async with Bot:
+        logging.info("Bot is up")
+        print("Bot is up")
         await auto_load_extensions()
         await Bot.start(token)
 
