@@ -15,8 +15,8 @@ class Main_Cog(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('Main Cog is up')
-        logging.info('Main Cog is up')
+        print(f'{self.__cog_name__} is up')
+        logging.info(f'{self.__cog_name__} is up')
 
     @commands.command()
     async def tm(self, ctx, *, arg: str):

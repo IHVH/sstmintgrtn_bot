@@ -19,8 +19,8 @@ class Members_Cog(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('members cog is up')
-        logging.info('members cog is up')
+        print(f'{self.__cog_name__} is up')
+        logging.info(f'{self.__cog_name__} is up')
 
     @commands.Cog.listener()
     async def on_member_joined(self, member: discord.Member):

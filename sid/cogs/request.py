@@ -16,8 +16,8 @@ class Request_Cog(commands.Cog):
     
     @commands.Cog.listener()
     async def on_ready(self):
-        print('request cog is up')
-        logging.info('reqtest cog is up')
+        print(f'{self.__cog_name__} is up')
+        logging.info(f'{self.__cog_name__} is up')
 
     @commands.command()
     async def req_test(self, ctx):
