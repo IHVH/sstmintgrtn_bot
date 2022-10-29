@@ -9,23 +9,36 @@ from discord.ui import Button, View
 cfx_path = Path.cwd() / 'sid' / 'json' / 'cfx.json'
 cfx = json.load(open(cfx_path, encoding='utf-8'))
 
-class User(commands.Cog):
+class Main_Cog(commands.Cog):
     def __init__(self, Bot):
         self.Bot = Bot
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('main cog is up')
-        logging.info('main cog is up')
+        print('Main Cog is up')
+        logging.info('Main Cog is up')
 
     @commands.command()
     async def tm(self, ctx, *, arg: str):
         await ctx.send(arg)
 
     @commands.command()
-    async def dm(self, ctx):
-        user = self.Bot.get_user(ctx.author.id)
-        await user.send(f'no way!\ndm is working!')
+    async def dm(self, member: discord.Member, * ,arg):
+        await member.send(arg)
+
+    @commands.Cog.listener("on_message")
+    async def on_message(self, message, *, arg:str):
+        print("a")
+        if not message.guild and message.author != self.Bot.user:
+            channel = self.Bot.get_channel(cfx['sandbox_channel'])
+
+            await channel.send(f'{message.author} написал в лс:')
+            print(f'\nworking?')
+        else:
+                print(f'\nwhy?')
+
+        await self.bot.process_commands(message)
+
 
     
     # -- Тестирование Embed'а
@@ -42,4 +55,4 @@ class User(commands.Cog):
         await ctx.send(embed=embed)
 
 async def setup(Bot):
-    await Bot.add_cog(User(Bot))
+    await Bot.add_cog(Main_Cog(Bot))

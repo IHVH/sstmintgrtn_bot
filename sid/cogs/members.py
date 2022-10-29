@@ -13,7 +13,7 @@ cfx = json.load(open(cfx_path, encoding='utf-8'))
 colour_path = Path.cwd() / 'sid' / 'json' / 'colours.json'
 colour = json.load(open(colour_path, encoding='utf-8'))
 
-class MembersCog(commands.Cog):
+class Members_Cog(commands.Cog):
     def __init__(self, Bot):
         self.Bot = Bot
 
@@ -61,4 +61,4 @@ class MembersCog(commands.Cog):
         await ctx.send(embed=embed)
 
 async def setup(Bot):
-    await Bot.add_cog(MembersCog(Bot))
+    await Bot.add_cog(Members_Cog(Bot))

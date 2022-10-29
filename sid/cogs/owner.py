@@ -9,7 +9,7 @@ from discord.ui import Button, View
 cfx_path = Path.cwd() / 'sid' / 'json' / 'cfx.json'
 cfx = json.load(open(cfx_path, encoding='utf-8'))
 
-class OwnerCog(commands.Cog):
+class Owner_Cog(commands.Cog):
     def __init__(self, Bot):
         self.Bot = Bot
 
@@ -51,4 +51,4 @@ class OwnerCog(commands.Cog):
 
 
 async def setup(Bot):
-    await Bot.add_cog(OwnerCog(Bot))
+    await Bot.add_cog(Owner_Cog(Bot))
