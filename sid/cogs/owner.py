@@ -1,10 +1,7 @@
-import discord
 import json
 import logging
 from pathlib import Path
-from discord import Message, message
 from discord.ext import commands
-from discord.ui import Button, View
 
 cfx_path = Path.cwd() / 'sid' / 'json' / 'cfx.json'
 cfx = json.load(open(cfx_path, encoding='utf-8'))
@@ -26,7 +23,7 @@ class Owner_Cog(commands.Cog):
         except Exception as e:
             await ctx.send(f'**`ERROR:`** {type(e).__name__} - {e}')
         else:
-            await ctx.send('**`SUCCESS`**')
+            await ctx.send(f'{extension} loaded successfully')
 
     @commands.command(pass_context=True)
     @commands.is_owner()
@@ -36,7 +33,7 @@ class Owner_Cog(commands.Cog):
         except Exception as e:
             await ctx.send(f'**`ERROR:`** {type(e).__name__} - {e}')
         else:
-            await ctx.send('**`SUCCESS`**')
+            await ctx.send(f'{extension} loaded successfully')
 
     @commands.command(pass_context=True)
     @commands.is_owner()
@@ -47,7 +44,7 @@ class Owner_Cog(commands.Cog):
         except Exception as e:
             await ctx.send(f'**`ERROR:`** {type(e).__name__} - {e}')
         else:
-            await ctx.send('**`SUCCESS`**')
+            await ctx.send(f'{extension} loaded successfully')
 
 
 async def setup(Bot):
