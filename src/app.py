@@ -32,7 +32,7 @@ def callback_query(call):
         bot.answer_callback_query(call.id, "Ответ НЕТ!")
 
 @bot.message_handler(commands=BOT_FUNCTIONS['country'].commands)
-def get_commits(message):
+def get_country_info(message):
     soap_country.get_country_info(message, bot)
 
 @bot.message_handler(commands=BOT_FUNCTIONS['commits'].commands)
