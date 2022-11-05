@@ -24,6 +24,7 @@ class Main_Cog(commands.Cog):
     async def dm(self, member: discord.Member, * ,arg):
         await member.send(arg)
 
+    ###TODO -- не работает
     @commands.Cog.listener("on_message")
     async def on_message(self, message, *, arg:str):
         print("a")
