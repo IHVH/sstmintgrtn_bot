@@ -1,25 +1,25 @@
+from email import header
 import os
+from urllib import response
 import telebot
+import requests
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 from functions import start
+from functions import github
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
+
+@bot.message_handler(commands=BOT_FUNCTIONS['start'].commands)
+def send_welcome(message):
+    bot.reply_to(message, start.get_start_message_from_bot_function_dictionary())
 
 def gen_markup():
     markup = types.InlineKeyboardMarkup()
     markup.row_width = 2
     markup.add(types.InlineKeyboardButton("Да", callback_data="cb_yes"), types.InlineKeyboardButton("Нет", callback_data="cb_no"))
     return markup
-
-@bot.message_handler(commands=BOT_FUNCTIONS['test1'].commands)
-def send_test(message):
-    bot.send_message(text="Ваш запрос TEST обработан!", chat_id= message.chat.id)
-
-@bot.message_handler(commands=BOT_FUNCTIONS['start'].commands)
-def send_welcome(message):
-    bot.reply_to(message, start.get_start_message_from_bot_function_dictionary())
 
 @bot.message_handler(commands=BOT_FUNCTIONS['test_keyboard'].commands)
 def send_markup(message):
@@ -31,6 +31,14 @@ def callback_query(call):
         bot.answer_callback_query(call.id, "Ответ ДА!")
     elif call.data == "cb_no":
         bot.answer_callback_query(call.id, "Ответ НЕТ!")
+
+@bot.message_handler(commands=BOT_FUNCTIONS['commits'].commands)
+def get_commits(message):
+    github.get_commits(message, bot)
+
+@bot.message_handler(commands=BOT_FUNCTIONS['issues'].commands)
+def get_issues(message):
+    github.get_issues(message, bot)
 
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):

@@ -8,22 +8,30 @@ class BotFunction:
     description: str
 
 BOT_FUNCTIONS = {
-    'start': BotFunction(
+        'start': BotFunction(
             commands=['start', 'help'], 
             authors=['IHVH'], 
             about='Старт бота и помощь по командам!',
             description='Функция предназначена для информирования пользователей о возможностях бота.' 
         ),
-    'test_keyboard': BotFunction(
+        'test_keyboard': BotFunction(
         commands=['keyboard', 'testkeyboard'], 
             authors=['IHVH'], 
             description='Тестовая клавиатура', 
             about='Тестовая клавиатура'
         ),
-    'test1': BotFunction(
-            commands=['test1', 'test2'], 
+        'issues': BotFunction(
+            commands=['issues', 'gi'], 
             authors=['IHVH'], 
-            about='TEST Func',
-            description='Тестовая функция!!!' 
+            about='Получение информации о issues',
+            description='Получение информации о issues для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
+                'Передайте в качестве параметра число для получения информации об указаном количестве последних issues. Например "/issues 5" '  
+        ),
+        'commits': BotFunction(
+            commands=['commits', 'gc'], 
+            authors=['IHVH'], 
+            about='Получение информации о коммитах.',
+            description='Получение информации о коммитах для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
+                'Передайте в качестве параметра число для получения информации об указаном количестве последних коммитов. Например "/gc 5" ' 
         ),
 }
