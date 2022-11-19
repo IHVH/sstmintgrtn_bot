@@ -48,11 +48,11 @@ def get_issues(message):
 async def grav(ctx, arg):
     email = libgravatar.Gravatar(arg)
     bot.send_message(email.get_image(), chat_id= ctx.chat.id)
-    bot.send_message(ctx, email.get_image(default='monsterid', force_default=True), chat_id= ctx.chat.id)
-    bot.send_message(ctx, email.get_image(default='identicon', force_default=True), chat_id= ctx.chat.id)
-    bot.send_message(ctx, email.get_image(default='wavatar', force_default=True), chat_id= ctx.chat.id)
-    bot.send_message(ctx, email.get_image(default='robohash', force_default=True), chat_id= ctx.chat.id)
-    bot.send_message(ctx, email.get_image(default='retro', force_default=True), chat_id= ctx.chat.id)
+    bot.send_message(email.get_image(default='monsterid', force_default=True), chat_id= ctx.chat.id)
+    bot.send_message(email.get_image(default='identicon', force_default=True), chat_id= ctx.chat.id)
+    bot.send_message(email.get_image(default='wavatar', force_default=True), chat_id= ctx.chat.id)
+    bot.send_message(email.get_image(default='robohash', force_default=True), chat_id= ctx.chat.id)
+    bot.send_message(email.get_image(default='retro', force_default=True), chat_id= ctx.chat.id)
 
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
