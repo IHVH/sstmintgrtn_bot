@@ -6,8 +6,7 @@ import requests
 import libgravatar
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start
-from functions import github
+from functions import start, github, soap_country
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -32,6 +31,10 @@ def callback_query(call):
         bot.answer_callback_query(call.id, "Ответ ДА!")
     elif call.data == "cb_no":
         bot.answer_callback_query(call.id, "Ответ НЕТ!")
+
+@bot.message_handler(commands=BOT_FUNCTIONS['country'].commands)
+def get_country_info(message):
+    soap_country.get_country_info(message, bot)
 
 @bot.message_handler(commands=BOT_FUNCTIONS['commits'].commands)
 def get_commits(message):
