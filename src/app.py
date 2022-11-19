@@ -45,14 +45,17 @@ def get_issues(message):
     github.get_issues(message, bot)
 
 @bot.message_handler(commands=BOT_FUNCTIONS['grav'].commands)
-async def grav(ctx, arg):
+def grav(message):
+    str_spilt = message.text.split()
+    arg = str_spilt[-1]
     email = libgravatar.Gravatar(arg)
-    bot.send_message(email.get_image(), chat_id= ctx.chat.id)
-    bot.send_message(email.get_image(default='monsterid', force_default=True), chat_id= ctx.chat.id)
-    bot.send_message(email.get_image(default='identicon', force_default=True), chat_id= ctx.chat.id)
-    bot.send_message(email.get_image(default='wavatar', force_default=True), chat_id= ctx.chat.id)
-    bot.send_message(email.get_image(default='robohash', force_default=True), chat_id= ctx.chat.id)
-    bot.send_message(email.get_image(default='retro', force_default=True), chat_id= ctx.chat.id)
+    size = 200
+    bot.send_message(text=email.get_image(size=size), chat_id= message.chat.id)
+    bot.send_message(text=email.get_image(default='monsterid', force_default=True, size=size), chat_id= message.chat.id)
+    bot.send_message(text=email.get_image(default='identicon', force_default=True, size=size), chat_id= message.chat.id)
+    bot.send_message(text=email.get_image(default='wavatar', force_default=True, size=size), chat_id= message.chat.id)
+    bot.send_message(text=email.get_image(default='robohash', force_default=True, size=size), chat_id= message.chat.id)
+    bot.send_message(text=email.get_image(default='retro', force_default=True, size=size), chat_id= message.chat.id)
 
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):

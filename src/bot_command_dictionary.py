@@ -42,9 +42,9 @@ BOT_FUNCTIONS = {
                 'Передайте в качестве параметра ISO код страны. Например "/country RU" \n ' +
                 'Передайте в качестве параметра строку all для получения доступных ISO кодов стран. Например "/country ALL" '
         ),
-        'graw': BotFunction(
+        'grav': BotFunction(
         commands=['grav', 'gravatar'], 
-            authors=['BBP'], 
+            authors=['BigBeatProphet'], 
             description='Тестирование функционала gravatar', 
             about='как аргумент принимает email'
         ),
