@@ -135,4 +135,8 @@ __queuestorage__
 __azurite_db*__.json
 .python_packages
 .fake
+<<<<<<< HEAD
 sid/cogs/tmp.py
+=======
+sid/cogs/tmp.py
+>>>>>>> cbd6e86a762834cac83b90304237ee6dacd70219

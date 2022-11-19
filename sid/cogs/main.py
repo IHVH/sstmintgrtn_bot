@@ -24,18 +24,14 @@ class Main_Cog(commands.Cog):
     async def dm(self, member: discord.Member, * ,arg):
         await member.send(arg)
 
+    ###TODO -- не работает
     @commands.Cog.listener("on_message")
-    async def on_message(self, message, *, arg:str):
-        print("a")
-        if not message.guild and message.author != self.Bot.user:
+    async def ReactOnMessage(self, ctx, *, arg:str):
+        if ctx.guild == None:
             channel = self.Bot.get_channel(cfx['sandbox_channel'])
+            await channel.send(f'{ctx.author} написал в лс:')
 
-            await channel.send(f'{message.author} написал в лс:')
-            print(f'\nworking?')
-        else:
-                print(f'\nwhy?')
-
-        await self.bot.process_commands(message)
+        await self.Bot.process_commands(ctx)
 
 
     

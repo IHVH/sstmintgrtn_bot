@@ -3,6 +3,7 @@ import os
 from urllib import response
 import telebot
 import requests
+import libgravatar
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 from functions import start, github, soap_country
@@ -42,6 +43,16 @@ def get_commits(message):
 @bot.message_handler(commands=BOT_FUNCTIONS['issues'].commands)
 def get_issues(message):
     github.get_issues(message, bot)
+
+@bot.message_handler(commands=BOT_FUNCTIONS['grav'].commands)
+async def grav(ctx, arg):
+    email = libgravatar.Gravatar(arg)
+    bot.send_message(email.get_image(), chat_id= ctx.chat.id)
+    bot.send_message(email.get_image(default='monsterid', force_default=True), chat_id= ctx.chat.id)
+    bot.send_message(email.get_image(default='identicon', force_default=True), chat_id= ctx.chat.id)
+    bot.send_message(email.get_image(default='wavatar', force_default=True), chat_id= ctx.chat.id)
+    bot.send_message(email.get_image(default='robohash', force_default=True), chat_id= ctx.chat.id)
+    bot.send_message(email.get_image(default='retro', force_default=True), chat_id= ctx.chat.id)
 
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
