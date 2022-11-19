@@ -14,6 +14,7 @@ cfx = json.load(open(cfx_path, encoding='utf-8'))
 token = os.environ["DBOTTOKEN"]
 intents = discord.Intents.all()
 intents.message_content = True
+intents.members = True
 activity = discord.Activity(name='голоса в своей голове', type=discord.ActivityType.listening)
 Bot = commands.Bot(command_prefix=cfx['prefix'], activity=activity, intents=intents, owner_id=cfx['owner'])
 
