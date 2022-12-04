@@ -59,10 +59,10 @@ def grav(message):
 
 @bot.message_handler(commands=BOT_FUNCTIONS['weather'].commands)
 def get_weather(message):
-    message_text = (message.text.replace('/weather ', ''))
-    if (message_text == "/weather"): 
+    if (message.text.strip() == "/weather"): 
         bot.send_message(message.chat.id, text="Введите адрес в формате: <Название города>, <Название улицы>, <Дом>")
         return
+    message_text = (message.text.replace('/weather ', ''))
     weather_text = weather.get_weather(message_text)
     bot.send_message(message.chat.id, text=weather_text)
 
