@@ -48,4 +48,10 @@ BOT_FUNCTIONS = {
             description='Тестирование функционала gravatar', 
             about='как аргумент принимает email'
         ),
+        'weather': BotFunction(
+            commands=['weather'],
+            authors=['Kostasus'],
+            about='Получение информации о погоде',
+            description='Введите адрес в формате: <Название города>, <Название улицы>, <Дом>'
+        )
 }

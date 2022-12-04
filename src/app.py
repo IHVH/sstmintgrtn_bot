@@ -6,7 +6,7 @@ import requests
 import libgravatar
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country
+from functions import start, github, soap_country, weather
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -56,6 +56,15 @@ def grav(message):
     bot.send_message(text=email.get_image(default='wavatar', force_default=True, size=size), chat_id= message.chat.id)
     bot.send_message(text=email.get_image(default='robohash', force_default=True, size=size), chat_id= message.chat.id)
     bot.send_message(text=email.get_image(default='retro', force_default=True, size=size), chat_id= message.chat.id)
+
+@bot.message_handler(commands=BOT_FUNCTIONS['weather'].commands)
+def get_weather(message):
+    message_text = (message.text.replace('/weather ', ''))
+    if (message_text == "/weather"): 
+        bot.send_message(message.chat.id, text="Введите адрес в формате: <Название города>, <Название улицы>, <Дом>")
+        return
+    weather_text = weather.get_weather(message_text)
+    bot.send_message(message.chat.id, text=weather_text)
 
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
