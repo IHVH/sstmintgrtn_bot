@@ -13,5 +13,6 @@ To run locally, add an `.env` file with your keys to the root of the project. Or
 TBOTTOKEN=
 DBOTTOKEN=
 GITHUBTOKEN=
+YAWEATHERTOKEN=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
