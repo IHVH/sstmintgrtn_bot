@@ -6,7 +6,7 @@ import requests
 import libgravatar
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, weather
+from functions import start, github, soap_country, weather, translate
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -65,6 +65,11 @@ def get_weather(message):
     message_text = (message.text.replace('/weather ', ''))
     weather_text = weather.get_weather(message_text)
     bot.send_message(message.chat.id, text=weather_text)
+    
+@bot.message_handler(commands=BOT_FUNCTIONS['translate'].commands)
+def get_translate(message):
+    translate_result = translate.get_translate(message.text)
+    bot.send_message(message.chat.id, text=translate_result)
 
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
