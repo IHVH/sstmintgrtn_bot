@@ -6,7 +6,7 @@ import requests
 import libgravatar
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, weather, translate, exc_rates
+from functions import start, github, soap_country, weather, translate, exc_rates, numbers
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -75,6 +75,21 @@ def get_translate(message):
 def get_excrate(message):
     excrate_res = exc_rates.exc_rates(message.text)
     bot.send_message(message.chat.id, text=excrate_res)
+
+@bot.message_handler(commands=BOT_FUNCTIONS['numbers'].commands)
+def get_fact_by_number(message):
+    params = message.text.split()
+    if '/digit' in params and len(params) == 2:
+        fact_by_digit = numbers.get_fact_by_request('digit', {'digit': params[1]})
+        bot.send_message(message.chat.id, text=fact_by_digit)
+    elif '/date' in params and len(params) == 3:
+        fact_by_date = numbers.get_fact_by_request('date', {'month': params[1], 'date': params[2]})
+        bot.send_message(message.chat.id, text=fact_by_date)
+    elif '/random' in params and len(params) == 1:
+        fact_by_random = numbers.get_fact_by_request('random')
+        bot.send_message(message.chat.id, text=fact_by_random)
+    else:
+        bot.send_message(message.chat.id, text="Некорректный формат команды. Повторите попытку!")
 
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
