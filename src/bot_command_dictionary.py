@@ -20,7 +20,7 @@ BOT_FUNCTIONS = {
             description='Тестовая клавиатура', 
             about='Тестовая клавиатура'
         ),
-        'issues': BotFunction(
+        'github': BotFunction(
             commands=['issues', 'gi'], 
             authors=['IHVH'], 
             about='Получение информации о issues',

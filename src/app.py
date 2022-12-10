@@ -42,7 +42,7 @@ def get_country_info(message):
 def get_commits(message):
     github.get_commits(message, bot)
 
-@bot.message_handler(commands=BOT_FUNCTIONS['issues'].commands)
+@bot.message_handler(commands=BOT_FUNCTIONS['github'].commands)
 def get_issues(message):
     github.get_issues(message, bot)
 
