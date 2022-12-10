@@ -3,5 +3,4 @@ requests
 zeep
 libgravatar
 geopy
-re
 xmltodict
