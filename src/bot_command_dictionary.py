@@ -90,5 +90,12 @@ BOT_FUNCTIONS = {
             authors=['ectmeyou'],
             about='Получить ругательство из сервиса',
             description='Получить ругательство из сервиса'
+        ),
+        'speller': BotFunction(
+            commands=['speller'],
+            authors=['maria21-hub'],
+            about='Проверка орфографии',
+            description='Введите слово после команды /speller, например "/speller Превет"\n' +
+                        'Бот выдаст исправленное слово. Остальные слова после первого игнорируются.'
         )
 }

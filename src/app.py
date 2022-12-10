@@ -8,7 +8,7 @@ import re
 import json
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, weather, translate, exc_rates, numbers, http_cats, swear
+from functions import start, github, soap_country, weather, translate, exc_rates, numbers, http_cats, swear, speller
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -105,6 +105,11 @@ def get_http(message):
 def insult_generator(message):
     swear_res = swear.insult_generator()
     bot.send_message(message.chat.id, text=swear_res)
+    
+@bot.message_handler(commands=BOT_FUNCTIONS['speller'].commands)
+def get_spell(message):
+    spell_result = speller.get_spell(message.text)
+    bot.send_message(message.chat.id, text=spell_result)
     
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
