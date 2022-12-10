@@ -7,8 +7,8 @@ def get_start_message_from_bot_function_dictionary():
         result += f'{BOT_FUNCTIONS[key].about} \n    - /'
         result += "\n    - /".join(BOT_FUNCTIONS[key].commands)
         result += f'\n{BOT_FUNCTIONS[key].description} '
-        result += f'\nНад функцией работают: \n    - https://github.com/'
-        result += "\n    - https://github.com/".join(BOT_FUNCTIONS[key].authors)
-        result += f'\n ------------------------------------------------------------ \n'
+        #result += f'\nНад функцией работают: \n    - https://github.com/'
+        #result += "\n    - https://github.com/".join(BOT_FUNCTIONS[key].authors)
+        result += f'\n ---- \n'
     
     return result
