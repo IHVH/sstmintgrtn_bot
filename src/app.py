@@ -6,12 +6,15 @@ import requests
 import libgravatar
 import re
 import json
+import telebot, wikipedia, re
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, weather, translate, exc_rates, numbers, http_cats, swear
+from functions import start, github, soap_country, weather, translate, exc_rates, numbers, http_cats, swear, getwiki
+
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
+wikipedia.set_lang("ru")
 
 @bot.message_handler(commands=BOT_FUNCTIONS['start'].commands)
 def send_welcome(message):
@@ -106,9 +109,15 @@ def insult_generator(message):
     swear_res = swear.insult_generator()
     bot.send_message(message.chat.id, text=swear_res)
     
-@bot.message_handler(func =lambda message:True)
-def text_messages(message):
-    bot.reply_to(message, "Text = " + message.text)
-    bot.send_message(text="Ваш запрос не обработан!!!", chat_id= message.chat.id)
+@bot.message_handler(commands=["getwiki"])
+
+def wikipedia(m, res=False):
+
+    bot.send_message(m.chat.id, 'Введите любое слово, чтобы узнать, что это такое!')
+
+@bot.message_handler(content_types=["text"])
+
+def handle_text(message):
+    bot.send_message(message.chat.id, getwiki.getwiki(message.text))
 
 bot.infinity_polling()

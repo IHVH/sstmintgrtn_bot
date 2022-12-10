@@ -90,5 +90,12 @@ BOT_FUNCTIONS = {
             authors=['ectmeyou'],
             about='Получить ругательство из сервиса',
             description='Получить ругательство из сервиса'
-        )
+        ),
+
+        'getwiki': BotFunction(
+            commands=['getwiki'],
+            authors=['TMD'],
+            about='Получить определение из wikipedia',
+            description='Получить определение из wikipedia'
+        ),        
 }
