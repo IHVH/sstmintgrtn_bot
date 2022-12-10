@@ -103,8 +103,9 @@ def get_http(message):
 
 @bot.message_handler(commands=BOT_FUNCTIONS['insult'].commands)
 def insult_generator(message):
-    swear.insult_generator(message, bot)
-
+    swear_res = swear.insult_generator()
+    bot.send_message(message.chat.id, text=swear_res)
+    
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
     bot.reply_to(message, "Text = " + message.text)
