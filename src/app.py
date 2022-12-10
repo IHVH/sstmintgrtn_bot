@@ -4,9 +4,11 @@ from urllib import response
 import telebot
 import requests
 import libgravatar
+import re
+import json
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, weather, translate, exc_rates, numbers
+from functions import start, github, soap_country, weather, translate, exc_rates, numbers, http_cats
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -90,6 +92,18 @@ def get_fact_by_number(message):
         bot.send_message(message.chat.id, text=fact_by_random)
     else:
         bot.send_message(message.chat.id, text="Некорректный формат команды. Повторите попытку!")
+
+@bot.message_handler(commands=BOT_FUNCTIONS['http'].commands)
+def get_http(message):
+    if (message.text.strip() == "/http"): 
+        http_reply = "Неверный формат ввода. Введите http код, например /http 204. Для просмотра возможных вариантов наберите команду /http list"
+    elif (message.text.strip() == "/http list"): 
+        codes_list = http_cats.get_codes_list()
+        http_reply = json.dumps(codes_list)
+    else:
+        http_code = re.sub(r'[^0-9.]', "", message.text)
+        http_reply = http_cats.get_cat(http_code)
+    bot.send_message(message.chat.id, text=http_reply)
 
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
