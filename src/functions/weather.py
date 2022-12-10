@@ -17,16 +17,18 @@ wind_dir = {"nw": "северо-западное", "n": "северное", "ne"
 # Функция для получения координат по адресу
 def get_geo_pos(adress):
     geolocator = geocoders.Nominatim(user_agent="yandex_weather")
-    try:
-        latitude = str(geolocator.geocode(adress).latitude)
-        longitude = str(geolocator.geocode(adress).longitude)
-    except AttributeError:
-        raise
+    geo = geolocator.geocode(adress)
+    latitude = geo.latitude
+    longitude = geo.longitude
     return latitude, longitude
 
 # Получение ответа от сервиса Яндекса в формате json и его обработка
-def get_weather(adress):
+def get_weather(message):
     token = os.environ["YAWEATHERTOKEN"]
+
+    if (message.strip() == "/weather"): 
+        return "Введите адрес в формате: <Название города>, <Название улицы>, <Дом>"
+    adress = (message.replace('/weather ', ''))
 
     try:
         location = get_geo_pos(adress)
@@ -35,7 +37,8 @@ def get_weather(adress):
 
     yandex_url = f"https://api.weather.yandex.ru/v2/forecast?lat={location[0]}&lon={location[1]}&[limit=1]&[lang=ru_RU]&[hours=false]"
     yandex_request = requests.get(yandex_url, headers={"X-Yandex-API-Key": token})
-    if (yandex_request.status_code == 404 or yandex_request.status_code == 403): return "Получена ошибка при выполнении запроса!"
+    if (str(yandex_request.status_code)[0] == "4"): 
+        return "Получена ошибка при выполнении запроса!"
 
     yandex_json = json.loads(yandex_request.text)
 
