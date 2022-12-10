@@ -101,6 +101,10 @@ def get_http(message):
         http_reply = http_cats.get_cat(http_code)
     bot.send_message(message.chat.id, text=http_reply)
 
+@bot.message_handler(commands=BOT_FUNCTIONS['insult'].commands)
+def insult_generator(message):
+    swear.insult_generator(message, bot)
+
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
     bot.reply_to(message, "Text = " + message.text)
