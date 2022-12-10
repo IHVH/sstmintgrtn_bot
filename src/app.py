@@ -8,7 +8,7 @@ import re
 import json
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, weather, translate, exc_rates, numbers, http_cats
+from functions import start, github, soap_country, weather, translate, exc_rates, numbers, http_cats, swear
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
