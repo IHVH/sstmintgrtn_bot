@@ -84,5 +84,11 @@ BOT_FUNCTIONS = {
             authors=['ostrichsmile'],
             about='По котику на каждый http статус',
             description='Введите http код, например /http 204. Для просмотра возможных вариантов наберите команду /http list'
-         )
+         ),
+        'insult': BotFunction(
+            commands=['insult'],
+            authors=['ectmeyou'],
+            about='Получить ругательство из сервиса',
+            description='Получить ругательство из сервиса'
+        )
 }
