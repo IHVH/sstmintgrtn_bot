@@ -7,7 +7,8 @@ import re
 import json
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import gravatar, start, github, soap_country, weather, translate, exc_rates, numbers, http_cats, swear, speller
+
+from functions import start, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, kinopoisk
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -21,6 +22,13 @@ def gen_markup():
     markup.row_width = 2
     markup.add(types.InlineKeyboardButton("Да", callback_data="cb_yes"), types.InlineKeyboardButton("Нет", callback_data="cb_no"))
     return markup
+
+def get_keyboard_kinopoisk(url):
+    """ Кнопка на внешний ресурс """
+
+    keyboard = types.InlineKeyboardMarkup()
+    keyboard.add(types.InlineKeyboardButton(text="Ссылка", url=url))
+    return keyboard
 
 @bot.message_handler(commands=BOT_FUNCTIONS['test_keyboard'].commands)
 def send_markup(message):
@@ -59,6 +67,29 @@ def get_commits(message):
 @bot.message_handler(commands=BOT_FUNCTIONS['issues'].commands)
 def get_issues(message):
     github.get_issues(message, bot)
+
+@bot.message_handler(commands=BOT_FUNCTIONS['kinopoisk'].commands)
+def get_kinopoisk(message):
+        stripped_greeting = message.text.strip("/kinopoisk ")
+        print(stripped_greeting)
+
+        search = kinopoisk.main(stripped_greeting)
+
+        if search:
+            for item in search:
+                caption = f'{item.ru_name}\n\n' \
+                              f'Год производства: {item.year}\n' \
+                              f'Жанр: {", ".join(item.genres)}\n' \
+                              f'Страна: {", ".join(item.countries)}\n' \
+                              f'Время просмотра: {item.duration}\n' \
+                              f'Рейтинг: {item.kp_rate}'
+
+                bot.send_photo(message.from_user.id, item.poster,
+                                         caption=caption,
+                                         reply_markup=get_keyboard_kinopoisk(item.kp_url))
+        else:
+            bot.send_message(message.chat.id, "По вашему запросу ничего не смог найти,\n пожалуйста введите корректное название фильма.")
+
 
 @bot.message_handler(commands=BOT_FUNCTIONS['grav'].commands)
 def grav(message):

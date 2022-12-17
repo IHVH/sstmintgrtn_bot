@@ -34,6 +34,15 @@ BOT_FUNCTIONS = {
             description='Получение информации о коммитах для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
                 'Передайте в качестве параметра число для получения информации об указаном количестве последних коммитов. Например "/gc 5" ' 
         ),
+        'kinopoisk': BotFunction(
+            commands=['kinopoisk'],
+            authors=['kagayato'],
+            about='Получение информации о фильмах в кинопоиске',
+            description='Получение информации о о фильмах для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
+                'Передать информацию о фильме . Например "/kinopoisk фильм" '
+        ),
+
+
         'country': BotFunction(
             commands=['country', 'cy'], 
             authors=['IHVH'], 

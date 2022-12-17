@@ -15,6 +15,7 @@ DBOTTOKEN=
 GITHUBTOKEN=
 YAWEATHERTOKEN=
 YADICTTOKEN=
+KP_TOKEN=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 
@@ -31,3 +32,5 @@ Links to information about tokens
 [YAWEATHERTOKEN](https://yandex.ru/dev/weather/doc/dg/concepts/about.html#about__onboarding) - Test plan required
 
 [YADICTTOKEN](https://yandex.ru/dev/dictionary/keys/get/?service=dict)
+
+[KP_TOKEN](https://kinopoiskapiunofficial.tech)
