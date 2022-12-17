@@ -33,6 +33,7 @@ def callback_query(call):
             bot.answer_callback_query(call.id, "Ответ ДА!")
         case('cb_no'):
             bot.answer_callback_query(call.id, "Ответ НЕТ!")
+        # TODO - call.message не содержит текст изначального сообщения, необходим другой вариант решения
         case('cb_default'):
             gravatar.main('1', bot, call.message)
         case('cb_monsterid'):
