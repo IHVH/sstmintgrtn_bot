@@ -4,11 +4,12 @@ from urllib import response
 import telebot
 import requests
 import libgravatar
+import wikipedia
 import re
 import json
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, weather, translate, numbers, exc_rates, http_cats, swear, speller, kinopoisk
+from functions import start, github, soap_country, weather, translate, numbers, exc_rates, http_cats, swear, speller, wikipedia
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -140,7 +141,11 @@ def insult_generator(message):
 def get_spell(message):
     spell_result = speller.get_spell(message.text)
     bot.send_message(message.chat.id, text=spell_result)
-    
+
+@bot.message_handler(commands=BOT_FUNCTIONS['Wikipedia'].commands)
+def test(message):
+    final_message = wikipedia.wiki_op(message.text)
+    bot.send_message(message.chat.id, text=final_message, parse_mode='html')
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
     bot.reply_to(message, "Text = " + message.text)

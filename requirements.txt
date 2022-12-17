@@ -4,3 +4,4 @@ zeep
 libgravatar
 geopy
 xmltodict
+Wikipedia
