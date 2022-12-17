@@ -2,7 +2,6 @@ from email import header
 import os
 from urllib import response
 import telebot
-import requests
 import libgravatar
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS

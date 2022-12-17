@@ -3,6 +3,8 @@ import json
 import logging
 from pathlib import Path
 from discord.ext import commands
+from discord import Webhook
+import aiohttp
 
 cfx_path = Path.cwd() / 'sid' / 'json' / 'cfx.json'
 cfx = json.load(open(cfx_path, encoding='utf-8'))
@@ -10,6 +12,12 @@ cfx = json.load(open(cfx_path, encoding='utf-8'))
 class Main_Cog(commands.Cog):
     def __init__(self, Bot):
         self.Bot = Bot
+
+    @commands.command()
+    async def foo(self, ctx):
+        async with aiohttp.ClientSession() as session:
+            webhook = Webhook.from_url(cfx['WHT'], session=session)
+            await webhook.send('Hello World', username='Foo')
 
     @commands.Cog.listener()
     async def on_ready(self):
