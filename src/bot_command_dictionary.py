@@ -63,6 +63,12 @@ BOT_FUNCTIONS = {
             about='Получение информации о погоде',
             description='Введите адрес в формате: <Название города>, <Название улицы>, <Дом>'
         ),
+        'accuweather': BotFunction(
+            commands=['accuweather'],
+            authors=['PR0YA'],
+            about='Получение информации о погоде с источника Accuweather',
+            description='Введите команду в формате: <Мой город ...>'
+        ),
         'translate': BotFunction(
             commands=['translate'],
             authors=['lanaveta0104 '],

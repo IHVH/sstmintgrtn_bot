@@ -8,7 +8,7 @@ import re
 import json
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, weather, translate, numbers, exc_rates, http_cats, swear, speller, kinopoisk
+from functions import start, github, soap_country, weather, translate, numbers, exc_rates, http_cats, swear, speller, accuweather
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -23,12 +23,9 @@ def gen_markup():
     markup.add(types.InlineKeyboardButton("Да", callback_data="cb_yes"), types.InlineKeyboardButton("Нет", callback_data="cb_no"))
     return markup
 
-def get_keyboard_kinopoisk(url):
-    """ Кнопка на внешний ресурс """
-
-    keyboard = types.InlineKeyboardMarkup()
-    keyboard.add(types.InlineKeyboardButton(text="Ссылка", url=url))
-    return keyboard
+@bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
+def get_accuweather(message):
+    accuweather.get_text_messages(message, bot)
 
 @bot.message_handler(commands=BOT_FUNCTIONS['test_keyboard'].commands)
 def send_markup(message):
