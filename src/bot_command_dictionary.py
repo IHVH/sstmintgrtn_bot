@@ -48,4 +48,54 @@ BOT_FUNCTIONS = {
             description='Тестирование функционала gravatar', 
             about='как аргумент принимает email'
         ),
+        'weather': BotFunction(
+            commands=['weather'],
+            authors=['Kostasus'],
+            about='Получение информации о погоде',
+            description='Введите адрес в формате: <Название города>, <Название улицы>, <Дом>'
+        ),
+        'translate': BotFunction(
+            commands=['translate'],
+            authors=['lanaveta0104 '],
+            about='Перевод слова на английский или русский язык, а также вывод синонимов слова',
+            description='Введите язык перевода в виде "en" - английский или "ru" - русский и затем необходимое "слово"\n' +
+                'Слово должно быть в начальной форме!\n' +
+                'Например, для перевода на английский - /translate en Привет\n' +
+                'Для перевода на русский - /translate ru Hello\n' +
+                'Остальные символы после введенного слова игнорируются!'
+        ),
+        'excrate': BotFunction(
+            commands=['excrate'],
+            authors=['redjuk'],
+            about='Отображение курса валют на сегодняшний день',
+            description='Введите код валюты в формате ISO 4217. Для просмотра возможных вариантов наберите команду /excrate list'
+        ),
+        'numbers': BotFunction(
+                commands=['digit', 'date', 'random'],
+                authors=['myrlifox'],
+                about='Забавные факты о числах и датах',
+                description='Получение факта по числу или дате \n ' +
+                            'Для получения факта по числу в качестве параметра укажите число. Например "/digit 15" \n ' +
+                            'Для получения факта по дате в качестве параметра укажите название месяца и число из этого месяца. Например "/date Август 14" \n ' +
+                            'Для получения случайного факта укажите команду /random'
+        ),
+        'http': BotFunction(
+            commands=['http'],
+            authors=['ostrichsmile'],
+            about='По котику на каждый http статус',
+            description='Введите http код, например /http 204. Для просмотра возможных вариантов наберите команду /http list'
+         ),
+        'insult': BotFunction(
+            commands=['insult'],
+            authors=['ectmeyou'],
+            about='Получить ругательство из сервиса',
+            description='Получить ругательство из сервиса'
+        ),
+        'speller': BotFunction(
+            commands=['speller'],
+            authors=['maria21-hub'],
+            about='Проверка орфографии',
+            description='Введите слово после команды /speller, например "/speller Превет"\n' +
+                        'Бот выдаст исправленное слово. Остальные слова после первого игнорируются.'
+        )
 }

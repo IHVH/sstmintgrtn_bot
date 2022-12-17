@@ -13,5 +13,21 @@ To run locally, add an `.env` file with your keys to the root of the project. Or
 TBOTTOKEN=
 DBOTTOKEN=
 GITHUBTOKEN=
+YAWEATHERTOKEN=
+YADICTTOKEN=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
+
+
+## Tokens
+Links to information about tokens
+
+[TBOTTOKEN](https://core.telegram.org/bots#how-do-i-create-a-bot)
+
+[DBOTTOKEN](https://discord.com/developers/applications)
+
+[GITHUBTOKEN](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+
+[YAWEATHERTOKEN](https://yandex.ru/dev/weather/doc/dg/concepts/about.html#about__onboarding) - Test plan required
+
+[YADICTTOKEN](https://yandex.ru/dev/dictionary/keys/get/?service=dict)

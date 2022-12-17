@@ -3,9 +3,11 @@ import os
 from urllib import response
 import telebot
 import libgravatar
+import re
+import json
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country
+from functions import start, github, soap_country, weather, translate, exc_rates, numbers, http_cats, swear, speller
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -56,6 +58,58 @@ def grav(message):
     bot.send_message(text=email.get_image(default='robohash', force_default=True, size=size), chat_id= message.chat.id)
     bot.send_message(text=email.get_image(default='retro', force_default=True, size=size), chat_id= message.chat.id)
 
+@bot.message_handler(commands=BOT_FUNCTIONS['weather'].commands)
+def get_weather(message):
+    weather_text = weather.get_weather(message.text)
+    bot.send_message(message.chat.id, text=weather_text)
+    
+@bot.message_handler(commands=BOT_FUNCTIONS['translate'].commands)
+def get_translate(message):
+    translate_result = translate.get_translate(message.text)
+    bot.send_message(message.chat.id, text=translate_result)
+    
+@bot.message_handler(commands=BOT_FUNCTIONS['excrate'].commands)
+def get_excrate(message):
+    excrate_res = exc_rates.exc_rates(message.text)
+    bot.send_message(message.chat.id, text=excrate_res)
+
+@bot.message_handler(commands=BOT_FUNCTIONS['numbers'].commands)
+def get_fact_by_number(message):
+    params = message.text.split()
+    if '/digit' in params and len(params) == 2:
+        fact_by_digit = numbers.get_fact_by_request('digit', {'digit': params[1]})
+        bot.send_message(message.chat.id, text=fact_by_digit)
+    elif '/date' in params and len(params) == 3:
+        fact_by_date = numbers.get_fact_by_request('date', {'month': params[1], 'date': params[2]})
+        bot.send_message(message.chat.id, text=fact_by_date)
+    elif '/random' in params and len(params) == 1:
+        fact_by_random = numbers.get_fact_by_request('random')
+        bot.send_message(message.chat.id, text=fact_by_random)
+    else:
+        bot.send_message(message.chat.id, text="Некорректный формат команды. Повторите попытку!")
+
+@bot.message_handler(commands=BOT_FUNCTIONS['http'].commands)
+def get_http(message):
+    if (message.text.strip() == "/http"): 
+        http_reply = "Неверный формат ввода. Введите http код, например /http 204. Для просмотра возможных вариантов наберите команду /http list"
+    elif (message.text.strip() == "/http list"): 
+        codes_list = http_cats.get_codes_list()
+        http_reply = json.dumps(codes_list)
+    else:
+        http_code = re.sub(r'[^0-9.]', "", message.text)
+        http_reply = http_cats.get_cat(http_code)
+    bot.send_message(message.chat.id, text=http_reply)
+
+@bot.message_handler(commands=BOT_FUNCTIONS['insult'].commands)
+def insult_generator(message):
+    swear_res = swear.insult_generator()
+    bot.send_message(message.chat.id, text=swear_res)
+    
+@bot.message_handler(commands=BOT_FUNCTIONS['speller'].commands)
+def get_spell(message):
+    spell_result = speller.get_spell(message.text)
+    bot.send_message(message.chat.id, text=spell_result)
+    
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
     bot.reply_to(message, "Text = " + message.text)
