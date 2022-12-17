@@ -6,7 +6,7 @@ import json
 env = environs.Env()
 env.read_env(".env")
 
-KINOPOISK = env.str('KP_TOKEN')
+KINOPOISK = env.str('KINOPOISKTOKEN')
 API = 'https://kinopoiskapiunofficial.tech/api/v2.1/'
 headers = {"X-API-KEY": KINOPOISK}
 
