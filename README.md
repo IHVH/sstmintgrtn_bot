@@ -20,4 +20,4 @@ Links to information about tokens
 
 [TBOTTOKEN](https://core.telegram.org/bots#how-do-i-create-a-bot)
 
-[ACCUWEATHER]([https://discord.com/developers/applications](https://developer.accuweather.com)
+[ACCUWEATHER](https://developer.accuweather.com)
