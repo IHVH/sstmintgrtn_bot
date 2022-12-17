@@ -16,6 +16,7 @@ GITHUBTOKEN=
 YAWEATHERTOKEN=
 YADICTTOKEN=
 KINOPOISKTOKEN=
+OPENWEATHERTOKEN=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 

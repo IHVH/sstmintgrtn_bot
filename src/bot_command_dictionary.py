@@ -42,6 +42,13 @@ BOT_FUNCTIONS = {
                 'Передать информацию о фильме . Например "/kinopoisk фильм" '
         ),
 
+        'openweather': BotFunction(
+            commands=['openweather'],
+            authors=['doppler'],
+            about='Получение информации о погоде',
+            description='Получение информации о погоде для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
+                'Передать информацию о погоде . Например "/openweather город" '
+        ),
 
         'country': BotFunction(
             commands=['country', 'cy'], 
