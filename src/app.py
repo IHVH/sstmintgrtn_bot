@@ -9,7 +9,7 @@ import json
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 
-from functions import start, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, kinopoisk, wikipedia, accuweather
+from functions import start, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, kinopoisk, wikipedia, accuweather, openweather
 
 
 token = os.environ["TBOTTOKEN"]
@@ -95,6 +95,14 @@ def get_kinopoisk(message):
                                          reply_markup=get_keyboard_kinopoisk(item.kp_url))
         else:
             bot.send_message(message.chat.id, "По вашему запросу ничего не смог найти,\n пожалуйста введите корректное название фильма.")
+
+@bot.message_handler(commands=BOT_FUNCTIONS['openweather'].commands)
+def get_open(message):
+    stripped_greeting = message.text.strip('/openweather ')
+    print (stripped_greeting, )
+    open_message = openweather.get_weather(stripped_greeting)
+    bot.send_message(message.chat.id, text = open_message)
+
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['grav'].commands)
