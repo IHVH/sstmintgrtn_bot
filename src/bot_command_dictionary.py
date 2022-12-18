@@ -42,6 +42,13 @@ BOT_FUNCTIONS = {
                 'Передать информацию о фильме . Например "/kinopoisk фильм" '
         ),
 
+        'openweather': BotFunction(
+            commands=['openweather'],
+            authors=['doppler'],
+            about='Получение информации о погоде',
+            description='Получение информации о погоде для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
+                'Передать информацию о погоде . Например "/openweather город" '
+        ),
 
         'country': BotFunction(
             commands=['country', 'cy'], 
@@ -62,6 +69,12 @@ BOT_FUNCTIONS = {
             authors=['Kostasus'],
             about='Получение информации о погоде',
             description='Введите адрес в формате: <Название города>, <Название улицы>, <Дом>'
+        ),
+        'accuweather': BotFunction(
+            commands=['accuweather'],
+            authors=['PR0YA'],
+            about='Получение информации о погоде с источника Accuweather',
+            description='Введите команду в формате: <Мой город ...>'
         ),
         'translate': BotFunction(
             commands=['translate'],
@@ -106,5 +119,12 @@ BOT_FUNCTIONS = {
             about='Проверка орфографии',
             description='Введите слово после команды /speller, например "/speller Превет"\n' +
                         'Бот выдаст исправленное слово. Остальные слова после первого игнорируются.'
+        ),
+        'Wikipedia': BotFunction(
+            commands=['Wikipedia'],
+            authors=['iznopa'],
+            about='Быстрый поиск определения с помощью Wikipedia',
+            description='Введи любое слово после /Wikipedia, например "/Wikipedia Java"\n' +
+                        'Бот выдаст определение которое нашел.'
         )
 }

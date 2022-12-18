@@ -1,14 +1,21 @@
+# import time
+# import requests
+# import environs
+# import json
+#
+# env = environs.Env()
+# env.read_env(".env")
+#
 import time
 import requests
-import environs
 import json
+import os
 
-env = environs.Env()
-env.read_env(".env")
 
-KINOPOISK = env.str('KINOPOISKTOKEN')
+KINOPOISK = os.environ["KP_TOKEN"]
 API = 'https://kinopoiskapiunofficial.tech/api/v2.1/'
 headers = {"X-API-KEY": KINOPOISK}
+
 
 
 class SEARCH:

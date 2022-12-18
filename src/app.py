@@ -2,15 +2,17 @@ from email import header
 import os
 from urllib import response
 import telebot
-import requests
 import libgravatar
+import wikipedia
 import re
 import json
 from datetime import datetime
 from pycbrf import ExchangeRates
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, weather, translate, numbers, exc_rates, http_cats, swear, speller, kinopoisk
+
+from functions import start, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, kinopoisk, wikipedia, accuweather, openweather
+
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -32,16 +34,35 @@ def get_keyboard_kinopoisk(url):
     keyboard.add(types.InlineKeyboardButton(text="Ссылка", url=url))
     return keyboard
 
+@bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
+def get_accuweather(message):
+    accuweather.get_text_messages(message, bot)
+
 @bot.message_handler(commands=BOT_FUNCTIONS['test_keyboard'].commands)
 def send_markup(message):
     bot.send_message(message.chat.id, "Да/Нет?", reply_markup=gen_markup())
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-    if call.data == "cb_yes":
-        bot.answer_callback_query(call.id, "Ответ ДА!")
-    elif call.data == "cb_no":
-        bot.answer_callback_query(call.id, "Ответ НЕТ!")
+    match(call.data):
+        case('cb_yes'):
+            bot.answer_callback_query(call.id, "Ответ ДА!")
+        case('cb_no'):
+            bot.answer_callback_query(call.id, "Ответ НЕТ!")
+        # TODO - call.message не содержит текст изначального сообщения, необходим другой вариант решения
+        case('cb_default'):
+            gravatar.main('1', bot, call.message)
+        case('cb_monsterid'):
+            gravatar.main('2', bot, call.message)
+        case('cb_identicon'):
+            gravatar.main('3', bot, call.message)
+        case('cb_wavatar'):
+            gravatar.main('4', bot, call.message)
+        case('cb_robohash'):
+            gravatar.main('5', bot, call.message)
+        case('cb_retro'):
+            gravatar.main('6', bot, call.message)
+
 
 @bot.message_handler(commands=BOT_FUNCTIONS['country'].commands)
 def get_country_info(message):
@@ -77,19 +98,18 @@ def get_kinopoisk(message):
         else:
             bot.send_message(message.chat.id, "По вашему запросу ничего не смог найти,\n пожалуйста введите корректное название фильма.")
 
+@bot.message_handler(commands=BOT_FUNCTIONS['openweather'].commands)
+def get_open(message):
+    stripped_greeting = message.text.strip('/openweather ')
+    print (stripped_greeting, )
+    open_message = openweather.get_weather(stripped_greeting)
+    bot.send_message(message.chat.id, text = open_message)
+
+
 
 @bot.message_handler(commands=BOT_FUNCTIONS['grav'].commands)
 def grav(message):
-    str_spilt = message.text.split()
-    arg = str_spilt[-1]
-    email = libgravatar.Gravatar(arg)
-    size = 200
-    bot.send_message(text=email.get_image(size=size), chat_id= message.chat.id)
-    bot.send_message(text=email.get_image(default='monsterid', force_default=True, size=size), chat_id= message.chat.id)
-    bot.send_message(text=email.get_image(default='identicon', force_default=True, size=size), chat_id= message.chat.id)
-    bot.send_message(text=email.get_image(default='wavatar', force_default=True, size=size), chat_id= message.chat.id)
-    bot.send_message(text=email.get_image(default='robohash', force_default=True, size=size), chat_id= message.chat.id)
-    bot.send_message(text=email.get_image(default='retro', force_default=True, size=size), chat_id= message.chat.id)
+    gravatar.grav(message, bot)
 
 @bot.message_handler(commands=BOT_FUNCTIONS['weather'].commands)
 def get_weather(message):
@@ -142,7 +162,11 @@ def insult_generator(message):
 def get_spell(message):
     spell_result = speller.get_spell(message.text)
     bot.send_message(message.chat.id, text=spell_result)
-    
+
+@bot.message_handler(commands=BOT_FUNCTIONS['Wikipedia'].commands)
+def test(message):
+    final_message = wikipedia.wiki_op(message.text)
+    bot.send_message(message.chat.id, text=final_message, parse_mode='html')
 
 @bot.message_handler(commands=['rates'])
 def start1(message):
