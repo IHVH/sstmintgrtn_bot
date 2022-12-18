@@ -8,7 +8,8 @@ import re
 import json
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, kinopoisk, wikipedia
+
+from functions import start, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, kinopoisk, wikipedia, accuweather
 
 
 token = os.environ["TBOTTOKEN"]
@@ -30,6 +31,10 @@ def get_keyboard_kinopoisk(url):
     keyboard = types.InlineKeyboardMarkup()
     keyboard.add(types.InlineKeyboardButton(text="Ссылка", url=url))
     return keyboard
+
+@bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
+def get_accuweather(message):
+    accuweather.get_text_messages(message, bot)
 
 @bot.message_handler(commands=BOT_FUNCTIONS['test_keyboard'].commands)
 def send_markup(message):
