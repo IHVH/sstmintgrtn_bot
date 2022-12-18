@@ -5,3 +5,4 @@ libgravatar
 geopy
 xmltodict
 Wikipedia
+pycbrf
