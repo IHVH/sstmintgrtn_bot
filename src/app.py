@@ -6,6 +6,8 @@ import libgravatar
 import wikipedia
 import re
 import json
+from datetime import datetime
+from pycbrf import ExchangeRates
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 
@@ -165,6 +167,23 @@ def get_spell(message):
 def test(message):
     final_message = wikipedia.wiki_op(message.text)
     bot.send_message(message.chat.id, text=final_message, parse_mode='html')
+
+@bot.message_handler(commands=['rates'])
+def start1(message):
+    markup   = telebot.types.ReplyKeyboardMarkup(row_width = 2)
+    itembtn1 = telebot.types.KeyboardButton('USD')
+    itembtn2 = telebot.types.KeyboardButton('EUR')
+    markup.add(itembtn1, itembtn2)
+    bot.send_message(chat_id=message.chat.id, text="<b>Привет! Выбери валюту.</b>", reply_markup=markup, parse_mode="html")
+
+@bot.message_handler(content_types=['text'])
+def message(message):
+    message_norm = message.text.strip().lower()
+
+    if message_norm in ['usd', 'eur']:
+        rates = ExchangeRates(datetime.now())
+        bot.send_message(chat_id=message.chat.id, text=f"<b>{message_norm.upper()} курс {float(rates[message_norm.upper()].rate)} </b>", parse_mode="html")
+
 @bot.message_handler(func =lambda message:True)
 def text_messages(message):
     bot.reply_to(message, "Text = " + message.text)
