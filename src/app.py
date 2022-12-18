@@ -2,14 +2,14 @@ from email import header
 import os
 from urllib import response
 import telebot
-import requests
 import libgravatar
 import wikipedia
 import re
 import json
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
-from functions import start, github, soap_country, weather, translate, numbers, exc_rates, http_cats, swear, speller, wikipedia
+from functions import start, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, kinopoisk, wikipedia
+
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -37,10 +37,25 @@ def send_markup(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-    if call.data == "cb_yes":
-        bot.answer_callback_query(call.id, "Ответ ДА!")
-    elif call.data == "cb_no":
-        bot.answer_callback_query(call.id, "Ответ НЕТ!")
+    match(call.data):
+        case('cb_yes'):
+            bot.answer_callback_query(call.id, "Ответ ДА!")
+        case('cb_no'):
+            bot.answer_callback_query(call.id, "Ответ НЕТ!")
+        # TODO - call.message не содержит текст изначального сообщения, необходим другой вариант решения
+        case('cb_default'):
+            gravatar.main('1', bot, call.message)
+        case('cb_monsterid'):
+            gravatar.main('2', bot, call.message)
+        case('cb_identicon'):
+            gravatar.main('3', bot, call.message)
+        case('cb_wavatar'):
+            gravatar.main('4', bot, call.message)
+        case('cb_robohash'):
+            gravatar.main('5', bot, call.message)
+        case('cb_retro'):
+            gravatar.main('6', bot, call.message)
+
 
 @bot.message_handler(commands=BOT_FUNCTIONS['country'].commands)
 def get_country_info(message):
@@ -79,16 +94,7 @@ def get_kinopoisk(message):
 
 @bot.message_handler(commands=BOT_FUNCTIONS['grav'].commands)
 def grav(message):
-    str_spilt = message.text.split()
-    arg = str_spilt[-1]
-    email = libgravatar.Gravatar(arg)
-    size = 200
-    bot.send_message(text=email.get_image(size=size), chat_id= message.chat.id)
-    bot.send_message(text=email.get_image(default='monsterid', force_default=True, size=size), chat_id= message.chat.id)
-    bot.send_message(text=email.get_image(default='identicon', force_default=True, size=size), chat_id= message.chat.id)
-    bot.send_message(text=email.get_image(default='wavatar', force_default=True, size=size), chat_id= message.chat.id)
-    bot.send_message(text=email.get_image(default='robohash', force_default=True, size=size), chat_id= message.chat.id)
-    bot.send_message(text=email.get_image(default='retro', force_default=True, size=size), chat_id= message.chat.id)
+    gravatar.grav(message, bot)
 
 @bot.message_handler(commands=BOT_FUNCTIONS['weather'].commands)
 def get_weather(message):
