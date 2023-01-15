@@ -22,14 +22,12 @@ def send_welcome(message):
     bot.reply_to(
         message, start.get_start_message_from_bot_function_dictionary())
 
-
 def gen_markup():
     markup = types.InlineKeyboardMarkup()
     markup.row_width = 2
     markup.add(types.InlineKeyboardButton("Да", callback_data="cb_yes"),
                types.InlineKeyboardButton("Нет", callback_data="cb_no"))
     return markup
-
 
 def get_keyboard_kinopoisk(url):
     """ Кнопка на внешний ресурс """
@@ -38,12 +36,11 @@ def get_keyboard_kinopoisk(url):
     keyboard.add(types.InlineKeyboardButton(text="Ссылка", url=url))
     return keyboard
 
-
 @bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
 def get_accuweather(message):
     accuweather.get_text_messages(message, bot)
 
-
+# DavidShariev
 @bot.message_handler(commands=BOT_FUNCTIONS['get_gif'].commands)
 def get_gif(message):
     requireString = message.text[9:]

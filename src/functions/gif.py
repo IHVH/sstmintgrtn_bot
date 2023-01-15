@@ -9,7 +9,6 @@ headers = {
     "limit": 1
 }
 
-
 def main(query):
     headers["q"] = query
     if (headers["q"] == ""):
