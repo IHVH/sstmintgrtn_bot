@@ -11,7 +11,7 @@ from pycbrf import ExchangeRates
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 
-from functions import start, gif, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, wikipedia, accuweather, openweather
+from functions import start, gif, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, wikipedia, accuweather, openweather, kinopoisk
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -80,15 +80,7 @@ def get_country_info(message):
     soap_country.get_country_info(message, bot)
 
 
-@ bot.message_handler(commands=BOT_FUNCTIONS['commits'].commands)
-def get_commits(message):
-    github.get_commits(message, bot)
-
-
-@ bot.message_handler(commands=BOT_FUNCTIONS['issues'].commands)
-def get_issues(message):
-    github.get_issues(message, bot)
-
+github.Github(bot=bot)
 
 @ bot.message_handler(commands=BOT_FUNCTIONS['kinopoisk'].commands)
 def get_kinopoisk(message):
