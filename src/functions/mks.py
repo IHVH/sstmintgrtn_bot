@@ -5,9 +5,9 @@ import json
 
 tgtoken=json.load(open("token.json"))
 bot = telebot.TeleBot(tgtoken['token']);
-bot.message_handler(commands=["start"])
 
-@bot.message_handler(commands=["start"])
+
+@bot.message_handler(commands=["mks"])
 def inline(message):
  key = types.InlineKeyboardMarkup()
  cord = types.InlineKeyboardButton(text="да", callback_data="да")
