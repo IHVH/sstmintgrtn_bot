@@ -141,4 +141,10 @@ BOT_FUNCTIONS = {
         about='Получение информации о нахождение мкс',
         description='Введите /mks'
     ),
+    'anecdote': BotFunction(
+        commands=['anecdote'],
+        authors=['alekseikornyushko'],
+        about='Рандомный анекдот специально для Вас',
+        description='Введите /anecdote с числовым аргументом'
+    ),
 }

@@ -12,7 +12,7 @@ from pycbrf import ExchangeRates
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 
-from functions import start, gif, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, wikipedia, accuweather, openweather, kinopoisk
+from functions import start, gif, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, wikipedia, accuweather, openweather, kinopoisk, anecdotes
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -118,6 +118,11 @@ def get_open(message):
 @bot.message_handler(commands=BOT_FUNCTIONS['grav'].commands)
 def grav(message):
     gravatar.grav(message, bot)
+
+
+@bot.message_handler(commands=BOT_FUNCTIONS['anecdote'].commands)
+def get_anecdote(message):
+    bot.send_message(message.chat.id, text=get_anecdote(message))
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['weather'].commands)
