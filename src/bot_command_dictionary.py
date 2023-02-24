@@ -134,5 +134,17 @@ BOT_FUNCTIONS = {
         about='Быстрый поиск определения с помощью Wikipedia',
         description='Введи любое слово после /Wikipedia, например "/Wikipedia Java"\n' +
         'Бот выдаст определение которое нашел.'
-    )
+    ),
+    'mks': BotFunction(
+        commands=['mks'],
+        authors=['f1mca'],
+        about='Получение информации о нахождение мкс',
+        description='Введите /mks'
+    ),
+    'anecdote': BotFunction(
+        commands=['anecdote'],
+        authors=['alekseikornyushko'],
+        about='Рандомный анекдот специально для Вас',
+        description='Введите /anecdote с числовым аргументом'
+    ),
 }

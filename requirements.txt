@@ -6,3 +6,4 @@ geopy
 xmltodict
 Wikipedia
 pycbrf
+beautifulsoup4
