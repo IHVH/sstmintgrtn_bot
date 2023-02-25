@@ -17,7 +17,6 @@ API = 'https://kinopoiskapiunofficial.tech/api/v2.1/'
 headers = {"X-API-KEY": KINOPOISK}
 
 
-
 class SEARCH:
     def __init__(self, data: dict):
         self.kp_id = data['filmId']

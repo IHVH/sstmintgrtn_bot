@@ -6,3 +6,5 @@ geopy
 xmltodict
 Wikipedia
 pycbrf
+pyyaml
+Pillow
