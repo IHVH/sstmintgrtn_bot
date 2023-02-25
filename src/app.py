@@ -1,5 +1,6 @@
 from email import header
 import os
+import urllib.request
 from urllib import response
 import telebot
 import libgravatar
@@ -16,6 +17,7 @@ from bot_command_dictionary import BOT_FUNCTIONS
 
 from functions import start, gif, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, \
     swear, speller, wikipedia, accuweather, openweather, kinopoisk, webui_interaction, config
+
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
@@ -134,6 +136,11 @@ def get_open(message):
 @bot.message_handler(commands=BOT_FUNCTIONS['grav'].commands)
 def grav(message):
     gravatar.grav(message, bot)
+
+
+@bot.message_handler(commands=BOT_FUNCTIONS['anecdote'].commands)
+def get_anecdote(message):
+    bot.send_message(message.chat.id, text=get_anecdote(message))
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['weather'].commands)
@@ -362,6 +369,27 @@ def text_messages(message):
     bot.reply_to(message, "Text = " + message.text)
     bot.send_message(text="Ваш запрос не обработан!!!",
                      chat_id=message.chat.id)
+
+
+
+
+@ bot.message_handler(commands=BOT_FUNCTIONS['mks'].commands)
+def inline(message):
+ key = types.InlineKeyboardMarkup()
+ cord = types.InlineKeyboardButton(text="да", callback_data="да")
+ key.add(cord)
+ bot.send_message(message.chat.id, "хотите узнать местоположение мкс?", reply_markup=key)
+
+@bot.callback_query_handler(func=lambda c: True)
+def inline(c):
+    if c.data == 'да':
+     key = types.InlineKeyboardMarkup()
+     req = urllib.request.urlopen("http://api.open-notify.org/iss-now.json")
+     obj = json.loads(req.read())
+     bot.send_message(c.message.chat.id,f"отметка времени {obj['timestamp']}", reply_markup=key)
+     bot.send_message(c.message.chat.id, f"долгота {obj['iss_position']['longitude']} и ширина  {obj['iss_position']['latitude']}", reply_markup=key)
+
+
 
 
 bot.infinity_polling()

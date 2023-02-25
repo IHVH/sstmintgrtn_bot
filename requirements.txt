@@ -8,3 +8,4 @@ Wikipedia
 pycbrf
 pyyaml
 Pillow
+beautifulsoup4
