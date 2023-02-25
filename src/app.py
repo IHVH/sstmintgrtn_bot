@@ -207,16 +207,6 @@ def start1(message):
                      reply_markup=markup, parse_mode="html")
 
 
-@bot.message_handler(content_types=['text'])
-def message(message):
-    message_norm = message.text.strip().lower()
-
-    if message_norm in ['usd', 'eur']:
-        rates = ExchangeRates(datetime.now())
-        bot.send_message(chat_id=message.chat.id,
-                         text=f"<b>{message_norm.upper()} курс {float(rates[message_norm.upper()].rate)} </b>", parse_mode="html")
-
-
 @bot.message_handler(commands=[conf.get_value("gen_cmd")])
 def generate_handler(message):
     global loading_image_id
@@ -259,6 +249,16 @@ def generate_handler(message):
 
     except Exception as e:
         __logFatal(e, message.chat.id, message.id)
+
+
+@bot.message_handler(content_types=['text'])
+def message(message):
+    message_norm = message.text.strip().lower()
+
+    if message_norm in ['usd', 'eur']:
+        rates = ExchangeRates(datetime.now())
+        bot.send_message(chat_id=message.chat.id,
+                         text=f"<b>{message_norm.upper()} курс {float(rates[message_norm.upper()].rate)} </b>", parse_mode="html")
 
 
 def __send_waiting(message: types.Message) -> types.Message:
