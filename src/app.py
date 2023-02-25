@@ -14,11 +14,13 @@ from pycbrf import ExchangeRates
 from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 
-from functions import start, gif, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, swear, speller, wikipedia, accuweather, openweather, kinopoisk, webui_interaction, config
+from functions import start, gif, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, \
+    swear, speller, wikipedia, accuweather, openweather, kinopoisk, webui_interaction, config
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
 
+loading_image_id = None
 conf = config.load_telegram_setting()
 msgs = config.load_telegram_msgs()
 neural = config.load_neural()
@@ -32,12 +34,14 @@ def send_welcome(message):
     bot.reply_to(
         message, start.get_start_message_from_bot_function_dictionary())
 
+
 def gen_markup():
     markup = types.InlineKeyboardMarkup()
     markup.row_width = 2
     markup.add(types.InlineKeyboardButton("Да", callback_data="cb_yes"),
                types.InlineKeyboardButton("Нет", callback_data="cb_no"))
     return markup
+
 
 def get_keyboard_kinopoisk(url):
     """ Кнопка на внешний ресурс """
@@ -46,9 +50,11 @@ def get_keyboard_kinopoisk(url):
     keyboard.add(types.InlineKeyboardButton(text="Ссылка", url=url))
     return keyboard
 
+
 @bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
 def get_accuweather(message):
     accuweather.get_text_messages(message, bot)
+
 
 # DavidShariev
 @bot.message_handler(commands=BOT_FUNCTIONS['get_gif'].commands)
@@ -58,41 +64,42 @@ def get_gif(message):
     bot.send_animation(message.chat.id, gif_url, None, "Text")
 
 
-@ bot.message_handler(commands=BOT_FUNCTIONS['test_keyboard'].commands)
+@bot.message_handler(commands=BOT_FUNCTIONS['test_keyboard'].commands)
 def send_markup(message):
     bot.send_message(message.chat.id, "Да/Нет?", reply_markup=gen_markup())
 
 
-@ bot.callback_query_handler(func=lambda call: True)
+@bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-    match(call.data):
-        case('cb_yes'):
+    match (call.data):
+        case ('cb_yes'):
             bot.answer_callback_query(call.id, "Ответ ДА!")
-        case('cb_no'):
+        case ('cb_no'):
             bot.answer_callback_query(call.id, "Ответ НЕТ!")
         # TODO - call.message не содержит текст изначального сообщения, необходим другой вариант решения
-        case('cb_default'):
+        case ('cb_default'):
             gravatar.main('1', bot, call.message)
-        case('cb_monsterid'):
+        case ('cb_monsterid'):
             gravatar.main('2', bot, call.message)
-        case('cb_identicon'):
+        case ('cb_identicon'):
             gravatar.main('3', bot, call.message)
-        case('cb_wavatar'):
+        case ('cb_wavatar'):
             gravatar.main('4', bot, call.message)
-        case('cb_robohash'):
+        case ('cb_robohash'):
             gravatar.main('5', bot, call.message)
-        case('cb_retro'):
+        case ('cb_retro'):
             gravatar.main('6', bot, call.message)
 
 
-@ bot.message_handler(commands=BOT_FUNCTIONS['country'].commands)
+@bot.message_handler(commands=BOT_FUNCTIONS['country'].commands)
 def get_country_info(message):
     soap_country.get_country_info(message, bot)
 
 
 github.Github(bot=bot)
 
-@ bot.message_handler(commands=BOT_FUNCTIONS['kinopoisk'].commands)
+
+@bot.message_handler(commands=BOT_FUNCTIONS['kinopoisk'].commands)
 def get_kinopoisk(message):
     stripped_greeting = message.text.strip("/kinopoisk ")
     print(stripped_greeting)
@@ -102,11 +109,11 @@ def get_kinopoisk(message):
     if search:
         for item in search:
             caption = f'{item.ru_name}\n\n' \
-                f'Год производства: {item.year}\n' \
-                f'Жанр: {", ".join(item.genres)}\n' \
-                f'Страна: {", ".join(item.countries)}\n' \
-                f'Время просмотра: {item.duration}\n' \
-                f'Рейтинг: {item.kp_rate}'
+                      f'Год производства: {item.year}\n' \
+                      f'Жанр: {", ".join(item.genres)}\n' \
+                      f'Страна: {", ".join(item.countries)}\n' \
+                      f'Время просмотра: {item.duration}\n' \
+                      f'Рейтинг: {item.kp_rate}'
 
             bot.send_photo(message.from_user.id, item.poster,
                            caption=caption,
@@ -168,9 +175,10 @@ def get_fact_by_number(message):
 
 @bot.message_handler(commands=BOT_FUNCTIONS['http'].commands)
 def get_http(message):
-    if (message.text.strip() == "/http"):
-        http_reply = "Неверный формат ввода. Введите http код, например /http 204. Для просмотра возможных вариантов наберите команду /http list"
-    elif (message.text.strip() == "/http list"):
+    if message.text.strip() == "/http":
+        http_reply = "Неверный формат ввода. Введите http код, например /http 204. Для просмотра возможных вариантов " \
+                     "наберите команду /http list"
+    elif message.text.strip() == "/http list":
         codes_list = http_cats.get_codes_list()
         http_reply = json.dumps(codes_list)
     else:
@@ -258,7 +266,8 @@ def message(message):
     if message_norm in ['usd', 'eur']:
         rates = ExchangeRates(datetime.now())
         bot.send_message(chat_id=message.chat.id,
-                         text=f"<b>{message_norm.upper()} курс {float(rates[message_norm.upper()].rate)} </b>", parse_mode="html")
+                         text=f"<b>{message_norm.upper()} курс {float(rates[message_norm.upper()].rate)} </b>",
+                         parse_mode="html")
 
 
 def __send_waiting(message: types.Message) -> types.Message:
@@ -279,14 +288,17 @@ def __send_waiting(message: types.Message) -> types.Message:
 
 
 def __generate(prompt_user, sent: types.Message) -> webui_interaction.Base64Img:
-    global negative
+
     ret = []
 
     logger.info(f"Generating, prompt = {prompt_user}")
 
     def gen_func():
-        img = webui_interaction.gen_img(conf.get_value("url"), prompt_user, neural.get_neural_setting_value(config.NEGATIVE), neural.get_neural_setting_value(config.WIDTH), neural.get_neural_setting_value(config.HEIGHT),
-                          steps=neural.get_neural_setting_value(config.STEPS))
+        img = webui_interaction.gen_img(conf.get_value("url"), prompt_user,
+                                        neural.get_neural_setting_value(config.NEGATIVE),
+                                        neural.get_neural_setting_value(config.WIDTH),
+                                        neural.get_neural_setting_value(config.HEIGHT),
+                                        steps=neural.get_neural_setting_value(config.STEPS))
         ret.append(img)
 
     th_creator = threading.Thread(target=gen_func)
@@ -294,7 +306,8 @@ def __generate(prompt_user, sent: types.Message) -> webui_interaction.Base64Img:
 
     while th_creator.is_alive():
         if neural.get_neural_setting_value(config.SHOW_PROGRESS):
-            progress = webui_interaction.get_progress(conf.get_value("url"), not neural.get_neural_setting_value(config.SHOW_PROGRESS_PREVIEW))
+            progress = webui_interaction.get_progress(conf.get_value("url"),
+                                                      not neural.get_neural_setting_value(config.SHOW_PROGRESS_PREVIEW))
 
             banner = msgs.get_value("progress").format(progress=progress.progress, eta=int(progress.eta_relative))
 
