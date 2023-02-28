@@ -233,7 +233,7 @@ def start1(message):
                      reply_markup=markup, parse_mode="html")
 
 
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(func=lambda msg: msg.text == "USD" or msg.text == "EUR")#content_types=['text'])
 def message(message):
     message_norm = message.text.strip().lower()
 
