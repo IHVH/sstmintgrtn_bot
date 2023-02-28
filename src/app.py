@@ -320,7 +320,7 @@ def __send_waiting(message: types.Message) -> types.Message:
 
     sent_msg = None
     if not loading_image_id:
-        with open(f"../../res/loading.png", "rb") as ph:
+        with open(f"res\\loading.png", "rb") as ph:
             sent_msg = bot.send_photo(photo=ph, chat_id=message.chat.id, reply_to_message_id=message.id,
                                       caption=msgs.get_value("working"))
             if sent_msg.photo:
