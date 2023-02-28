@@ -6,7 +6,7 @@ import logging
 
 logger = logging.Logger(__name__)
 
-CONFIG_FOLDER = '../../config'
+CONFIG_FOLDER = "config"#'../../config'
 
 URL = "url"
 TOKEN = "token"
@@ -72,6 +72,7 @@ class Config:
     def __init__(self, file: str) -> None:
         logger.info(f"Load config, file - {file}")
         self.__file = file
+        #test = "config\\telegram_config.yaml" # 
         self.__conf_node = yaml.load(open(self.__file, "r", encoding="utf-8"), Loader=yaml.SafeLoader)
 
     def get_value(self, name: str):

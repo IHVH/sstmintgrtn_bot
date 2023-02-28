@@ -3,6 +3,9 @@ import os
 import urllib.request
 from urllib import response
 import telebot
+from telebot import types
+from telebot.callback_data import CallbackData, CallbackDataFilter
+from telebot.custom_filters import AdvancedCustomFilter
 import libgravatar
 import wikipedia
 import re
@@ -12,15 +15,21 @@ import threading
 import time
 from datetime import datetime
 from pycbrf import ExchangeRates
-from telebot import types
 from bot_command_dictionary import BOT_FUNCTIONS
 
 from functions import start, gif, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, \
-    swear, speller, wikipedia, accuweather, openweather, kinopoisk, webui_interaction, config
+    swear, speller, wikipedia, accuweather, openweather, kinopoisk, webui_interaction, config, anecdotes
 
 
 token = os.environ["TBOTTOKEN"]
 bot = telebot.TeleBot(token)
+
+class ProductsCallbackFilter(AdvancedCustomFilter):
+    key = 'config'
+
+    def check(self, call: types.CallbackQuery, config: CallbackDataFilter):
+        return config.check(query=call)
+
 
 loading_image_id = None
 conf = config.load_telegram_setting()
@@ -71,7 +80,7 @@ def send_markup(message):
     bot.send_message(message.chat.id, "Да/Нет?", reply_markup=gen_markup())
 
 
-@bot.callback_query_handler(func=lambda call: True)
+@bot.callback_query_handler(func=lambda call: False)
 def callback_query(call):
     match (call.data):
         case ('cb_yes'):
@@ -91,6 +100,8 @@ def callback_query(call):
             gravatar.main('5', bot, call.message)
         case ('cb_retro'):
             gravatar.main('6', bot, call.message)
+        case _:
+            bot.answer_callback_query(call.id, call.data)
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['country'].commands)
@@ -140,7 +151,7 @@ def grav(message):
 
 @bot.message_handler(commands=BOT_FUNCTIONS['anecdote'].commands)
 def get_anecdote(message):
-    bot.send_message(message.chat.id, text=get_anecdote(message))
+    bot.send_message(message.chat.id, text=anecdotes.get_anecdote(message))
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['weather'].commands)
@@ -222,6 +233,42 @@ def start1(message):
                      reply_markup=markup, parse_mode="html")
 
 
+@bot.message_handler(content_types=['text'])
+def message(message):
+    message_norm = message.text.strip().lower()
+
+    if message_norm in ['usd', 'eur']:
+        rates = ExchangeRates(datetime.now())
+        bot.send_message(chat_id=message.chat.id,
+                         text=f"<b>{message_norm.upper()} курс {float(rates[message_norm.upper()].rate)} </b>",
+                         parse_mode="html")
+
+mks_factory = CallbackData('mks_button', prefix=BOT_FUNCTIONS['mks'].commands[0])
+
+@bot.message_handler(commands=BOT_FUNCTIONS['mks'].commands)
+def inline(message):
+    key = types.InlineKeyboardMarkup()
+    cord = types.InlineKeyboardButton(text="да", callback_data=mks_factory.new(mks_button="да"))#BOT_FUNCTIONS['mks'].authors[0])
+    key.add(cord)
+
+    bot.send_message(message.chat.id, "хотите узнать местоположение мкс?", reply_markup=key)
+
+#@bot.callback_query_handler(func=lambda c: c.data == BOT_FUNCTIONS['mks'].authors[0] )# 
+@bot.callback_query_handler(func=None, config=mks_factory.filter()  )# mks_button='да'
+def inline(c: types.CallbackQuery):
+    callback_data: dict = mks_factory.parse(callback_data=c.data)
+    mks_button = callback_data['mks_button']
+    
+    if mks_button == 'да':
+     key = types.InlineKeyboardMarkup()
+     req = urllib.request.urlopen("http://api.open-notify.org/iss-now.json")
+     obj = json.loads(req.read())
+     bot.send_message(c.message.chat.id,f"отметка времени {obj['timestamp']}", reply_markup=key)
+     bot.send_message(c.message.chat.id, f"долгота {obj['iss_position']['longitude']} и ширина  {obj['iss_position']['latitude']}", reply_markup=key)
+
+
+
+
 @bot.message_handler(commands=[conf.get_value("gen_cmd")])
 def generate_handler(message):
     global loading_image_id
@@ -266,15 +313,6 @@ def generate_handler(message):
         __logFatal(e, message.chat.id, message.id)
 
 
-@bot.message_handler(content_types=['text'])
-def message(message):
-    message_norm = message.text.strip().lower()
-
-    if message_norm in ['usd', 'eur']:
-        rates = ExchangeRates(datetime.now())
-        bot.send_message(chat_id=message.chat.id,
-                         text=f"<b>{message_norm.upper()} курс {float(rates[message_norm.upper()].rate)} </b>",
-                         parse_mode="html")
 
 
 def __send_waiting(message: types.Message) -> types.Message:
@@ -364,6 +402,8 @@ def prompt2filename(prompt: str):
     return repl_prompt
 
 
+
+
 @bot.message_handler(func=lambda message: True)
 def text_messages(message):
     bot.reply_to(message, "Text = " + message.text)
@@ -372,24 +412,5 @@ def text_messages(message):
 
 
 
-
-@ bot.message_handler(commands=BOT_FUNCTIONS['mks'].commands)
-def inline(message):
- key = types.InlineKeyboardMarkup()
- cord = types.InlineKeyboardButton(text="да", callback_data="да")
- key.add(cord)
- bot.send_message(message.chat.id, "хотите узнать местоположение мкс?", reply_markup=key)
-
-@bot.callback_query_handler(func=lambda c: True)
-def inline(c):
-    if c.data == 'да':
-     key = types.InlineKeyboardMarkup()
-     req = urllib.request.urlopen("http://api.open-notify.org/iss-now.json")
-     obj = json.loads(req.read())
-     bot.send_message(c.message.chat.id,f"отметка времени {obj['timestamp']}", reply_markup=key)
-     bot.send_message(c.message.chat.id, f"долгота {obj['iss_position']['longitude']} и ширина  {obj['iss_position']['latitude']}", reply_markup=key)
-
-
-
-
+bot.add_custom_filter(ProductsCallbackFilter())
 bot.infinity_polling()
