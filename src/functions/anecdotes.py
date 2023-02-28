@@ -23,9 +23,12 @@ def get_anecdote(message):
         list_of_jokes = par()
         random.shuffle(list_of_jokes)
 
-    if message.text.lower() in '123456789':
+    str_spilt = message.text.split()
+    x = str_spilt[-1]
+
+    if x in '123456789':
         try:
-            anecdote_id = int(message.text)
+            anecdote_id = int(x)
             anecdote_text = list_of_jokes[anecdote_id]
             del list_of_jokes[anecdote_id]
             return anecdote_text
