@@ -68,9 +68,9 @@ BOT_FUNCTIONS = {
     ),
     'grav': BotFunction(
         commands=['grav', 'gravatar'],
-        authors=['BigBeatProphet'],
-        description='Тестирование функционала gravatar',
-        about='как аргумент принимает email'
+        authors=['BigBeatProphet', 'IHVH'],
+        description='Получить аватар из сервиса gravatar',
+        about='Как аргумент принимает email. Например "/grav test@mail.ru"'
     ),
     'weather': BotFunction(
         commands=['weather'],

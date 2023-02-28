@@ -6,7 +6,6 @@ import telebot
 from telebot import types
 from telebot.callback_data import CallbackData, CallbackDataFilter
 from telebot.custom_filters import AdvancedCustomFilter
-import libgravatar
 import wikipedia
 import re
 import json
@@ -55,24 +54,9 @@ def gen_markup():
                types.InlineKeyboardButton("Нет", callback_data=test_keyboard_factory.new(t_key_button="cb_no")))
     return markup
 
-
-@bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
-def get_accuweather(message):
-    accuweather.get_text_messages(message, bot)
-
-
-# DavidShariev
-@bot.message_handler(commands=BOT_FUNCTIONS['get_gif'].commands)
-def get_gif(message):
-    requireString = message.text[9:]
-    gif_url = gif.main(requireString)
-    bot.send_animation(message.chat.id, gif_url, None, "Text")
-
-
 @bot.message_handler(commands=BOT_FUNCTIONS['test_keyboard'].commands)
 def send_markup(message):
     bot.send_message(message.chat.id, "Да/Нет?", reply_markup=gen_markup())
-
 
 @bot.callback_query_handler(func=None, config=test_keyboard_factory.filter())
 def test_keyboard_callback(call):
@@ -86,6 +70,18 @@ def test_keyboard_callback(call):
             bot.answer_callback_query(call.id, "Ответ НЕТ!")
         case _:
             bot.answer_callback_query(call.id, call.data)
+
+
+@bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
+def get_accuweather(message):
+    accuweather.get_text_messages(message, bot)
+
+# DavidShariev
+@bot.message_handler(commands=BOT_FUNCTIONS['get_gif'].commands)
+def get_gif(message):
+    requireString = message.text[9:]
+    gif_url = gif.main(requireString)
+    bot.send_animation(message.chat.id, gif_url, None, "Text")
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['country'].commands)
@@ -134,38 +130,16 @@ def get_open(message):
     bot.send_message(message.chat.id, text=open_message)
 
 
+gravatar_keyboard_factory = CallbackData('grav_button', 'grav_email', prefix=BOT_FUNCTIONS['grav'].commands[0])
+
 @bot.message_handler(commands=BOT_FUNCTIONS['grav'].commands)
 def grav(message):
-    gravatar.grav(message, bot)
+    gravatar.grav(message, bot, gravatar_keyboard_factory)
 
-
-@bot.callback_query_handler(func=None, config=test_keyboard_factory.filter())
-def test_keyboard_callback(call):
-    callback_data: dict = test_keyboard_factory.parse(callback_data=call.data)
-    t_key_button = callback_data['t_key_button']
-    
-    match (t_key_button):
-        case ('cb_yes'):
-            bot.answer_callback_query(call.id, "Ответ ДА!")
-        case ('cb_no'):
-            bot.answer_callback_query(call.id, "Ответ НЕТ!")
-        # TODO - call.message не содержит текст изначального сообщения, необходим другой вариант решения
-        case ('cb_default'):
-            gravatar.main('1', bot, call.message)
-        case ('cb_monsterid'):
-            gravatar.main('2', bot, call.message)
-        case ('cb_identicon'):
-            gravatar.main('3', bot, call.message)
-        case ('cb_wavatar'):
-            gravatar.main('4', bot, call.message)
-        case ('cb_robohash'):
-            gravatar.main('5', bot, call.message)
-        case ('cb_retro'):
-            gravatar.main('6', bot, call.message)
-        case _:
-            bot.answer_callback_query(call.id, call.data)
-
-
+@bot.callback_query_handler(func=None, config=gravatar_keyboard_factory.filter())
+def gravatar_keyboard_callback(call):
+    callback_data: dict = gravatar_keyboard_factory.parse(callback_data=call.data)
+    gravatar.main(bot, call, callback_data)
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['anecdote'].commands)
