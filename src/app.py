@@ -46,20 +46,14 @@ def send_welcome(message):
         message, start.get_start_message_from_bot_function_dictionary())
 
 
+test_keyboard_factory = CallbackData('t_key_button', prefix=BOT_FUNCTIONS['test_keyboard'].commands[0])
+
 def gen_markup():
     markup = types.InlineKeyboardMarkup()
     markup.row_width = 2
-    markup.add(types.InlineKeyboardButton("Да", callback_data="cb_yes"),
-               types.InlineKeyboardButton("Нет", callback_data="cb_no"))
+    markup.add(types.InlineKeyboardButton("Да", callback_data=test_keyboard_factory.new(t_key_button="cb_yes")),
+               types.InlineKeyboardButton("Нет", callback_data=test_keyboard_factory.new(t_key_button="cb_no")))
     return markup
-
-
-def get_keyboard_kinopoisk(url):
-    """ Кнопка на внешний ресурс """
-
-    keyboard = types.InlineKeyboardMarkup()
-    keyboard.add(types.InlineKeyboardButton(text="Ссылка", url=url))
-    return keyboard
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
@@ -80,26 +74,16 @@ def send_markup(message):
     bot.send_message(message.chat.id, "Да/Нет?", reply_markup=gen_markup())
 
 
-@bot.callback_query_handler(func=lambda call: False)
-def callback_query(call):
-    match (call.data):
+@bot.callback_query_handler(func=None, config=test_keyboard_factory.filter())
+def test_keyboard_callback(call):
+    callback_data: dict = test_keyboard_factory.parse(callback_data=call.data)
+    t_key_button = callback_data['t_key_button']
+    
+    match (t_key_button):
         case ('cb_yes'):
             bot.answer_callback_query(call.id, "Ответ ДА!")
         case ('cb_no'):
             bot.answer_callback_query(call.id, "Ответ НЕТ!")
-        # TODO - call.message не содержит текст изначального сообщения, необходим другой вариант решения
-        case ('cb_default'):
-            gravatar.main('1', bot, call.message)
-        case ('cb_monsterid'):
-            gravatar.main('2', bot, call.message)
-        case ('cb_identicon'):
-            gravatar.main('3', bot, call.message)
-        case ('cb_wavatar'):
-            gravatar.main('4', bot, call.message)
-        case ('cb_robohash'):
-            gravatar.main('5', bot, call.message)
-        case ('cb_retro'):
-            gravatar.main('6', bot, call.message)
         case _:
             bot.answer_callback_query(call.id, call.data)
 
@@ -111,6 +95,12 @@ def get_country_info(message):
 
 github.Github(bot=bot)
 
+def get_keyboard_kinopoisk(url):
+    """ Кнопка на внешний ресурс """
+
+    keyboard = types.InlineKeyboardMarkup()
+    keyboard.add(types.InlineKeyboardButton(text="Ссылка", url=url))
+    return keyboard
 
 @bot.message_handler(commands=BOT_FUNCTIONS['kinopoisk'].commands)
 def get_kinopoisk(message):
@@ -147,6 +137,35 @@ def get_open(message):
 @bot.message_handler(commands=BOT_FUNCTIONS['grav'].commands)
 def grav(message):
     gravatar.grav(message, bot)
+
+
+@bot.callback_query_handler(func=None, config=test_keyboard_factory.filter())
+def test_keyboard_callback(call):
+    callback_data: dict = test_keyboard_factory.parse(callback_data=call.data)
+    t_key_button = callback_data['t_key_button']
+    
+    match (t_key_button):
+        case ('cb_yes'):
+            bot.answer_callback_query(call.id, "Ответ ДА!")
+        case ('cb_no'):
+            bot.answer_callback_query(call.id, "Ответ НЕТ!")
+        # TODO - call.message не содержит текст изначального сообщения, необходим другой вариант решения
+        case ('cb_default'):
+            gravatar.main('1', bot, call.message)
+        case ('cb_monsterid'):
+            gravatar.main('2', bot, call.message)
+        case ('cb_identicon'):
+            gravatar.main('3', bot, call.message)
+        case ('cb_wavatar'):
+            gravatar.main('4', bot, call.message)
+        case ('cb_robohash'):
+            gravatar.main('5', bot, call.message)
+        case ('cb_retro'):
+            gravatar.main('6', bot, call.message)
+        case _:
+            bot.answer_callback_query(call.id, call.data)
+
+
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['anecdote'].commands)
@@ -243,18 +262,18 @@ def message(message):
                          text=f"<b>{message_norm.upper()} курс {float(rates[message_norm.upper()].rate)} </b>",
                          parse_mode="html")
 
+
 mks_factory = CallbackData('mks_button', prefix=BOT_FUNCTIONS['mks'].commands[0])
 
 @bot.message_handler(commands=BOT_FUNCTIONS['mks'].commands)
 def inline(message):
     key = types.InlineKeyboardMarkup()
-    cord = types.InlineKeyboardButton(text="да", callback_data=mks_factory.new(mks_button="да"))#BOT_FUNCTIONS['mks'].authors[0])
+    cord = types.InlineKeyboardButton(text="да", callback_data=mks_factory.new(mks_button="да"))
     key.add(cord)
 
     bot.send_message(message.chat.id, "хотите узнать местоположение мкс?", reply_markup=key)
 
-#@bot.callback_query_handler(func=lambda c: c.data == BOT_FUNCTIONS['mks'].authors[0] )# 
-@bot.callback_query_handler(func=None, config=mks_factory.filter()  )# mks_button='да'
+@bot.callback_query_handler(func=None, config=mks_factory.filter())# mks_button='да'
 def inline(c: types.CallbackQuery):
     callback_data: dict = mks_factory.parse(callback_data=c.data)
     mks_button = callback_data['mks_button']
@@ -265,8 +284,6 @@ def inline(c: types.CallbackQuery):
      obj = json.loads(req.read())
      bot.send_message(c.message.chat.id,f"отметка времени {obj['timestamp']}", reply_markup=key)
      bot.send_message(c.message.chat.id, f"долгота {obj['iss_position']['longitude']} и ширина  {obj['iss_position']['latitude']}", reply_markup=key)
-
-
 
 
 @bot.message_handler(commands=[conf.get_value("gen_cmd")])
