@@ -1,15 +1,15 @@
 import os
 import requests
 import telebot
-from bot_command_dictionary import BOT_FUNCTIONS
+from bot_func_abc import BotFunctionABC
+from typing import List
 
-class Github:
+class Github(BotFunctionABC):
     URL = "https://api.github.com/repos/IHVH/OEMIB_PI01_19_TBOT/"
     
-    def __init__(self, bot: telebot.TeleBot):
+    def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot 
-
-        @bot.message_handler(commands=BOT_FUNCTIONS['issues'].commands)
+        @bot.message_handler(commands=commands)
         def hendler(message):
             self.get_issues(message)
 

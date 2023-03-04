@@ -1,47 +1,20 @@
-from typing import List
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
-#from functions import github
-import telebot
+from bot_func import BotFunction, BotFunction2
 
-class Bot_Function(ABC):
-    
-    @abstractmethod
-    def set_msg_handler(self, bot: telebot.TeleBot, commands: List[str]):
-        self.bot = bot 
-        @bot.message_handler(commands=commands)
-        def hendler(message):
-            msg = "Ваш запрос обработан в базовом абстрактном класее!!!"
-            print(message)
-            bot.send_message(text=msg, chat_id=message.chat.id)
+from functions.example_bot_function import ExampleBotFunction
+from functions import github
 
-
-class BF(Bot_Function):
-    def set_msg_handler(self, bot: telebot.TeleBot, commands: List[str]):
-        super().set_msg_handler(bot, commands)
-        
-
-
-
-
-
-
-
-@dataclass
-class BotFunction:
-    commands: list[str]
-    authors: list[str]
-    about: str
-    description: str
-
-@dataclass
-class BotFunction2(BotFunction):
-    bot_function: Bot_Function
-    
 
 BOT_FUNCTIONS_2= {
+    'example_bot_function': BotFunction2(
+        bot_function=ExampleBotFunction(),
+        commands=['example', 'ebf'],
+        authors=['IHVH'],
+        about='Пример функции бота!',
+        description='Пример функции бота (подробное описание)! \n ' +
+        'Пример вызова функции - "/ebf" '
+    ),
     'issues': BotFunction2(
-        bot_function=BF(),
+        bot_function= github.Github(),
         commands=['issues', 'gi'],
         authors=['IHVH'],
         about='Получение информации о issues',
@@ -62,12 +35,6 @@ BOT_FUNCTIONS = {
         authors=["DavidShariev"],
         description="Подбор подходящей гивки. /get_gif [строка для поиска гивки]",
         about="Гивки"
-    ),
-    'test_keyboard': BotFunction(
-        commands=['keyboard', 'testkeyboard'],
-        authors=['IHVH'],
-        description='Тестовая клавиатура',
-        about='Тестовая клавиатура'
     ),
     'commits': BotFunction(
         commands=['commits', 'gc'],

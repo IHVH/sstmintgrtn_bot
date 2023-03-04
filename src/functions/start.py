@@ -1,4 +1,4 @@
-from bot_command_dictionary import BOT_FUNCTIONS
+from bot_func_dictionary import BOT_FUNCTIONS
 
 def get_start_message_from_bot_function_dictionary():
     result = 'Привет! \nВот список функций:'

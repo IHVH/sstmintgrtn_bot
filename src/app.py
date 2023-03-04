@@ -1,3 +1,4 @@
+import sys
 from email import header
 import os
 import urllib.request
@@ -14,9 +15,9 @@ import threading
 import time
 from datetime import datetime
 from pycbrf import ExchangeRates
-from bot_command_dictionary import BOT_FUNCTIONS, BOT_FUNCTIONS_2
+from bot_func_dictionary import BOT_FUNCTIONS, BOT_FUNCTIONS_2
 
-from functions import start, gif, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, \
+from functions import start, gif, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, \
     swear, speller, wikipedia, accuweather, openweather, kinopoisk, webui_interaction, config, anecdotes
 
 
@@ -35,41 +36,22 @@ conf = config.load_telegram_setting()
 msgs = config.load_telegram_msgs()
 neural = config.load_neural()
 
-logger = logging.Logger(__name__)
-logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+handler = logging.FileHandler(f"{__name__}.log")
+formatter = logging.Formatter("%(name)s %(asctime)s %(levelname)s %(message)s")
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+console_handler = logging.StreamHandler(sys.stderr)
+console_handler.setFormatter(formatter)
+logger.addHandler(console_handler)
+
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['start'].commands)
 def send_welcome(message):
     bot.reply_to(
         message, start.get_start_message_from_bot_function_dictionary())
-
-
-test_keyboard_factory = CallbackData('t_key_button', prefix=BOT_FUNCTIONS['test_keyboard'].commands[0])
-
-def gen_markup():
-    markup = types.InlineKeyboardMarkup()
-    markup.row_width = 2
-    markup.add(types.InlineKeyboardButton("Да", callback_data=test_keyboard_factory.new(t_key_button="cb_yes")),
-               types.InlineKeyboardButton("Нет", callback_data=test_keyboard_factory.new(t_key_button="cb_no")))
-    return markup
-
-@bot.message_handler(commands=BOT_FUNCTIONS['test_keyboard'].commands)
-def send_markup(message):
-    bot.send_message(message.chat.id, "Да/Нет?", reply_markup=gen_markup())
-
-@bot.callback_query_handler(func=None, config=test_keyboard_factory.filter())
-def test_keyboard_callback(call):
-    callback_data: dict = test_keyboard_factory.parse(callback_data=call.data)
-    t_key_button = callback_data['t_key_button']
-    
-    match (t_key_button):
-        case ('cb_yes'):
-            bot.answer_callback_query(call.id, "Ответ ДА!")
-        case ('cb_no'):
-            bot.answer_callback_query(call.id, "Ответ НЕТ!")
-        case _:
-            bot.answer_callback_query(call.id, call.data)
 
 
 @bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
@@ -305,7 +287,6 @@ def generate_handler(message):
 
 
 
-
 def __send_waiting(message: types.Message) -> types.Message:
     global loading_image_id
 
@@ -393,24 +374,27 @@ def prompt2filename(prompt: str):
     return repl_prompt
 
 
-
-
-@bot.message_handler(func=lambda message: True)
-def text_messages(message):
-    bot.reply_to(message, "Text = " + message.text)
-    bot.send_message(text="Ваш запрос не обработан!!!",
-                     chat_id=message.chat.id)
-
 def starter_functions():
-    #TO_DO
-    bf = BOT_FUNCTIONS_2['issues']
-    bf.bot_function.set_msg_handler(bot=bot, commands=bf.commands)
 
-    print('starter_functions')
+    for bf_key, bf_value in BOT_FUNCTIONS_2.items():
+        try:
+            bf_value.bot_function.set_handlers(bot=bot, commands=bf_value.commands)
+            logger.info(f'{bf_key} - start OK!')
+        except Exception as e:
+            logger.exception(e)
+        
+    @bot.message_handler(func=lambda message: True)
+    def text_messages(message):
+        bot.reply_to(message, "Text = " + message.text)
+        bot.send_message(text="Ваш запрос не обработан!!!",
+                         chat_id=message.chat.id)
+    
+    
 
 
 if __name__ == '__main__':
     print('-= START =-')
+    logger.info('-= START =-')
     starter_functions()
     bot.add_custom_filter(ProductsCallbackFilter())
     bot.infinity_polling()

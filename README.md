@@ -12,6 +12,7 @@ To run locally, add an `.env` file with your keys to the root of the project. Or
 ```
 TBOTTOKEN=
 DBOTTOKEN=
+EXAMPLETOKEN=example
 GITHUBTOKEN=
 YAWEATHERTOKEN=
 YADICTTOKEN=
