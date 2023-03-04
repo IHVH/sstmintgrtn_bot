@@ -1,21 +1,24 @@
+from typing import List
 from dataclasses import dataclass
-from abc import ABC, abstractmethod, staticmethod
-from functions import github
+from abc import ABC, abstractmethod
+#from functions import github
 import telebot
 
 class Bot_Function(ABC):
     
     @abstractmethod
-    def set_msg_handler(self, bot: telebot.TeleBot):
+    def set_msg_handler(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot 
-        @bot.message_handler(commands=BOT_FUNCTIONS['issues'].commands)
+        @bot.message_handler(commands=commands)
         def hendler(message):
-            bot.send_message(text="Ваш запрос не обработан!!!", chat_id=message.chat.id)
+            msg = "Ваш запрос обработан в базовом абстрактном класее!!!"
+            print(message)
+            bot.send_message(text=msg, chat_id=message.chat.id)
 
 
 class BF(Bot_Function):
-    def set_msg_handler(message):
-        super().set_msg_handler(message)
+    def set_msg_handler(self, bot: telebot.TeleBot, commands: List[str]):
+        super().set_msg_handler(bot, commands)
         
 
 
@@ -26,12 +29,26 @@ class BF(Bot_Function):
 
 @dataclass
 class BotFunction:
-    bot_function: Bot_Function
     commands: list[str]
     authors: list[str]
     about: str
     description: str
 
+@dataclass
+class BotFunction2(BotFunction):
+    bot_function: Bot_Function
+    
+
+BOT_FUNCTIONS_2= {
+    'issues': BotFunction2(
+        bot_function=BF(),
+        commands=['issues', 'gi'],
+        authors=['IHVH'],
+        about='Получение информации о issues',
+        description='Получение информации о issues для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
+        'Передайте в качестве параметра число для получения информации об указаном количестве последних issues. Например "/issues 5" '
+    )
+}
 
 BOT_FUNCTIONS = {
     'start': BotFunction(
@@ -51,14 +68,6 @@ BOT_FUNCTIONS = {
         authors=['IHVH'],
         description='Тестовая клавиатура',
         about='Тестовая клавиатура'
-    ),
-    'issues': BotFunction(
-        bot_function=BF(),
-        commands=['issues', 'gi'],
-        authors=['IHVH'],
-        about='Получение информации о issues',
-        description='Получение информации о issues для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
-        'Передайте в качестве параметра число для получения информации об указаном количестве последних issues. Например "/issues 5" '
     ),
     'commits': BotFunction(
         commands=['commits', 'gc'],

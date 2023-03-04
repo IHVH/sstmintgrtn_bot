@@ -14,7 +14,7 @@ import threading
 import time
 from datetime import datetime
 from pycbrf import ExchangeRates
-from bot_command_dictionary import BOT_FUNCTIONS
+from bot_command_dictionary import BOT_FUNCTIONS, BOT_FUNCTIONS_2
 
 from functions import start, gif, github, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, \
     swear, speller, wikipedia, accuweather, openweather, kinopoisk, webui_interaction, config, anecdotes
@@ -89,7 +89,7 @@ def get_country_info(message):
     soap_country.get_country_info(message, bot)
 
 
-github.Github(bot=bot)
+#github.Github(bot=bot)
 
 def get_keyboard_kinopoisk(url):
     """ Кнопка на внешний ресурс """
@@ -403,15 +403,15 @@ def text_messages(message):
 
 def starter_functions():
     #TO_DO
-    bf = BOT_FUNCTIONS['issues'].bot_function
-    @bot.message_handler(commands=BOT_FUNCTIONS['issues'].commands)
-    bf.set_msg_handler(message)
+    bf = BOT_FUNCTIONS_2['issues']
+    bf.bot_function.set_msg_handler(bot=bot, commands=bf.commands)
 
     print('starter_functions')
 
 
 if __name__ == '__main__':
+    print('-= START =-')
     starter_functions()
     bot.add_custom_filter(ProductsCallbackFilter())
     bot.infinity_polling()
-    print('-= START =-')
+    
