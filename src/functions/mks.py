@@ -4,7 +4,7 @@ import urllib.request
 import json
 
 tgtoken=json.load(open("token.json"))
-bot = telebot.TeleBot(tgtoken['token']);
+bot = telebot.TeleBot(tgtoken['token'])
 
 
 @bot.message_handler(commands=["mks"])
@@ -21,6 +21,6 @@ def inline(c):
      req = urllib.request.urlopen("http://api.open-notify.org/iss-now.json")
      obj = json.loads(req.read())
      bot.send_message(c.message.chat.id,f"отметка времени {obj['timestamp']}", reply_markup=key)
-     bot.send_message(c.message.chat.id, f"долгота {obj['iss_position']['longitude']} и ширина  {obj['iss_position']['latitude']}", reply_markup=key)
+     bot.send_message(c.message.chat.id, f"долгота {obj['iss_position']['longitude']} и широта  {obj['iss_position']['latitude']}", reply_markup=key)
 
 bot.polling(none_stop=True)
