@@ -401,7 +401,17 @@ def text_messages(message):
     bot.send_message(text="Ваш запрос не обработан!!!",
                      chat_id=message.chat.id)
 
+def starter_functions():
+    #TO_DO
+    bf = BOT_FUNCTIONS['issues'].bot_function
+    @bot.message_handler(commands=BOT_FUNCTIONS['issues'].commands)
+    bf.set_msg_handler(message)
+
+    print('starter_functions')
 
 
-bot.add_custom_filter(ProductsCallbackFilter())
-bot.infinity_polling()
+if __name__ == '__main__':
+    starter_functions()
+    bot.add_custom_filter(ProductsCallbackFilter())
+    bot.infinity_polling()
+    print('-= START =-')

@@ -1,8 +1,32 @@
 from dataclasses import dataclass
+from abc import ABC, abstractmethod, staticmethod
+from functions import github
+import telebot
+
+class Bot_Function(ABC):
+    
+    @abstractmethod
+    def set_msg_handler(self, bot: telebot.TeleBot):
+        self.bot = bot 
+        @bot.message_handler(commands=BOT_FUNCTIONS['issues'].commands)
+        def hendler(message):
+            bot.send_message(text="Ваш запрос не обработан!!!", chat_id=message.chat.id)
+
+
+class BF(Bot_Function):
+    def set_msg_handler(message):
+        super().set_msg_handler(message)
+        
+
+
+
+
+
 
 
 @dataclass
 class BotFunction:
+    bot_function: Bot_Function
     commands: list[str]
     authors: list[str]
     about: str
@@ -29,6 +53,7 @@ BOT_FUNCTIONS = {
         about='Тестовая клавиатура'
     ),
     'issues': BotFunction(
+        bot_function=BF(),
         commands=['issues', 'gi'],
         authors=['IHVH'],
         about='Получение информации о issues',
