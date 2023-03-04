@@ -3,3 +3,9 @@ requests
 zeep
 libgravatar
 geopy
+xmltodict
+Wikipedia
+pycbrf
+pyyaml
+Pillow
+beautifulsoup4

@@ -30,7 +30,7 @@ steps:
     tags: latest
 
 - name: systemIntegrationBot ssh commands
-  image: appleboy/drone-ssh
+  image: appleboy/drone-ssh:1.6.0
   settings:
     host: 192.168.1.121
     username: root
@@ -49,7 +49,7 @@ steps:
   - systemIntegrationBot image publish
 
 - name: systemIntegrationBotDiscord ssh commands
-  image: appleboy/drone-ssh
+  image: appleboy/drone-ssh:1.6.0
   settings:
     host: 192.168.1.121
     username: root

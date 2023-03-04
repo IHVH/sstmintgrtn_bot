@@ -1,0 +1,36 @@
+- code: negative
+  description: Negative prompt for img2img or text2img
+  type: str
+  value: realistic
+- code: steps
+  type: int
+  description: Steps for img2img or text2img
+  value: 35
+- code: width
+  description: Width for generated images
+  type: int
+  value: 512
+- code: height
+  description: Height for generated images
+  type: int
+  value: 512
+- code: show_progress
+  description: Show 'progress bar'?
+  type: bool
+  value: true
+- code: show_progress_preview
+  description: Show preview in 'progress bar'?
+  type: bool
+  value: true
+- code: upscale
+  description: Upscale generated images?
+  type: bool
+  value: true
+- code: img2img_denoising_strength
+  description: Denoising strength for img2img
+  type: float
+  value: 0.7
+- code: img2img_default_prompt
+  description: Denoising strength for img2img
+  type: str
+  value: 'anime, anime version of'
