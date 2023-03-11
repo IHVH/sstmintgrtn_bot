@@ -2,6 +2,7 @@ from bot_func import BotFunction, BotFunction2
 
 from functions.example_bot_function import ExampleBotFunction
 from functions import github
+from functions import test_github
 
 
 BOT_FUNCTIONS_2= {
@@ -20,6 +21,13 @@ BOT_FUNCTIONS_2= {
         about='Получение информации о issues',
         description='Получение информации о issues для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
         'Передайте в качестве параметра число для получения информации об указаном количестве последних issues. Например "/issues 5" '
+    ),
+    'test_function': BotFunction2(
+        bot_function=test_github.TestGitFunction(),
+        commands=['test', 'git'],
+        authors=['IHVH'],
+        about='Test ',
+        description='Пример функции  '
     )
 }
 
