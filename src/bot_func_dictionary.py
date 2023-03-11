@@ -1,6 +1,7 @@
 from bot_func import BotFunction, BotFunction2
 
 from functions.example_bot_function import ExampleBotFunction
+from functions.dadata import DadataFunctionClass
 from functions import github
 from functions import test_github
 
@@ -30,7 +31,7 @@ BOT_FUNCTIONS_2= {
         description='Пример функции  '
     ),
     'dadata': BotFunction2(
-        bot_function=test_github.TestGitFunction(),
+        bot_function=DadataFunctionClass(),
         commands=['dadata'],
         authors=['aishmurodov'],
         about='По введенному ИНН находит компанию и выводит информацию о ней',
