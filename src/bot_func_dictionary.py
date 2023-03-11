@@ -28,6 +28,14 @@ BOT_FUNCTIONS_2= {
         authors=['IHVH'],
         about='Test ',
         description='Пример функции  '
+    ),
+    'dadata': BotFunction2(
+        bot_function=test_github.TestGitFunction(),
+        commands=['dadata'],
+        authors=['aishmurodov'],
+        about='По введенному ИНН находит компанию и выводит информацию о ней',
+        description=('Получение информации о компаний по ИНН для репазитория https://github.com/IHVH/OEMIB_PI01_19_TBOT\n'
+                     'Передайте в качестве параметра ИНН компании для получения краткой информации по имени, адресу и тд. Например /dadata 7707083893')
     )
 }
 
