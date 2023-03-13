@@ -125,6 +125,7 @@ class DadataFunctionClass(BotFunctionABC):
     def set_handlers(self, bot: TeleBot, commands: list[str]):
         self.bot = bot
 
+        '''
         @self.bot.message_handler(commands=commands)
         def welcome(message: types.Message):
             bot.reply_to(
@@ -132,8 +133,8 @@ class DadataFunctionClass(BotFunctionABC):
                 text="Приветствую в модуле Dadata. Напишите команду <code>/dadata 7707083893</code>, чтобы найти компанию по ИНН",
                 parse_mode='HTML'
             )
-
-        @self.bot.message_handler(func=lambda m: True)
+        '''
+        @self.bot.message_handler(commands=commands)
         def get_all_messages(message: types.Message):
             inn = DadataFunctionClass.get_inn_from_text(message.text)
 
@@ -168,6 +169,12 @@ class DadataFunctionClass(BotFunctionABC):
                             text=DadataFunctionClass.get_suggest_text(item),
                             parse_mode='HTML'
                         )
+            else:
+                bot.reply_to(
+                    message=message,
+                    text="Приветствую в модуле Dadata. Напишите команду <code>/dadata 7707083893</code>, чтобы найти компанию по ИНН",
+                    parse_mode='HTML'
+                )
 
 
 if __name__ == '__main__':
