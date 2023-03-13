@@ -45,6 +45,8 @@ class DadataClientClass:
 
         if token is not None:
             self.__token = token
+        else:
+            self.__token = DadataClientClass.get_env_token()
 
     @staticmethod
     def get_env_token() -> str:
@@ -141,7 +143,7 @@ class DadataFunctionClass(BotFunctionABC):
             if inn is not None:
                 suggestions = self.client.get_suggestions(inn=inn)
 
-                if len(suggestions) > 0:
+                if len(suggestions) == 0:
                     bot.reply_to(
                         message=message,
                         text="Не удалось найти по ИНН <code>{inn}</code> никаких компаний".format(inn=inn),
