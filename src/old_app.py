@@ -213,7 +213,7 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
             req = urllib.request.urlopen("http://api.open-notify.org/iss-now.json")
             obj = json.loads(req.read())
             bot.send_message(c.message.chat.id,f"отметка времени {obj['timestamp']}", reply_markup=key)
-            bot.send_message(c.message.chat.id, f"долгота {obj['iss_position']['longitude']} и ширина  {obj['iss_position']['latitude']}", reply_markup=key)
+            bot.send_message(c.message.chat.id, f"долгота {obj['iss_position']['longitude']} \nширота {obj['iss_position']['latitude']}", reply_markup=key)
 
 
     @bot.message_handler(commands=[conf.get_value("gen_cmd")])
