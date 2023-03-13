@@ -143,3 +143,7 @@ sid/cogs/tmp.py
 t_tmp/bot.py
 t_tmp/commands_lib.py
 t_tmp/json/cfx.json
+
+# IDE
+.vs
+.idea
