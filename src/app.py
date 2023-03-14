@@ -31,6 +31,8 @@ def starter_functions():
             bf_value.bot_function.set_handlers(bot=bot, commands=bf_value.commands)
             logger.info(f'{bf_key} - start OK!')
         except Exception as e:
+            BOT_FUNCTIONS_2[bf_key].state = False
+            logger.info(f'{bf_key} - start EXCEPTION!')
             logger.exception(e)
         
     old_start(bot, logger)

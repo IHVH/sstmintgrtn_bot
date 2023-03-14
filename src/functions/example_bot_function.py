@@ -11,13 +11,13 @@ class ExampleBotFunction(BotFunctionABC):
         self.example_keyboard_factory = CallbackData('t_key_button', prefix=commands[0])
 
         @bot.message_handler(commands=commands)
-        def example_message_hendler(message):
+        def example_message_hendler(message: types.Message):
             msg = f'Ваш запрос обработан в ExampleBotFunction! EXAMPLETOKEN={self.get_example_token()}'
             print(msg)
             bot.send_message(text=msg, chat_id=message.chat.id, reply_markup=self.gen_markup())
 
         @bot.callback_query_handler(func=None, config=self.example_keyboard_factory.filter())
-        def example_keyboard_callback(call):
+        def example_keyboard_callback(call: types.CallbackQuery):
             callback_data: dict = self.example_keyboard_factory.parse(callback_data=call.data)
             t_key_button = callback_data['t_key_button']
     

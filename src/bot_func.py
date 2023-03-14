@@ -7,8 +7,9 @@ class BotFunction:
     authors: list[str]
     about: str
     description: str
+    
 
 @dataclass
 class BotFunction2(BotFunction):
     bot_function: BotFunctionABC
-    
+    state: bool = True

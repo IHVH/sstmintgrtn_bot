@@ -1,62 +1,58 @@
 from bot_func import BotFunction, BotFunction2
 
+from functions.start import StartInfoBotFunction
 from functions.example_bot_function import ExampleBotFunction
 from functions.dadata import DadataFunctionClass
 from functions.github2 import GitHubFunctions
 
 
 BOT_FUNCTIONS_2= {
+    'start_info': BotFunction2(
+        bot_function=StartInfoBotFunction(),
+        commands=['start', 'help', 's', 'h'],
+        authors=['IHVH'],
+        about='Старт бота и помощь по командам!',
+        description='Функция предназначена для информирования пользователей о возможностях бота.'
+    ),
     'example_bot_function': BotFunction2(
         bot_function=ExampleBotFunction(),
         commands=['example', 'ebf'],
         authors=['IHVH'],
         about='Пример функции бота!',
-        description='Пример функции бота (подробное описание)! \n ' +
-        'Пример вызова функции - "/ebf" '
+        description='В поле  *description* поместите подробную информацию о работе функции. '
+            'Описание способов использования, логики работы. Примеры вызова функции - /ebf \n'
+            'Возможные параметры функции `/example` '
     ),
     'github': BotFunction2(
         bot_function=GitHubFunctions(),
         commands=['git', 'commits'],
         authors=['IHVH'],
         about='Получение информации о коммитах',
-        description='Получение информации из репозитория https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
-        'Передайте в качестве параметра количество записей. Например "/commits 5" '
+        description='Получение информации из репозитория [OEMIB_PI01_19_TBOT](https://github.com/IHVH/OEMIB_PI01_19_TBOT) \n'
+            'Передайте в качестве параметра количество записей. Например `/commits 5` '
     ),
     'dadata': BotFunction2(
         bot_function=DadataFunctionClass(),
         commands=['dadata'],
         authors=['aishmurodov'],
         about='По введенному ИНН находит компанию и выводит информацию о ней',
-        description=('Получение информации о компаний по ИНН \n'
-                     'Передайте в качестве параметра ИНН компании для получения краткой информации по имени, адресу и тд. Например /dadata 7707083893')
+        description=('Получение информации о компаний по ИНН. \n Передайте в качестве параметра ИНН '
+            'компании для получения краткой информации по имени, адресу и тд. Например /dadata 7707083893')
     )
 }
 
 BOT_FUNCTIONS = {
-    'start': BotFunction(
-        commands=['start', 'help'],
-        authors=['IHVH'],
-        about='Старт бота и помощь по командам!',
-        description='Функция предназначена для информирования пользователей о возможностях бота.'
-    ),
     "get_gif": BotFunction(
         commands=["get_gif"],
         authors=["DavidShariev"],
         description="Подбор подходящей гивки. /get_gif [строка для поиска гивки]",
         about="Гивки"
     ),
-    'commits': BotFunction(
-        commands=['commits', 'gc'],
-        authors=['IHVH'],
-        about='Получение информации о коммитах.',
-        description='Получение информации о коммитах для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
-        'Передайте в качестве параметра число для получения информации об указаном количестве последних коммитов. Например "/gc 5" '
-    ),
     'kinopoisk': BotFunction(
         commands=['kinopoisk'],
         authors=['kagayato'],
         about='Получение информации о фильмах в кинопоиске',
-        description='Получение информации о о фильмах для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
+        description='Получение информации о фильмах \n ' +
         'Передать информацию о фильме . Например "/kinopoisk фильм" '
     ),
 
@@ -64,7 +60,7 @@ BOT_FUNCTIONS = {
         commands=['openweather'],
         authors=['doppler'],
         about='Получение информации о погоде',
-        description='Получение информации о погоде для репозитария https://github.com/IHVH/OEMIB_PI01_19_TBOT \n ' +
+        description='Получение информации о погоде \n ' +
         'Передать информацию о погоде . Например "/openweather город" '
     ),
 

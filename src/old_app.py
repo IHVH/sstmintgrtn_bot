@@ -24,13 +24,7 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
     msgs = config.load_telegram_msgs()
     neural = config.load_neural()
 
-
-    @bot.message_handler(commands=BOT_FUNCTIONS['start'].commands)
-    def send_welcome(message):
-        bot.reply_to(
-            message, start.get_start_message_from_bot_function_dictionary())
-
-
+    
     @bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
     def get_accuweather(message):
         accuweather.get_text_messages(message, bot)
