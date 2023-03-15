@@ -153,4 +153,10 @@ BOT_FUNCTIONS = {
         about='Рандомный анекдот специально для Вас',
         description='Введите /anecdote с числовым аргументом'
     ),
+    'genius': BotFunction(
+        commands=['genius'],
+        authors=['GradoboevPavel'],
+        about='Поиск слов трека',
+        description='Введите /genius исполнитель - трек'
+    ),
 }
