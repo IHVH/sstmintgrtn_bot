@@ -2,6 +2,7 @@ import logging
 import sys
 import os
 import telebot
+from bot_middleware import Middleware
 from bot_callback_filter import SystemIntegrationBotCallbackFilter
 from bot_func_dictionary import BOT_FUNCTIONS_2
 
@@ -21,7 +22,8 @@ def get_logger()-> logging.Logger:
 
 def get_bot()-> telebot.TeleBot:
     token = os.environ["TBOTTOKEN"]
-    bot = telebot.TeleBot(token)
+    #telebot.logger.setLevel(logging.DEBUG)
+    bot = telebot.TeleBot(token, use_class_middlewares=True)
     return bot
 
 def starter_functions():
@@ -50,5 +52,6 @@ if __name__ == '__main__':
     print('-= START =-')
     logger.info('-= START =-')
     starter_functions()
+    bot.setup_middleware(Middleware(logger, bot))
     bot.add_custom_filter(SystemIntegrationBotCallbackFilter())
     bot.infinity_polling()
