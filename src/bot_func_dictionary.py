@@ -38,7 +38,13 @@ BOT_FUNCTIONS_2= {
         about='По введенному ИНН находит компанию и выводит информацию о ней',
         description=('Получение информации о компаний по ИНН. \n Передайте в качестве параметра ИНН '
             'компании для получения краткой информации по имени, адресу и тд. Например /dadata 7707083893')
-    )
+    ),
+    'genius': BotFunction(
+        commands=['genius'],
+        authors=['GradoboevPavel'],
+        about='Поиск слов трека',
+        description='Введите /genius исполнитель - трек'
+    ),
 }
 
 BOT_FUNCTIONS = {
@@ -152,11 +158,5 @@ BOT_FUNCTIONS = {
         authors=['alekseikornyushko'],
         about='Рандомный анекдот специально для Вас',
         description='Введите /anecdote с числовым аргументом'
-    ),
-    'genius': BotFunction(
-        commands=['genius'],
-        authors=['GradoboevPavel'],
-        about='Поиск слов трека',
-        description='Введите /genius исполнитель - трек'
     ),
 }
