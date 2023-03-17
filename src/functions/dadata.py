@@ -53,7 +53,8 @@ class DadataClientClass:
         token = os.environ.get("DADATA_TOKEN")
 
         if not token or token is None or len(token) < 1:
-            raise Exception("You must provide dadata token. Get it from https://dadata.ru/api/")
+            print("You must provide dadata token. Get it from https://dadata.ru/api/")
+            #raise Exception("You must provide dadata token. Get it from https://dadata.ru/api/")
 
         return token
 
@@ -71,7 +72,7 @@ class DadataClientClass:
         })
 
         headers = {
-            'Authorization': 'Token ' + self.get_token(),
+            'Authorization': f'Token {self.get_token()}',
             'Content-Type': 'application/json',
         }
 

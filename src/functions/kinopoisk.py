@@ -1,21 +1,15 @@
-# import time
-# import requests
-# import environs
-# import json
-#
-# env = environs.Env()
-# env.read_env(".env")
-#
 import time
 import requests
 import json
 import os
 
-
-KINOPOISK = os.environ["KP_TOKEN"]
+def get_kinopoisk_token():
+        if "KP_TOKEN" in os.environ:
+            return os.environ["KP_TOKEN"]
+        return None
+#KINOPOISK = #os.environ["KP_TOKEN"]
 API = 'https://kinopoiskapiunofficial.tech/api/v2.1/'
-headers = {"X-API-KEY": KINOPOISK}
-
+headers = {"X-API-KEY": get_kinopoisk_token()}
 
 class SEARCH:
     def __init__(self, data: dict):
@@ -36,6 +30,10 @@ def main(query):
 
     response = requests.get(API + 'films/search-by-keyword', headers=headers,
                                        params={"keyword": query, "page": 1})
+
+    if(response.status_code != 200):
+        print(response.text)
+        return None
 
     request_json = response.json()
     output = []
