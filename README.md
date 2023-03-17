@@ -19,6 +19,7 @@ YADICTTOKEN=
 KP_TOKEN=
 OPENWEATHERTOKEN=
 DADATA_TOKEN=
+GENIUS_TOKEN=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 
