@@ -4,7 +4,7 @@ from functions.start import StartInfoBotFunction
 from functions.example_bot_function import ExampleBotFunction
 from functions.dadata import DadataFunctionClass
 from functions.github2 import GitHubFunctions
-
+from functions.git_issues import GitIssues
 
 BOT_FUNCTIONS_2= {
     'start_info': BotFunction2(
@@ -38,6 +38,13 @@ BOT_FUNCTIONS_2= {
         about='По введенному ИНН находит компанию и выводит информацию о ней',
         description=('Получение информации о компаний по ИНН. \n Передайте в качестве параметра ИНН '
             'компании для получения краткой информации по имени, адресу и тд. Например /dadata 7707083893')
+    ),
+    'git_issue': BotFunction2(
+        bot_function=GitIssues(),
+        commands=['issues', 'iss'],
+        authors=['IHVH'],
+        about='Пример создания функции ',
+        description='Например `/issues` '
     )
 }
 
