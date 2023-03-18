@@ -9,4 +9,3 @@ pycbrf
 pyyaml
 Pillow
 beautifulsoup4
-lyricsgenius
