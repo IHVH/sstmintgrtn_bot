@@ -41,6 +41,8 @@ Links to information about tokens
 
 [DADATA_TOKEN](https://dadata.ru/profile/#info)
 
+[GENIUS_TOKEN](https://genius.com/api-clients)
+
 
 ## Adding telegram bot functions.
 
