@@ -1,21 +1,25 @@
 import os
+import telebot
+from bot_func_abc import BotFunctionABC
 from lyricsgenius import Genius
+from telebot import types
+from typing import List
 
 class GeniusFunction(BotFunctionABC):
 	def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
 		self.bot = bot 
 		@bot.message_handler(commands=commands)
 		def example_message_hendler(message: types.Message):
-			self.get_lyrics(message):
-
+			bot.send_message(text=self.get_lyrics(message), chat_id=message.chat.id)
+			
 	def get_lyrics(self, message):
-		temp = message.split('-')
+		temp = message.text[len("/genius "):].split('-')
 		if len(temp) != 2:
 			return "Напиши запрос в формате /genius исполнитель - трек"
 		genius = Genius(os.environ["GENIUS_TOKEN"])
-		song = genius.search_song(temp[0].strip(), temp[1].strip())
+		song = genius.search_song(temp[1].strip(), temp[0].strip())
 		if song is None:
-			bot.send_message(text="К сожалению, я не смог найти нужный трек", chat_id=message.chat.id, reply_markup=self.gen_markup())
+			return "К сожалению, я не смог найти нужный трек"
 		else:
-			bot.send_message(text=song.lyrics, chat_id=message.chat.id, reply_markup=self.gen_markup())
+			return song.lyrics
 		
