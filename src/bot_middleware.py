@@ -15,7 +15,8 @@ class Middleware(BaseMiddleware):
         self.logger.info(Middleware.create_text_from_message(message))
         
     def post_process_message(self, message: telebot.types.Message, data, exception=None):
-        self.bot.send_message(text=Middleware.create_text_from_message(message), chat_id=self.admt)
+        if self.admt != None:
+            self.bot.send_message(text=Middleware.create_text_from_message(message), chat_id=self.admt)
         if exception:
             self.logger.exception(exception)
     
@@ -27,7 +28,8 @@ class Middleware(BaseMiddleware):
         self.logger.info(Middleware.create_text_from_callback_query(call))
     
     def post_process_callback_query(self, call: telebot.types.CallbackQuery, data, exception=None):
-        self.bot.send_message(text=Middleware.create_text_from_callback_query(call), chat_id=self.admt)
+        if self.admt != None:
+            self.bot.send_message(text=Middleware.create_text_from_callback_query(call), chat_id=self.admt)
         if exception:
             self.logger.exception(exception)
 
@@ -39,4 +41,4 @@ class Middleware(BaseMiddleware):
     def get_admt(self):
         if "ADMT" in os.environ:
             return os.environ["ADMT"]
-        return "247213469"
+        return None
