@@ -4,6 +4,7 @@ from functions.start import StartInfoBotFunction
 from functions.example_bot_function import ExampleBotFunction
 from functions.dadata import DadataFunctionClass
 from functions.github2 import GitHubFunctions
+from functions.genius import GeniusFunction
 
 
 BOT_FUNCTIONS_2= {
@@ -38,7 +39,14 @@ BOT_FUNCTIONS_2= {
         about='По введенному ИНН находит компанию и выводит информацию о ней',
         description=('Получение информации о компаний по ИНН. \n Передайте в качестве параметра ИНН '
             'компании для получения краткой информации по имени, адресу и тд. Например /dadata 7707083893')
-    )
+    ),
+    'genius': BotFunction2(
+        bot_function=GeniusFunction(),
+        commands=['genius'],
+        authors=['GradoboevPavel'],
+        about='Поиск слов трека',
+        description='Введите /genius исполнитель - трек'
+    ),
 }
 
 BOT_FUNCTIONS = {
