@@ -6,11 +6,11 @@ The Telegram bot is designed to master the practical skills of integrating infor
 The bot combines various authoring functions written by students in the process of studying the discipline "system integration of software applications".
 Each of the functions must implement interaction with an external information system.
 
-Link to get acquainted with the capabilities of the used library [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI)
 
-__Test telegram bot__ - [@sstmintgrtn_bot](https://t.me/sstmintgrtn_bot)
+__Test telegram bot__ - [@sstmintgrtn_bot](https://t.me/sstmintgrtn_bot). __Shared group with a bot__ - [sstmintgrtn](https://t.me/sstmintgrtn)
 
 __To test the discord bot, you can join the group__ - [Discord group](https://discord.gg/apKWWMbUuG)
+
 
 To run locally, add an `.env` file with your keys to the root of the project. Or add appropriate values to the environment variables of your operating system.
 ```
@@ -62,3 +62,5 @@ you need to add information about your function to the **BOT_FUNCTIONS_2** dicti
 - authors - your login on github.com
 - about - short description
 - description - a detailed description of the function with a description of the parameters if they are needed
+
+Explore the capabilities of the library that is used in the project [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI).
