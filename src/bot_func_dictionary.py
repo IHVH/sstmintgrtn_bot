@@ -5,6 +5,7 @@ from functions.example_bot_function import ExampleBotFunction
 from functions.dadata import DadataFunctionClass
 from functions.github2 import GitHubFunctions
 from functions.genius import GeniusFunction
+from functions.cosmofunct import CosmoBotFunction
 
 
 BOT_FUNCTIONS_2= {
@@ -47,6 +48,15 @@ BOT_FUNCTIONS_2= {
         about='Поиск слов трека',
         description='Введите /genius исполнитель - трек'
     ),
+    'cosmowether': BotFunction2(
+        bot_function=CosmoBotFunction(),
+        commands=['cosmo'],
+        authors=['strlex-dev'],
+        about='Пример функции бота!',
+        description='В поле  *description* поместите подробную информацию о работе функции. '
+            'Описание способов использования, логики работы. Примеры вызова функции - /ebf \n'
+            'Возможные параметры функции `/example` '
+    )
 }
 
 BOT_FUNCTIONS = {
