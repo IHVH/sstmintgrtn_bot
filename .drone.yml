@@ -4,7 +4,7 @@ name: systemIntegrationBot
 
 trigger:
   branch:
-  - main
+  - deploy
 
 steps:
 - name: systemIntegrationBot image publish 
