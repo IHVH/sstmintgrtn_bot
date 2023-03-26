@@ -5,7 +5,7 @@ from functions.example_bot_function import ExampleBotFunction
 from functions.dadata import DadataFunctionClass
 from functions.github2 import GitHubFunctions
 from functions.genius import GeniusFunction
-
+from functions.menu_with_some_functions import IndividualBotWithMenu
 
 BOT_FUNCTIONS_2= {
     'start_info': BotFunction2(
