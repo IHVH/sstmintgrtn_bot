@@ -47,6 +47,13 @@ BOT_FUNCTIONS_2= {
         about='Поиск слов трека',
         description='Введите /genius исполнитель - трек'
     ),
+    'menu_with_some_functions': BotFunction2(
+        bot_function=IndividualBotWithMenu(),
+        commands=['spaceinvasion'],
+        authors=['strlex-dev'],
+        about='Меню с разным функционалом внутри',
+        description='Введите команду - `/spaceinvasion` и выберите любую понравившуюся команду в меню.'
+    )
 }
 
 BOT_FUNCTIONS = {
