@@ -5,6 +5,7 @@ from functions.example_bot_function import ExampleBotFunction
 from functions.dadata import DadataFunctionClass
 from functions.github2 import GitHubFunctions
 from functions.genius import GeniusFunction
+from functions.menu_with_some_functions import IndividualBotWithMenu
 from functions.doggie import RandomDogAPIFunction
 
 BOT_FUNCTIONS_2 = {
@@ -48,6 +49,13 @@ BOT_FUNCTIONS_2 = {
         authors=["GradoboevPavel"],
         about="Поиск слов трека",
         description="Введите /genius исполнитель - трек",
+    ),
+    "menu_with_some_functions": BotFunction2(
+        bot_function=IndividualBotWithMenu(),
+        commands=["spaceinvasion"],
+        authors=["strlex-dev"],
+        about="Меню с разным функционалом внутри",
+        description="Введите команду - `/spaceinvasion` и выберите любую понравившуюся команду в меню.",
     ),
     "doggie": BotFunction2(
         bot_function=RandomDogAPIFunction(),
