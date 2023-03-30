@@ -54,6 +54,13 @@ BOT_FUNCTIONS_2= {
         about='Меню с разным функционалом внутри',
         description='Введите команду - `/spaceinvasion` и выберите любую понравившуюся команду в меню.'
     )
+    'currency_rate': BotFunction2(
+        bot_function=CurrencyRateFunction(),
+        commands=['currency_rate'],
+        authors=['ironravencrest'],
+        about='Простая программа для вывода курса Доллара и Евро',
+        description='Программа выводит данные взятые с центрального банка РФ, в данном случае это Доллар США и Евро'
+    )
 }
 
 BOT_FUNCTIONS = {
