@@ -24,6 +24,7 @@ KP_TOKEN=
 OPENWEATHERTOKEN=
 DADATA_TOKEN=
 GENIUS_TOKEN
+YTFINDERTOKEN = AIzaSyDp7whxMLELcMz6-S51BaOA0h7PWKrDyjo
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 
@@ -46,6 +47,8 @@ Links to information about tokens
 [DADATA_TOKEN](https://dadata.ru/profile/#info)
 
 [GENIUS_TOKEN](https://genius.com/api-clients)
+
+[YTFINDERTOKEN](https://console.developers.google.com.)
 
 
 ## Adding telegram bot functions.
