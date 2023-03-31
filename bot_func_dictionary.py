@@ -62,7 +62,7 @@ BOT_FUNCTIONS_2 = {
         commands=["doggie"],
         authors=["may-uri"],
         about="Случайная фотография собачки, способная осчастливить любого.",
-        description="Опробуйте же по комманде - /doggie",
+        description="Опробуйте же!",
     ),
 }
 
