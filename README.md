@@ -1,4 +1,4 @@
-# @sstmintgrtn_bot
+# [@sstmintgrtn_bot](https://t.me/sstmintgrtn_bot)
 ![@sstmintgrtn_bot](https://www.gravatar.com/avatar/7ceee8792cfff9591510a6fe04131afa?size=200&default=robohash&forcedefault=y)
 
 The Telegram bot is designed to master the practical skills of integrating information systems and gain experience in working together on a project in a distributed team.
