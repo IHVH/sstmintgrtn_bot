@@ -23,8 +23,8 @@ YADICTTOKEN=
 KP_TOKEN=
 OPENWEATHERTOKEN=
 DADATA_TOKEN=
-GENIUS_TOKEN
-YTFINDERTOKEN = AIzaSyDp7whxMLELcMz6-S51BaOA0h7PWKrDyjo
+GENIUS_TOKEN=
+YTFINDERTOKEN=AIzaSyDp7whxMLELcMz6-S51BaOA0h7PWKrDyjo
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 
