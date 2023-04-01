@@ -7,6 +7,7 @@ from functions.github2 import GitHubFunctions
 from functions.genius import GeniusFunction
 from functions.menu_with_some_functions import IndividualBotWithMenu
 from functions.doggie import RandomDogAPIFunction
+from functions.youtube import YoutubeFinder
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -63,6 +64,13 @@ BOT_FUNCTIONS_2 = {
         authors=["may-uri"],
         about="Случайная фотография собачки, способная осчастливить любого.",
         description="Опробуйте же!",
+    ),
+    "youtube": BotFunction2(
+        bot_function=YoutubeFinder(),
+        commands=["YTfind"],
+        authors=["ironravencrest"],
+        about="Поиск названий youtube видео",
+        description="Введите команду - /YTfind",
     ),
 }
 
