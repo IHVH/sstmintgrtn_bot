@@ -15,9 +15,9 @@ class YoutubeFinder(BotFunctionABC):
         def message_handler(message: types.Message):
             bot.send_message(text=self.YTFinder(message), chat_id=message.chat.id)
 
-    def YTFinder(self, message):
+    def YTFinder(self, message: types.Message):
         api_key = os.environ["YTFINDERTOKEN"]
-        word = message.text("/YTfind").lower()
+        word = message.text.split("/YTfind ") #.lower()
         query = word
         url = f'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q={query}&key={api_key}'
         response = requests.get(url)
