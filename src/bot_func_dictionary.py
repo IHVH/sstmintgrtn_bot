@@ -8,6 +8,8 @@ from functions.genius import GeniusFunction
 from functions.menu_with_some_functions import IndividualBotWithMenu
 from functions.doggie import RandomDogAPIFunction
 from functions.youtube import YoutubeFinder
+from functions.soap_country import SoapCountry
+
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -72,6 +74,15 @@ BOT_FUNCTIONS_2 = {
         about="Поиск названий youtube видео",
         description="Введите команду - /YTfind",
     ),
+    "country": BotFunction2(
+        bot_function=SoapCountry(),
+        commands=["country", "cy"],
+        authors=["IHVH"],
+        about="Информация о странах.",
+        description="Получение информации о странах по коду страны \n "
+        + 'Передайте в качестве параметра *ISO* код страны. Например `/country RU` \n '
+        + 'Передайте в качестве параметра строку *all* для получения доступных *ISO* кодов стран. Например `/country ALL` ',
+    )
 }
 
 BOT_FUNCTIONS = {
@@ -94,14 +105,6 @@ BOT_FUNCTIONS = {
         about="Получение информации о погоде",
         description="Получение информации о погоде \n "
         + 'Передать информацию о погоде . Например "/openweather город" ',
-    ),
-    "country": BotFunction(
-        commands=["country", "cy"],
-        authors=["IHVH"],
-        about="Информация о странах.",
-        description="Получение информации о странах по коду страны \n "
-        + 'Передайте в качестве параметра ISO код страны. Например "/country RU" \n '
-        + 'Передайте в качестве параметра строку all для получения доступных ISO кодов стран. Например "/country ALL" ',
     ),
     "grav": BotFunction(
         commands=["grav", "gravatar"],
