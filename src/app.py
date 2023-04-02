@@ -49,7 +49,7 @@ logger = get_logger()
 bot = get_bot()
 
 if __name__ == '__main__':
-    print('-= START =-')
+    #print('-= START =-')
     logger.info('-= START =-')
     starter_functions()
     bot.setup_middleware(Middleware(logger, bot))
