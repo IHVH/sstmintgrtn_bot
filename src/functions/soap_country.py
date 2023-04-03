@@ -5,15 +5,28 @@ from telebot.callback_data import CallbackData, CallbackDataFilter
 from typing import List
 import zeep
 
+from emot.emo_unicode import UNICODE_EMOJI, UNICODE_EMOJI_ALIAS, EMOTICONS_EMO, EMOJI_ALIAS_UNICODE
+
+
 class SoapCountry(BotFunctionABC):
     
     def __init__(self) -> None:
         wsdl_url = "http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL"
         self.client = zeep.Client(wsdl=wsdl_url)
+        
+
 
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot 
         self.country_keyboard_factory = CallbackData('code_button', prefix=commands[0])
+        self.country_name_dict = {}
+        self.country_phone_dict = {}
+        countryes = self.client.service.FullCountryInfoAllCountries()
+        for country in countryes:
+            self.country_name_dict[country.sISOCode] = country.sName
+            self.country_phone_dict[country.sISOCode] = country.sPhoneCode
+
+        
 
         @bot.message_handler(commands=commands)
         def country_handler(message: types.Message):
@@ -31,7 +44,7 @@ class SoapCountry(BotFunctionABC):
 
     def gen_markup(self, arrStr):
         markup = types.InlineKeyboardMarkup()
-        markup.row_width = 20
+        markup.row_width = 8
         buttons = []
         for val in arrStr:
             buttons.append(types.InlineKeyboardButton(val, 
@@ -42,29 +55,48 @@ class SoapCountry(BotFunctionABC):
 
 
 
-    @staticmethod
-    def country_code_from_message(message):
+    def country_code_from_message(self, message):
         str_spilt = message.text.split()
+        len_str = len(str_spilt)
+        if len_str == 1:
+            return "ALL"
+        
         x = str_spilt[-1]
-        return x.upper()
+
+        if x in UNICODE_EMOJI.keys():
+            country_name = UNICODE_EMOJI[x].strip(":").replace("_"," ")
+            country_iso_code = self.client.service.CountryISOCode(country_name)
+            return country_iso_code
+
+        if x.upper() in self.country_name_dict.keys():
+            return x.upper()
+
+        if x in self.country_name_dict.values():
+            name_code = {x: y for y, x in self.country_name_dict.items()}
+            return name_code[x]
+
+        if x in self.country_phone_dict.values():
+            phone_code = {x: y for y, x in self.country_phone_dict.items()}
+            return phone_code[x]
+
+        for c_code, c_name in self.country_name_dict.items():
+            if x.lower() in c_name.lower(): 
+                return c_code
+            
 
     def do_work_on_service_response(self, param, obj, chat_id):
-        send_msg = f'param={param} \n {obj}'
+        send_msg = f'ISOCode = {param} \n {obj}'
         self.bot.send_message(text=send_msg, chat_id=chat_id)
         
 
-
     def get_country_info(self, message):
-        code = SoapCountry.country_code_from_message(message)
-        if (code == "ALL"):
+        code = self.country_code_from_message(message)
+        if code is None or code.upper() == "ALL" or code == "No country found by that name":
             countryes = self.client.service.ListOfCountryNamesByCode()
             codes = []
             for country in countryes:
                 codes.append(country.sISOCode)
-
-
             self.bot.send_message(text="Выбор страны!", chat_id=message.chat.id, reply_markup=self.gen_markup(codes))
-            #self.do_work_on_service_response(code, codes, message.chat.id)
         else:
             country_info = self.client.service.FullCountryInfo(code)
             self.do_work_on_service_response(code, country_info, message.chat.id)

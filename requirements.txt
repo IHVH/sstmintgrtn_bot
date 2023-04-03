@@ -1,6 +1,7 @@
 pyTelegramBotAPI
 requests
 zeep
+emot
 libgravatar
 geopy
 xmltodict
