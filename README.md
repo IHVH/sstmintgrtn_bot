@@ -15,9 +15,11 @@ __To test the discord bot, you can join the group__ - [Discord group](https://di
 To run locally, add an `.env` file with your keys to the root of the project. Or add appropriate values to the environment variables of your operating system.
 ```
 LOGLEVEL=INFO
+TBOT_LOGLEVEL=WARNING
+EXAMPLETOKEN=for_example_token
+
 TBOTTOKEN=
 DBOTTOKEN=
-EXAMPLETOKEN=example
 GITHUBTOKEN=
 YAWEATHERTOKEN=
 YADICTTOKEN=
@@ -25,7 +27,7 @@ KP_TOKEN=
 OPENWEATHERTOKEN=
 DADATA_TOKEN=
 GENIUS_TOKEN=
-YTFINDERTOKEN=AIzaSyDp7whxMLELcMz6-S51BaOA0h7PWKrDyjo
+YTFINDERTOKEN=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 
