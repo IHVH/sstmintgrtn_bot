@@ -15,18 +15,18 @@ class IndividualBotWithMenu(BotFunctionABC):
 
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot
-        self.menu_buttons = CallbackData('menu_button', prefix=commands[0])
+        self.menu_buttons = CallbackData('menu_buttons', prefix=commands[0])
         self.agreement_buttons = CallbackData('agreement_buttons', prefix=f'{commands[0]}cosmo')
 
         @bot.message_handler(commands=commands)
         def welcome_message(message: types.Message):
-            bot.send_message(message.chat.id, 'Welcome!\nPlease, choose the option ⬇️', reply_markup=self.menu_create_buttons())
+            bot.send_message(message.chat.id, 'Welcome!\nPlease, choose the option ⬇️', reply_markup=self.create_menu_buttons())
 
         @bot.callback_query_handler(func=None, config=self.menu_buttons.filter())
         def menu_buttons_callback(call: types.CallbackQuery):
             callback_data: dict = self.menu_buttons.parse(callback_data=call.data)
 
-            button_menu = callback_data['button_menu']
+            button_menu = callback_data['menu_buttons']
 
             if button_menu == "🛰":
                 self.iss_position(call.message)
@@ -46,10 +46,10 @@ class IndividualBotWithMenu(BotFunctionABC):
     def create_menu_buttons(self):
         markup = types.InlineKeyboardMarkup()
         markup.row_width = 2
-        markup.add(types.InlineKeyboardButton("🛰", callback_data=self.menu_buttons.new(button_menu="🛰")),
-                   types.InlineKeyboardButton("👨‍🚀", callback_data=self.menu_buttons.new(button_menu="👨‍🚀")),
-                   types.InlineKeyboardButton("🌦", callback_data=self.menu_buttons.new(button_menu="🌦")),
-                   types.InlineKeyboardButton("💸", callback_data=self.menu_buttons.new(button_menu="💸")))
+        markup.add(types.InlineKeyboardButton("🛰", callback_data=self.menu_buttons.new(menu_buttons="🛰")),
+                   types.InlineKeyboardButton("👨‍🚀", callback_data=self.menu_buttons.new(menu_buttons="👨‍🚀")),
+                   types.InlineKeyboardButton("🌦", callback_data=self.menu_buttons.new(menu_buttons="🌦")),
+                   types.InlineKeyboardButton("💸", callback_data=self.menu_buttons.new(menu_buttons="💸")))
         return markup
 
     def iss_position(self, message: types.Message):
