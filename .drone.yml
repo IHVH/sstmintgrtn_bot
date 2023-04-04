@@ -5,6 +5,7 @@ name: systemIntegrationBot
 trigger:
   branch:
   - deploy
+  - main
 
 steps:
 - name: systemIntegrationBot image publish 
@@ -66,3 +67,18 @@ steps:
     - docker save systemintegrationbotdiscord > /systemintegrationbot/systemintegrationbotdiscord.tar
   depends_on:
   - systemIntegrationBotDiscord image publish
+
+- name: systemIntegrationBot send telegram notification
+  image: appleboy/drone-telegram
+  settings:
+    token:
+      from_secret: TBOTTOKEN
+    to: -1001962546065
+    message: >
+      {{#success build.status}}
+        build {{build.number}} succeeded. Good job.
+      {{else}}
+        build {{build.number}} failed. Fix me please.
+      {{/success}}
+  depends_on:
+  - systemIntegrationBot ssh commands
