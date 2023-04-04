@@ -1,9 +1,9 @@
 import telebot
 from typing import List
 import requests
+from bot_func_abc import BotFunctionABC
 
-
-class RandomDogAPIFunction:
+class RandomDogAPIFunction(BotFunctionABC):
     def __init__(self):
         self.random_dog_data = "random_dog"
 

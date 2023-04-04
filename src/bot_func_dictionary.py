@@ -92,7 +92,7 @@ BOT_FUNCTIONS = {
         commands=["get_gif"],
         authors=["DavidShariev"],
         description="Подбор подходящей гивки. /get_gif [строка для поиска гивки]",
-        about="Гивки",
+        about="Подбор подходящей гивки",
     ),
     "kinopoisk": BotFunction(
         commands=["kinopoisk"],
@@ -128,7 +128,7 @@ BOT_FUNCTIONS = {
     ),
     "translate": BotFunction(
         commands=["translate"],
-        authors=["lanaveta0104 "],
+        authors=["lanaveta0104"],
         about="Перевод слова на английский или русский язык, а также вывод синонимов слова",
         description='Введите язык перевода в виде "en" - английский или "ru" - русский и затем необходимое "слово"\n'
         + "Слово должно быть в начальной форме!\n"
@@ -159,7 +159,7 @@ BOT_FUNCTIONS = {
     ),
     "insult": BotFunction(
         commands=["insult"],
-        authors=["ectmeyou"],
+        authors=["meyouect"],
         about="Получить ругательство из сервиса",
         description="Получить ругательство из сервиса",
     ),

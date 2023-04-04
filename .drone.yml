@@ -93,13 +93,17 @@ steps:
     message: >
       {{#success build.status}}
       ✅ Build {{build.number}} of `{{repo.name}}` succeeded.
-      📝 Commit by {{commit.author}} on `{{commit.branch}}`:
+      
+      🚀 Commit by {{commit.author}} on `{{commit.branch}}`: 
+      
       ```
       {{commit.message}}
       ```
       {{else}}
       ❌ Build #{{build.number}} of `{{repo.name}}` failed.
-      📝 Commit by {{commit.author}} on `{{commit.branch}}`:
+      
+      🩼 Commit by {{commit.author}} on `{{commit.branch}}`: 
+      
       ```
       {{commit.message}}
       ```
