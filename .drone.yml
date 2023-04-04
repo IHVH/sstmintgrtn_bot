@@ -6,6 +6,7 @@ trigger:
   branch:
   - deploy
   - main
+  - discord_deploy
 
 steps:
 - name: systemIntegrationBot image publish 
@@ -18,6 +19,10 @@ steps:
     registry: 192.168.1.111:5000
     dockerfile: Dockerfile
     tags: latest
+  when:
+    branch:
+    - deploy
+    - main
 
 - name: systemIntegrationBotDiscord image publish 
   image: plugins/docker
@@ -29,6 +34,9 @@ steps:
     registry: 192.168.1.111:5000
     dockerfile: sid/Dockerfile
     tags: latest
+  when:
+    branch:
+    - discord_deploy
 
 - name: systemIntegrationBot ssh commands
   image: appleboy/drone-ssh:1.6.0
@@ -48,6 +56,10 @@ steps:
     - docker save systemintegrationbot > /systemintegrationbot/systemintegrationbot.tar
   depends_on:
   - systemIntegrationBot image publish
+  when:
+    branch:
+    - deploy
+    - main
 
 - name: systemIntegrationBotDiscord ssh commands
   image: appleboy/drone-ssh:1.6.0
@@ -67,6 +79,9 @@ steps:
     - docker save systemintegrationbotdiscord > /systemintegrationbot/systemintegrationbotdiscord.tar
   depends_on:
   - systemIntegrationBotDiscord image publish
+  when:
+    branch:
+    - discord_deploy
 
 - name: systemIntegrationBot send telegram notification
   image: appleboy/drone-telegram
@@ -77,9 +92,21 @@ steps:
       from_secret: user_id
     message: >
       {{#success build.status}}
-        build {{build.number}} succeeded. Good job.
+      ✅ Build {{build.number}} of `{{repo.name}}` succeeded.
+      📝 Commit by {{commit.author}} on `{{commit.branch}}`:
+      ```
+      {{commit.message}}
+      ```
       {{else}}
-        build {{build.number}} failed. Fix me please.
+      ❌ Build #{{build.number}} of `{{repo.name}}` failed.
+      📝 Commit by {{commit.author}} on `{{commit.branch}}`:
+      ```
+      {{commit.message}}
+      ```
       {{/success}}
   depends_on:
   - systemIntegrationBot ssh commands
+  when:
+    branch:
+    - deploy
+    - main
