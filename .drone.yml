@@ -19,7 +19,7 @@ steps:
     - deploy
     - main
 
-- name: systemIntegrationBot send telegram notification
+- name: systemIntegrationBot send test notification
   image: appleboy/drone-telegram
   settings:
     token:
