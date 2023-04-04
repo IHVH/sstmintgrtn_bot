@@ -8,6 +8,8 @@ from bot_func import BotFunction
 import time
 
 class StartInfoBotFunction(BotFunctionABC):
+    slip_time = 0.2
+
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot 
         self.start_keyboard_factory = CallbackData('start_f_button', prefix=commands[0])
@@ -34,7 +36,7 @@ class StartInfoBotFunction(BotFunctionABC):
                     txt += f' - `/{command}` \n'
                 #txt += "\n  - /".join(val.commands)
                 self.bot.send_message(text=txt, chat_id=message.chat.id, reply_markup=self.gen_markup(key), parse_mode='Markdown')
-                time.sleep(0.5)
+                time.sleep(self.slip_time)
 
     def send_messages_bf(self, message: types.Message):
         for key, val in bot_func_dictionary.BOT_FUNCTIONS.items():
@@ -42,7 +44,7 @@ class StartInfoBotFunction(BotFunctionABC):
             for command in val.commands:
                 txt += f' - `/{command}` \n'
             self.bot.send_message(text=txt, chat_id=message.chat.id, reply_markup=self.gen_markup(key), parse_mode='Markdown')
-            time.sleep(0.5)
+            time.sleep(self.slip_time)
 
     def find_function_info(self, key: str) -> BotFunction:
         if key in bot_func_dictionary.BOT_FUNCTIONS_2:
