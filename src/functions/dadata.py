@@ -53,9 +53,8 @@ class DadataClientClass:
         token = os.environ.get("DADATA_TOKEN")
 
         if not token or token is None or len(token) < 1:
-            print("You must provide dadata token. Get it from https://dadata.ru/api/")
-            #raise Exception("You must provide dadata token. Get it from https://dadata.ru/api/")
-
+            print("*warning* You must provide dadata token. Get it from https://dadata.ru/api/")
+            
         return token
 
     def get_token(self) -> str:

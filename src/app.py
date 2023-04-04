@@ -8,9 +8,16 @@ from bot_func_dictionary import BOT_FUNCTIONS_2
 
 from old_app import old_start
 
+def get_log_level(env_key: str):
+    str_level = os.environ.get(env_key)
+    if str_level in logging._nameToLevel.keys():
+        return logging._nameToLevel[str_level]
+    else:
+        return logging._nameToLevel["INFO"]
+            
 def get_logger()-> logging.Logger:
     logger = logging.getLogger(__name__)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(get_log_level("LOGLEVEL"))
     handler = logging.FileHandler(f"{__name__}.log")
     formatter = logging.Formatter("%(name)s %(asctime)s %(levelname)s %(message)s")
     handler.setFormatter(formatter)
@@ -22,7 +29,7 @@ def get_logger()-> logging.Logger:
 
 def get_bot()-> telebot.TeleBot:
     token = os.environ["TBOTTOKEN"]
-    #telebot.logger.setLevel(logging.DEBUG)
+    telebot.logger.setLevel(get_log_level("TBOT_LOGLEVEL"))
     bot = telebot.TeleBot(token, use_class_middlewares=True)
     return bot
 
@@ -34,7 +41,7 @@ def starter_functions():
             logger.info(f'{bf_key} - start OK!')
         except Exception as e:
             BOT_FUNCTIONS_2[bf_key].state = False
-            logger.info(f'{bf_key} - start EXCEPTION!')
+            logger.warning(f'{bf_key} - start EXCEPTION!')
             logger.exception(e)
         
     old_start(bot, logger)
@@ -49,8 +56,7 @@ logger = get_logger()
 bot = get_bot()
 
 if __name__ == '__main__':
-    print('-= START =-')
-    logger.info('-= START =-')
+    logger.critical('-= START =-')
     starter_functions()
     bot.setup_middleware(Middleware(logger, bot))
     bot.add_custom_filter(SystemIntegrationBotCallbackFilter())

@@ -37,11 +37,6 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
         bot.send_animation(message.chat.id, gif_url, None, "Text")
 
 
-    @bot.message_handler(commands=BOT_FUNCTIONS['country'].commands)
-    def get_country_info(message):
-        soap_country.get_country_info(message, bot)
-
-
     def get_keyboard_kinopoisk(url):
         """ Кнопка на внешний ресурс """
 

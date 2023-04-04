@@ -2,11 +2,45 @@ kind: pipeline
 type: docker
 name: systemIntegrationBot
 
-trigger:
-  branch:
-  - main
-
 steps:
+- name: systemIntegrationBot codetest
+  image: python:3
+  commands:
+  - pip install -r requirements.txt
+  - python -m unittest discover -s src -v
+
+- name: systemIntegrationBot send test notification
+  image: appleboy/drone-telegram
+  settings:
+    token:
+      from_secret: TBOTTOKEN
+    to: 
+      from_secret: user_id
+    message: >
+      {{#success build.status}}
+      🧪 TEST OK! Build number - {{build.number}} succeeded.
+      
+      🚀 Commit by {{commit.author}} on `{{commit.branch}}`: 
+      
+      ```
+      {{commit.message}}
+      ```
+
+      Repo name - `{{repo.name}}` 
+      {{else}}
+      ❌ TEST FAILED! Build number - {{build.number}} failed.
+      
+      🩼 Commit by {{commit.author}} on `{{commit.branch}}`: 
+      
+      ```
+      {{commit.message}}
+      ```
+      
+      Repo name - `{{repo.name}}` 
+      {{/success}}
+  depends_on:
+  - systemIntegrationBot codetest
+
 - name: systemIntegrationBot image publish 
   image: plugins/docker
   settings:
@@ -17,17 +51,11 @@ steps:
     registry: 192.168.1.111:5000
     dockerfile: Dockerfile
     tags: latest
-
-- name: systemIntegrationBotDiscord image publish 
-  image: plugins/docker
-  settings:
-    username: root
-    password: pa55word
-    insecure: true
-    repo: 192.168.1.111:5000/tvi/systemintegrationbotdiscord
-    registry: 192.168.1.111:5000
-    dockerfile: sid/Dockerfile
-    tags: latest
+  depends_on:
+  - systemIntegrationBot codetest
+  when:
+    branch:
+    - deploy
 
 - name: systemIntegrationBot ssh commands
   image: appleboy/drone-ssh:1.6.0
@@ -47,6 +75,61 @@ steps:
     - docker save systemintegrationbot > /systemintegrationbot/systemintegrationbot.tar
   depends_on:
   - systemIntegrationBot image publish
+  when:
+    branch:
+    - deploy
+
+- name: systemIntegrationBot send telegram notification
+  image: appleboy/drone-telegram
+  settings:
+    token:
+      from_secret: TBOTTOKEN
+    to: 
+      from_secret: user_id
+    message: >
+      {{#success build.status}}
+      ✅ Build {{build.number}} succeeded.
+
+      🐳 Application deployment successful! 
+      
+      🚀 Commit by {{commit.author}} on `{{commit.branch}}`: 
+      
+      ```
+      {{commit.message}}
+      ```
+
+      Repo name - `{{repo.name}}` 
+      {{else}}
+      ❌ Build #{{build.number}} failed.
+      
+      🩼 Commit by {{commit.author}} on `{{commit.branch}}`: 
+      
+      ```
+      {{commit.message}}
+      ```
+      
+      Repo name - `{{repo.name}}` 
+      {{/success}}
+  depends_on:
+  - systemIntegrationBot ssh commands
+  when:
+    branch:
+    - deploy
+
+
+- name: systemIntegrationBotDiscord image publish 
+  image: plugins/docker
+  settings:
+    username: root
+    password: pa55word
+    insecure: true
+    repo: 192.168.1.111:5000/tvi/systemintegrationbotdiscord
+    registry: 192.168.1.111:5000
+    dockerfile: sid/Dockerfile
+    tags: latest
+  when:
+    branch:
+    - discord_deploy
 
 - name: systemIntegrationBotDiscord ssh commands
   image: appleboy/drone-ssh:1.6.0
@@ -66,3 +149,6 @@ steps:
     - docker save systemintegrationbotdiscord > /systemintegrationbot/systemintegrationbotdiscord.tar
   depends_on:
   - systemIntegrationBotDiscord image publish
+  when:
+    branch:
+    - discord_deploy
