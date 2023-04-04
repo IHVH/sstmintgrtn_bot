@@ -9,6 +9,16 @@ trigger:
   - discord_deploy
 
 steps:
+- name: systemIntegrationBot codetest
+  image: python:3
+  commands:
+  - pip install -r requirements.txt
+  - python -m unittest discover -s src 
+  when:
+    branch:
+    - deploy
+    - main
+
 - name: systemIntegrationBot image publish 
   image: plugins/docker
   settings:
