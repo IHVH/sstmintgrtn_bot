@@ -3,6 +3,7 @@ from typing import List
 import requests
 from bot_func_abc import BotFunctionABC
 
+
 class RandomDogAPIFunction(BotFunctionABC):
     def __init__(self):
         self.random_dog_data = "random_dog"
@@ -10,20 +11,20 @@ class RandomDogAPIFunction(BotFunctionABC):
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot
 
-        @bot.message_handler(commands=commands)
-        def random_dog_command(message: telebot.types.Message):
-            response = requests.get("https://dog.ceo/api/breeds/image/random")
-            url = response.json()["message"]
-            markup = self.get_buttons_markup()
-            bot.send_photo(chat_id=message.chat.id, photo=url, reply_markup=markup)
-
         @bot.callback_query_handler(func=lambda call: call.data == self.random_dog_data)
-        def random_dog_callback(call: telebot.types.CallbackQuery):
+        @bot.message_handler(commands=commands)
+        def random_dog_handler(message_or_call):
+            if isinstance(message_or_call, telebot.types.Message):
+                chat_id = message_or_call.chat.id
+            else:
+                chat_id = message_or_call.message.chat.id
             response = requests.get("https://dog.ceo/api/breeds/image/random")
             url = response.json()["message"]
             markup = self.get_buttons_markup()
-            bot.send_photo(chat_id=call.message.chat.id, photo=url, reply_markup=markup)
-            bot.answer_callback_query(callback_query_id=call.id)
+            bot.send_photo(chat_id=chat_id, photo=url, reply_markup=markup)
+
+            if isinstance(message_or_call, telebot.types.CallbackQuery):
+                bot.answer_callback_query(callback_query_id=message_or_call.id)
 
     def get_buttons_markup(self) -> telebot.types.InlineKeyboardMarkup:
         markup = telebot.types.InlineKeyboardMarkup()
