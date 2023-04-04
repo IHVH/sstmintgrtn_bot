@@ -9,7 +9,7 @@ Each of the functions must implement interaction with an external information sy
 
 __Test telegram bot__ - [@sstmintgrtn_bot](https://t.me/sstmintgrtn_bot). 
 
-__Shared group with a bot__ - [sstmintgrtn](https://t.me/sstmintgrtn) - Test results will also appear in this group when submitted to any branch.
+__Shared group with a bot__ - [sstmintgrtn](https://t.me/sstmintgrtn). When pushed to any branch, test results will also appear in that group.
 
 __To test the discord bot, you can join the group__ - [Discord group](https://discord.gg/apKWWMbUuG)
 
