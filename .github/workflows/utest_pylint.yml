@@ -24,4 +24,5 @@ jobs:
     #    pylint $(git ls-files '*.py')
     - name: Run Test
       run: |
+        cd OEMIB_PI01_19_TBOT/OEMIB_PI01_19_TBOT/
         python -m unittest discover -s src -v
