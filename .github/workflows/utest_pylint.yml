@@ -24,5 +24,4 @@ jobs:
     #    pylint $(git ls-files '*.py')
     - name: Run Test
       run: |
-        cp -r src/ .
         python -m unittest -v
