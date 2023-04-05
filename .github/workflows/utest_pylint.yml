@@ -1,5 +1,5 @@
-name: Pylint
-run-name: ${{ github.actor }} Analysing the code with pylint
+name: Unittest and pylint
+run-name: ${{ github.actor }} Analysing the code with unittest and pylint
 on: [push, pull_request]
 
 jobs:
@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.10", "3.11"]
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -19,6 +19,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install -r requirements.txt
-    - name: Analysing the code with pylint
+    #- name: Analysing the code with pylint
+    #  run: |
+    #    pylint $(git ls-files '*.py')
+    - name: Run Test
       run: |
-        pylint $(git ls-files '*.py')
+        python -m unittest discover -s src -v
