@@ -9,6 +9,7 @@ from functions.menu_with_some_functions import IndividualBotWithMenu
 from functions.doggie import RandomDogAPIFunction
 from functions.youtube import YoutubeFinder
 from functions.soap_country import SoapCountry
+from functions.animetarelka import Animetarelka,Mangatarelka
 
 
 BOT_FUNCTIONS_2 = {
@@ -86,11 +87,18 @@ BOT_FUNCTIONS_2 = {
         "Для получения доступных *ISO* кодов стран передайте в качестве параметра строку *ALL*. Например `/country ALL` ")
     ),
     "animetarelka": BotFunction2(
-        bot_function=AnimeSearh(),
-        commands=["rndanime","rndmanga"],
+        bot_function=Animetarelka(),
+        commands=["rndanime"],
         authors=["d1mens1"],
-        about="Слуйчайное аниме или манга",
-        description=("/rndanime выдает случайное аниме с краткой иформацией о нем,/rndmanga аналогично")
+        about="Слуйчайное аниме",
+        description=("/rndanime выдает случайное аниме с краткой иформацией о нем")
+    ),
+    "mangatarelka": BotFunction2(
+        bot_function=Mangatarelka(),
+        commands=["rndmanga"],
+        authors=["d1mens1"],
+        about="Слуйчайная манга",
+        description=("/rndmanga выдает случайную мангу с краткой иформацией о ней")
     )
 }
 
