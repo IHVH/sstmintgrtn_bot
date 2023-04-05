@@ -84,6 +84,13 @@ BOT_FUNCTIONS_2 = {
         " - название страны `/country Russia` \n" 
         " - iso код страны `/country RU` \n - или телефонный код страны `/country 7` \n"
         "Для получения доступных *ISO* кодов стран передайте в качестве параметра строку *ALL*. Например `/country ALL` ")
+    ),
+    "animetarelka": BotFunction2(
+        bot_function=AnimeSearh(),
+        commands=["rndanime","rndmanga"],
+        authors=["d1mens1"],
+        about="Слуйчайное аниме или манга",
+        description=("/rndanime выдает случайное аниме с краткой иформацией о нем,/rndmanga аналогично")
     )
 }
 
