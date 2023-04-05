@@ -9,6 +9,7 @@ import json
 import logging
 import threading
 import time
+import requests
 from datetime import datetime
 from pycbrf import ExchangeRates
 from bot_func_dictionary import BOT_FUNCTIONS
@@ -335,3 +336,4 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
         if len(repl_prompt) > 100:
             return repl_prompt[:100]
         return repl_prompt
+
