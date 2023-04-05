@@ -24,5 +24,6 @@ jobs:
     #    pylint $(git ls-files '*.py')
     - name: Run Test
       run: |
+        cd src/
         ls
-        python -m unittest discover -s src -v
+        python -m unittest -v
