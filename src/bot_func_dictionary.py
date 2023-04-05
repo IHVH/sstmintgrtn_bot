@@ -22,7 +22,7 @@ BOT_FUNCTIONS_2 = {
     "example_bot_function": BotFunction2(
         bot_function=ExampleBotFunction(),
         commands=["example", "ebf"],
-        authors=["IHVH"],
+        authors=[],
         about="Пример функции бота!",
         description="В поле  *description* поместите подробную информацию о работе функции. "
         "Описание способов использования, логики работы. Примеры вызова функции - /ebf \n"
