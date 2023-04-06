@@ -32,7 +32,7 @@ BOT_FUNCTIONS_2 = {
     "github": BotFunction2(
         bot_function=GitHubFunctions(),
         commands=["git", "commits"],
-        authors=[],
+        authors=["IHVH"],
         about="Получение информации о коммитах",
         description="Получение информации из репозитория [OEMIB_PI01_19_TBOT](https://github.com/IHVH/OEMIB_PI01_19_TBOT) \n"
         "Передайте в качестве параметра количество записей. Например `/commits 5` ",
