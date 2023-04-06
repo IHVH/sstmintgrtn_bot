@@ -30,6 +30,7 @@ OPENWEATHERTOKEN=
 DADATA_TOKEN=
 GENIUS_TOKEN=
 YTFINDERTOKEN=
+openai.api_key=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 
@@ -55,6 +56,7 @@ Links to information about tokens
 
 [YTFINDERTOKEN](https://console.developers.google.com.)
 
+[openai.api_key](https://platform.openai.com/docs/api-reference)
 
 ## Adding telegram bot functions.
 
