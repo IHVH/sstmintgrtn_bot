@@ -105,7 +105,7 @@ BOT_FUNCTIONS_2 = {
         bot_function=CatFunction(),
         commands=["cat"],
         authors=["Qipk"],
-        about="Фото кота",
+        about="Случайное фото кота",
         description=("Введите /cat для получения случайного фото кота")
     )
 }
