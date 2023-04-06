@@ -1,5 +1,4 @@
 import json
-import telebot
 import requests as req
 from geopy import geocoders
 

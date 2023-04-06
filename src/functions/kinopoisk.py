@@ -4,9 +4,9 @@ import json
 import os
 
 def get_kinopoisk_token():
-        if "KP_TOKEN" in os.environ:
-            return os.environ["KP_TOKEN"]
-        return None
+    if "KP_TOKEN" in os.environ:
+        return os.environ["KP_TOKEN"]
+    return None
 #KINOPOISK = #os.environ["KP_TOKEN"]
 API = 'https://kinopoiskapiunofficial.tech/api/v2.1/'
 headers = {"X-API-KEY": get_kinopoisk_token()}
@@ -42,9 +42,9 @@ def main(query):
             if len(output) == 4:
                 return output
             output.append(SEARCH(film))
-        except (Exception, BaseException):
-            continue
-            return output
         except json.decoder.JSONDecodeError:
             time.sleep(0.5)
+        except Exception:
+            continue
+
     return output

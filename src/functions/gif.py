@@ -1,4 +1,3 @@
-import json
 import requests
 
 API = "https://api.giphy.com/v1/gifs/search"

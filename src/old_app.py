@@ -3,7 +3,6 @@ import urllib.request
 import telebot
 from telebot import types
 from telebot.callback_data import CallbackData
-import wikipedia
 import re
 import json
 import logging
@@ -13,8 +12,8 @@ from datetime import datetime
 from pycbrf import ExchangeRates
 from bot_func_dictionary import BOT_FUNCTIONS
 
-from functions import start, gif, soap_country, gravatar, weather, translate, numbers, exc_rates, http_cats, \
-    swear, speller, wikipedia, accuweather, openweather, kinopoisk, webui_interaction, config, anecdotes
+from functions import gif, gravatar, weather, translate, numbers, exc_rates, http_cats, \
+    swear, speller, accuweather, openweather, kinopoisk, webui_interaction, config, anecdotes, wikipedia_function
 
 
 def old_start(bot: telebot.TeleBot, logger: logging.Logger):
@@ -158,7 +157,7 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
 
     @bot.message_handler(commands=BOT_FUNCTIONS['Wikipedia'].commands)
     def test(message):
-        final_message = wikipedia.wiki_op(message.text)
+        final_message = wikipedia_function.wiki_op(message.text)
         bot.send_message(message.chat.id, text=final_message, parse_mode='html')
 
 
@@ -186,7 +185,7 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
     mks_factory = CallbackData('mks_button', prefix=BOT_FUNCTIONS['mks'].commands[0])
 
     @bot.message_handler(commands=BOT_FUNCTIONS['mks'].commands)
-    def inline(message):
+    def mks_msg_handler(message):
         key = types.InlineKeyboardMarkup()
         cord = types.InlineKeyboardButton(text="да", callback_data=mks_factory.new(mks_button="да"))
         key.add(cord)
@@ -194,7 +193,7 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
         bot.send_message(message.chat.id, "хотите узнать местоположение мкс?", reply_markup=key)
 
     @bot.callback_query_handler(func=None, config=mks_factory.filter())# mks_button='да'
-    def inline(c: types.CallbackQuery):
+    def mks_callback_handler(c: types.CallbackQuery):
         callback_data: dict = mks_factory.parse(callback_data=c.data)
         mks_button = callback_data['mks_button']
         if mks_button == 'да':
@@ -207,7 +206,6 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
 
     @bot.message_handler(commands=[conf.get_value("gen_cmd")])
     def generate_handler(message):
-        global loading_image_id
         try:
             msgtext = message.text
 
@@ -335,3 +333,4 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
         if len(repl_prompt) > 100:
             return repl_prompt[:100]
         return repl_prompt
+
