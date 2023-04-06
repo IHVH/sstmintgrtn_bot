@@ -10,7 +10,7 @@ from functions.doggie import RandomDogAPIFunction
 from functions.youtube import YoutubeFinder
 from functions.soap_country import SoapCountry
 from functions.animetarelka import Animetarelka,Mangatarelka
-from functions.chat_bot import Animetarelka,Mangatarelka
+from functions.chat_bot import chat_bot
 
 
 BOT_FUNCTIONS_2 = {
