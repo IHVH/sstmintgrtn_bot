@@ -42,9 +42,9 @@ def main(query):
             if len(output) == 4:
                 return output
             output.append(SEARCH(film))
-        except (Exception, BaseException):
-            continue
-            return output
         except json.decoder.JSONDecodeError:
             time.sleep(0.5)
+        except Exception:
+            continue
+
     return output
