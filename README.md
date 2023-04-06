@@ -56,7 +56,7 @@ Links to information about tokens
 
 [YTFINDERTOKEN](https://console.developers.google.com.)
 
-[openai.api_key](https://platform.openai.com/docs/api-reference)
+[openai.api_key](https://platform.openai.com/docs/api-reference) требуется VPN
 
 ## Adding telegram bot functions.
 
