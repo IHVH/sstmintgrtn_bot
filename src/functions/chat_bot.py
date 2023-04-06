@@ -7,7 +7,7 @@ import os
 import openai
 import telebot
 
-class DadataFunctionClass(BotFunctionABC):
+class chatBot(BotFunctionABC):
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot
     NUMBERS_ROWS = 6
