@@ -10,10 +10,10 @@ from old_app import old_start
 
 def get_log_level(env_key: str):
     str_level = os.environ.get(env_key)
-    if str_level in logging.getLevelNamesMapping().keys():
-        return logging.getLevelNamesMapping()[str_level]
+    if str_level in logging._nameToLevel.keys():
+        return logging._nameToLevel[str_level]
     else:
-        return logging.getLevelNamesMapping()["INFO"]
+        return logging._nameToLevel["INFO"]
             
 def get_logger()-> logging.Logger:
     logger = logging.getLogger(__name__)
