@@ -1,2 +1,4 @@
 [MESSAGES CONTROL]
 disable=C,R,W
+enable=bad-indentation,
+        unused-import

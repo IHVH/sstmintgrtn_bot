@@ -1,7 +1,7 @@
 from bot_func_abc import BotFunctionABC
 import telebot
 from telebot import types
-from telebot.callback_data import CallbackData, CallbackDataFilter
+from telebot.callback_data import CallbackData
 from typing import List
 import requests
 

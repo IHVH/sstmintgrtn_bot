@@ -4,9 +4,9 @@ import json
 import os
 
 def get_kinopoisk_token():
-        if "KP_TOKEN" in os.environ:
-            return os.environ["KP_TOKEN"]
-        return None
+    if "KP_TOKEN" in os.environ:
+        return os.environ["KP_TOKEN"]
+    return None
 #KINOPOISK = #os.environ["KP_TOKEN"]
 API = 'https://kinopoiskapiunofficial.tech/api/v2.1/'
 headers = {"X-API-KEY": get_kinopoisk_token()}

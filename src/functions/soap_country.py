@@ -1,20 +1,16 @@
 from bot_func_abc import BotFunctionABC
 import telebot
 from telebot import types
-from telebot.callback_data import CallbackData, CallbackDataFilter
+from telebot.callback_data import CallbackData
 from typing import List
 import zeep
-
-from emot.emo_unicode import UNICODE_EMOJI, UNICODE_EMOJI_ALIAS, EMOTICONS_EMO, EMOJI_ALIAS_UNICODE
-
+from emot.emo_unicode import UNICODE_EMOJI
 
 class SoapCountry(BotFunctionABC):
-    
+
     def __init__(self) -> None:
         wsdl_url = "http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL"
         self.client = zeep.Client(wsdl=wsdl_url)
-        
-
 
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot 
@@ -26,8 +22,6 @@ class SoapCountry(BotFunctionABC):
             self.country_name_dict[country.sISOCode] = country.sName
             self.country_phone_dict[country.sISOCode] = country.sPhoneCode
 
-        
-
         @bot.message_handler(commands=commands)
         def country_handler(message: types.Message):
             self.get_country_info(message)
@@ -38,9 +32,6 @@ class SoapCountry(BotFunctionABC):
             code = callback_data['code_button']
             country_info = self.client.service.FullCountryInfo(code)
             self.do_work_on_service_response(code, country_info, call.message.chat.id)
-    
-            
-
 
     def gen_markup(self, arrStr):
         markup = types.InlineKeyboardMarkup()
@@ -52,8 +43,6 @@ class SoapCountry(BotFunctionABC):
 
         markup.add(*buttons)
         return markup
-
-
 
     def country_code_from_message(self, message):
         str_spilt = message.text.split()
@@ -82,12 +71,10 @@ class SoapCountry(BotFunctionABC):
         for c_code, c_name in self.country_name_dict.items():
             if x.lower() in c_name.lower(): 
                 return c_code
-            
 
     def do_work_on_service_response(self, param, obj, chat_id):
         send_msg = f'ISOCode = {param} \n {obj}'
         self.bot.send_message(text=send_msg, chat_id=chat_id)
-        
 
     def get_country_info(self, message):
         code = self.country_code_from_message(message)
@@ -100,4 +87,3 @@ class SoapCountry(BotFunctionABC):
         else:
             country_info = self.client.service.FullCountryInfo(code)
             self.do_work_on_service_response(code, country_info, message.chat.id)
-    
