@@ -30,6 +30,13 @@ BOT_FUNCTIONS_2 = {
         "Описание способов использования, логики работы. Примеры вызова функции - /ebf \n"
         "Возможные параметры функции `/example` ",
     ),
+    "chat_bot": BotFunction2(
+        bot_function=chat_bot(),
+        commands=["chat"],
+        authors=["Alina65487"],
+        about="Бот отвечает на ваши вопросы и просьбы",
+        description="Задайте боту вопрос или попросите что то сделать после написания команды `/chat` Например /chat реши 2+2*2",
+    ),
     "github": BotFunction2(
         bot_function=GitHubFunctions(),
         commands=["git", "commits"],
