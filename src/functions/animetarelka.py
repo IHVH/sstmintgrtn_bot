@@ -1,4 +1,3 @@
-import os
 import requests
 import telebot
 from telebot import types
@@ -24,18 +23,12 @@ class Animetarelka(BotFunctionABC):
 
         if anime_episodes is None:
             anime_episodes = "число эпизодов не известно"
-        else:
-            anime_episodes = anime_episodes
 
         if anime_year is None:
             anime_year = "неизвестного года выпуска"
-        else:
-            anime_year = anime_year
 
         if anime_synopsis is None:
             anime_synopsis = "отсутствует"
-        else:
-            anime_synopsis = anime_synopsis
 
         if len(anime_synopsis) > 600:
             anime_synopsis = anime_synopsis[:600]
@@ -66,13 +59,9 @@ class Mangatarelka(BotFunctionABC):
 
         if manga_volumes == None:
             manga_volumes = 1
-        else:
-            manga_volumes = manga_volumes
 
         if manga_synopsis == None:
             manga_synopsis = "отсутствует"
-        else:
-            manga_synopsis = manga_synopsis
 
         if manga_status == "Finished":
             manga_status = "Завершена"

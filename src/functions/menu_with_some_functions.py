@@ -1,7 +1,7 @@
 from bot_func_abc import BotFunctionABC
 import telebot
 from telebot import types
-from telebot.callback_data import CallbackData, CallbackDataFilter
+from telebot.callback_data import CallbackData
 from typing import List
 import os
 import requests
@@ -33,7 +33,7 @@ class IndividualBotWithMenu(BotFunctionABC):
             if button_menu == "👨‍🚀":
                 self.iss_squad(call.message)
             if button_menu == "🌦":
-                self.get_agreement(call.message)
+                self.get_weather_agreement(call.message)
             if button_menu == "💸":
                 pass
 
@@ -41,7 +41,7 @@ class IndividualBotWithMenu(BotFunctionABC):
         def agree_buttons_callback(call: types.CallbackQuery):
             callback_data: dict = self.agreement_buttons.parse(callback_data=call.data)
             agreement_button = callback_data['agreement_button']
-            self.say_yes_no(call.message, agreement_button)
+            self.get_agreement(call.message, agreement_button)
 
     def create_menu_buttons(self):
         markup = types.InlineKeyboardMarkup()

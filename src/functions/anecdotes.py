@@ -2,18 +2,14 @@ import requests
 import random
 from bs4 import BeautifulSoup as b
 
-
 list_of_jokes = []
-ANECDOTE_URL = 'https://www.anekdot.ru/last/anekdot/'
-
 
 def par():
-    global ANECDOTE_URL
+    ANECDOTE_URL = 'https://www.anekdot.ru/last/anekdot/'
     r = requests.get(ANECDOTE_URL)
     soup = b(r.text, 'html.parser')
     anekdots = soup.find_all('div', class_='text')
     return [c.text for c in anekdots]
-
 
 def get_anecdote(message):
 

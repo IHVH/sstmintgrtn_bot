@@ -1,0 +1,17 @@
+[MESSAGES CONTROL]
+disable=C,R,
+        missing-timeout,
+        attribute-defined-outside-init,
+        logging-fstring-interpolation,
+        f-string-without-interpolation,
+        redefined-outer-name,
+        global-variable-not-assigned,
+        global-variable-undefined,
+        global-statement,
+        broad-exception-caught,
+        bare-except,
+        unused-variable,
+        unused-argument,
+        arguments-renamed,
+        protected-access,
+        unspecified-encoding
