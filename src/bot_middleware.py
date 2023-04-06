@@ -4,6 +4,13 @@ from telebot.handler_backends import BaseMiddleware
 import os
 
 class Middleware(BaseMiddleware):
+    
+    def pre_process(self, message, data):
+        raise NotImplementedError
+
+    def post_process(self, message, data, exception):
+        raise NotImplementedError
+
     def __init__(self, logger: logging.Logger, bot: telebot.TeleBot):
         self.update_types = ['message', 'callback_query']
         self.logger = logger

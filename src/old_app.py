@@ -206,7 +206,6 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
 
     @bot.message_handler(commands=[conf.get_value("gen_cmd")])
     def generate_handler(message):
-        global loading_image_id
         try:
             msgtext = message.text
 
