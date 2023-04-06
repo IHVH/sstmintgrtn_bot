@@ -21,7 +21,7 @@ jobs:
         pip install -r requirements.txt
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files 'src/*.py') -E
+        pylint $(git ls-files 'src/*.py')
     - name: Run Test
       run: |
         python -m unittest discover -s src -v

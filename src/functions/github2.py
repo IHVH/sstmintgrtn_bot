@@ -4,6 +4,7 @@ from telebot import types
 from telebot.callback_data import CallbackData
 from typing import List
 import requests
+import os
 
 class GitHubFunctions(BotFunctionABC):
     OWNER = 'IHVH'
