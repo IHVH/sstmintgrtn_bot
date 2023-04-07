@@ -18,6 +18,7 @@ To run locally, add an `.env` file with your keys to the root of the project. Or
 ```
 LOGLEVEL=INFO
 TBOT_LOGLEVEL=WARNING
+CONECTION_PGDB=
 EXAMPLETOKEN=for_example_token
 
 TBOTTOKEN=
