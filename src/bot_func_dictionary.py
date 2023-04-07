@@ -10,6 +10,7 @@ from functions.doggie import RandomDogAPIFunction
 from functions.youtube import YoutubeFinder
 from functions.soap_country import SoapCountry
 from functions.animetarelka import Animetarelka,Mangatarelka
+from functions.cat import CatFunction
 
 
 BOT_FUNCTIONS_2 = {
@@ -99,6 +100,13 @@ BOT_FUNCTIONS_2 = {
         authors=["d1mens1"],
         about="Слуйчайная манга",
         description=("/rndmanga выдает случайную мангу с краткой иформацией о ней")
+    ),
+    "cat": BotFunction2(
+        bot_function=CatFunction(),
+        commands=["cat"],
+        authors=["Qipk"],
+        about="Случайное фото кота",
+        description=("Введите /cat для получения случайного фото кота")
     )
 }
 
