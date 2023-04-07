@@ -7,6 +7,7 @@ import os
 import openai
 import telebot
 
+
 class chat_bot(BotFunctionABC):
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot
