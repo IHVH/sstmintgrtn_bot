@@ -14,7 +14,7 @@ class chat_bot(BotFunctionABC):
     openai.api_key = ""
     if not os.path.exists("users"):
         os.mkdir("users")
-    @bot.message_handler(content_types=['text'])
+    @bot.message_handler(func=lambda message: message.content_type == 'text')
     def msg(message):
         if f"{message.chat.id}.txt" not in os.listdir('users'):
             with open(f"users/{message.chat.id}.txt", "x") as f:
