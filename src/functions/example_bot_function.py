@@ -11,7 +11,7 @@ class ExampleBotFunction(BotFunctionABC):
         self.example_keyboard_factory = CallbackData('t_key_button', prefix=commands[0])
 
         @bot.message_handler(commands=commands)
-        def example_message_hendler(message: types.Message):
+        def example_message_handler(message: types.Message):
             msg = f'Ваш запрос обработан в ExampleBotFunction! EXAMPLETOKEN={self.get_example_token()}'
             print(msg)
             bot.send_message(text=msg, chat_id=message.chat.id, reply_markup=self.gen_markup())
