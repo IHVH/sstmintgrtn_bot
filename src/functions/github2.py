@@ -20,7 +20,7 @@ class GitHubFunctions(BotFunctionABC):
         self.git_keyboard_factory = CallbackData('git_key_button', prefix=commands[0])
 
         @bot.message_handler(commands=commands)
-        def git_msg_hendler(message: types.Message):
+        def git_msg_handler(message: types.Message):
             self.set_user_per_page(message)
             resp = self.request(message)
             self.proces_response(message, resp)
