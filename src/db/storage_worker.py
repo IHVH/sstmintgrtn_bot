@@ -43,12 +43,12 @@ class StorageWorker:
             messages = db.query(Message).filter(User.id == user.id).all()
             return messages
 
-    def get_user(self, id: str) -> User:
+    def get_user(self, user_id: str) -> User:
         with self.__db_session() as db:
-            user = db.get(User, id)
+            user = db.get(User, user_id)
             return user
 
-    def get_chat(self, id: str) -> Chat:
+    def get_chat(self, chat_id: str) -> Chat:
         with self.__db_session() as db:
-            chat = db.get(Chat, id)
+            chat = db.get(Chat, chat_id)
             return chat
