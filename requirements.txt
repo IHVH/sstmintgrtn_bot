@@ -11,3 +11,6 @@ pyyaml
 Pillow
 beautifulsoup4
 lyricsgenius
+psycopg2
+sqlalchemy
+sqlalchemy-utils

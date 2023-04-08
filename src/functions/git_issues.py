@@ -22,7 +22,7 @@ class GitIssues(BotFunctionABC):
 
 
         @bot.message_handler(commands=commands)
-        def issues_message_hendler(message: types.Message):
+        def issues_message_handler(message: types.Message):
             self.get_issues(message)
 
         @bot.callback_query_handler(func=None, config=self.issue_keyboard_factory.filter())

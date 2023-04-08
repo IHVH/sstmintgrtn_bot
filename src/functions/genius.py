@@ -9,7 +9,7 @@ class GeniusFunction(BotFunctionABC):
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot 
         @bot.message_handler(commands=commands)
-        def example_message_hendler(message: types.Message):
+        def example_message_handler(message: types.Message):
             bot.send_message(text=self.get_lyrics(message), chat_id=message.chat.id)
 
     def get_lyrics(self, message):
