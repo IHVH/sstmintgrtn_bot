@@ -10,6 +10,7 @@ from functions.doggie import RandomDogAPIFunction
 from functions.youtube import YoutubeFinder
 from functions.soap_country import SoapCountry
 from functions.animetarelka import Animetarelka,Mangatarelka
+from functions.goroskop import GoroskopFunction
 
 
 BOT_FUNCTIONS_2 = {
@@ -99,6 +100,13 @@ BOT_FUNCTIONS_2 = {
         authors=["d1mens1"],
         about="Слуйчайная манга",
         description=("/rndmanga выдает случайную мангу с краткой иформацией о ней")
+    ),
+    "goroskop": BotFunction2(
+        bot_function=GoroskopFunction(),
+        commands=["goroskop"],
+        authors=["livin161"],
+        about="Пример goroskopa",
+        description="Goroskop `/goroskop` ",
     )
 }
 
