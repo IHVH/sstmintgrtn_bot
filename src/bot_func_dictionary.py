@@ -114,8 +114,8 @@ BOT_FUNCTIONS = {
     "get_gif": BotFunction(
         commands=["get_gif"],
         authors=["DavidShariev"],
-        description="Подбор подходящей гивки. /get_gif [строка для поиска гивки]",
         about="Подбор подходящей гивки",
+        description="Подбор подходящей гивки. `/get_gif` <строка для поиска гивки>",
     ),
     "kinopoisk": BotFunction(
         commands=["kinopoisk"],
