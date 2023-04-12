@@ -1,0 +1,97 @@
+import telebot
+import requests
+from typing import List
+from bot_func_abc import BotFunctionABC
+
+
+class RandomDogAPIFunction(BotFunctionABC):
+    def __init__(self):
+        self.random_dog_data = "random_dog_breed"
+        self.breed_list_data = "dog_breed_list"
+        self.breed_dict = {}
+        self.breed_data_prefix = "dog_breed:"
+
+    def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
+        self.bot = bot
+
+        @bot.callback_query_handler(func=lambda call: True)
+        def callback_handler(call):
+            chat_id = call.message.chat.id
+            data = call.data
+
+            if data.startswith(self.breed_data_prefix):
+                breed = data[len(self.breed_data_prefix):]
+                self.breed_dict[chat_id] = breed
+                self.send_dog_photo(chat_id, breed)
+            elif data == self.random_dog_data:
+                breed = self.breed_dict.get(chat_id)
+                if breed:
+                    del self.breed_dict[chat_id]
+                    self.send_dog_photo(chat_id, breed)
+                else:
+                    self.send_random_dog_photo(chat_id)
+
+        @bot.message_handler(commands=commands)
+        def random_dog_handler(message):
+            chat_id = message.chat.id
+            breed = ""
+            if len(message.text.split()) > 1:
+                breed = message.text.split()[1].lower()
+
+            if breed:
+                response = requests.get(
+                    f"https://dog.ceo/api/breed/{breed}/images/random")
+                url = response.json()["message"]
+            else:
+                response = requests.get(
+                    "https://dog.ceo/api/breeds/image/random")
+                url = response.json()["message"]
+
+            markup = self.get_buttons_markup(breed)
+            bot.send_photo(chat_id=chat_id, photo=url, reply_markup=markup)
+
+        @bot.message_handler(commands=['breeds'])
+        def breed_list_handler(message):
+            chat_id = message.chat.id
+            response = requests.get("https://dog.ceo/api/breeds/list/all")
+            breeds = response.json()["message"]
+            text = "list of all available dog breeds:\n\n" + "\n".join(breeds)
+            bot.send_message(chat_id, text)
+
+    def get_buttons_markup(self, breed: str) -> telebot.types.InlineKeyboardMarkup:
+        markup = telebot.types.InlineKeyboardMarkup()
+
+        if breed:
+            markup.add(
+                telebot.types.InlineKeyboardButton(
+                    text="🐾 just one photo and that's it!",
+                    callback_data=self.random_dog_data
+                ),
+                telebot.types.InlineKeyboardButton(
+                    text=f"🐶 {breed.title()}",
+                    callback_data=f"{self.breed_data_prefix}{breed.lower()}"
+                )
+
+            )
+        else:
+            markup.add(
+                telebot.types.InlineKeyboardButton(
+                    text="🐾 random breed",
+                    callback_data=self.random_dog_data
+                ),
+            )
+
+        return markup
+
+    def send_random_dog_photo(self, chat_id: int):
+        response = requests.get("https://dog.ceo/api/breeds/image/random")
+        url = response.json()["message"]
+        markup = self.get_buttons_markup("")
+        self.bot.send_photo(chat_id=chat_id, photo=url, reply_markup=markup)
+
+    def send_dog_photo(self, chat_id: int, breed: str):
+        response = requests.get(
+            f"https://dog.ceo/api/breed/{breed}/images/random")
+        url = response.json()["message"]
+        markup = self.get_buttons_markup(breed)
+        self.bot.send_photo(chat_id=chat_id, photo=url, reply_markup=markup)
