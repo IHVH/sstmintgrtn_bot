@@ -3,8 +3,6 @@ import telebot
 from telebot import types
 from bot_func_abc import BotFunctionABC
 from typing import List
-import datetime  
-from datetime import datetime
 
 class HumanGenerator(BotFunctionABC):
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
