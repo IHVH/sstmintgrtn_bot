@@ -11,6 +11,7 @@ from functions.youtube import YoutubeFinder
 from functions.soap_country import SoapCountry
 from functions.animetarelka import Animetarelka,Mangatarelka
 from functions.cat import CatFunction
+from functions.human import HumanGenerator
 
 
 BOT_FUNCTIONS_2 = {
@@ -107,6 +108,13 @@ BOT_FUNCTIONS_2 = {
         authors=["Qipk"],
         about="Случайное фото кота",
         description=("Введите /cat для получения случайного фото кота")
+    ),
+    "human": BotFunction2(
+        bot_function=HumanGenerator(),
+        commands=["human"],
+        authors=["IMJAV"],
+        about="Случайная собачка?..\n\nСлучайный котик?..\n\nА может, случайный аНеКдОт?..\n.\n.\n.\nА как насчёт...\n.\n.\n.\nСЛУЧАЙНОГО ЧЕЛОВЕКА С ЕГО ЛИЧНЫМИ ДАННЫМИ, М???\n",
+        description=("\nПочувствуй себя Большим Братом! ;)")
     )
 }
 
