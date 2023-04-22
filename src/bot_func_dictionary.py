@@ -12,7 +12,7 @@ from functions.soap_country import SoapCountry
 from functions.animetarelka import Animetarelka,Mangatarelka
 from functions.cat import CatFunction
 from functions.human import HumanGenerator
-
+from functions.goroskop import GoroskopFunction
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -115,6 +115,13 @@ BOT_FUNCTIONS_2 = {
         authors=["IMJAV"],
         about="Случайная собачка?..\n\nСлучайный котик?..\n\nА может, случайный аНеКдОт?..\n.\n.\n.\nА как насчёт...\n.\n.\n.\nСЛУЧАЙНОГО ЧЕЛОВЕКА С ЕГО ЛИЧНЫМИ ДАННЫМИ, М???\n",
         description=("\nПочувствуй себя Большим Братом! ;)")
+    ),
+    "goroskop": BotFunction2(
+        bot_function=GoroskopFunction(),
+        commands=["goroskop"],
+        authors=["livin161"],
+        about="Выводит гороско на сегодняшний день",
+        description=("/goroskop выдает гороскоп на сегодняшний день")
     )
 }
 
