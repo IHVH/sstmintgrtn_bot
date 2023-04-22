@@ -105,8 +105,8 @@ BOT_FUNCTIONS_2 = {
         bot_function=GoroskopFunction(),
         commands=["goroskop"],
         authors=["livin161"],
-        about="Пример goroskopa",
-        description="Goroskop `/goroskop` ",
+        about="Выводит гороско на сегодняшний день",
+        description=("/goroskop выдает гороскоп на сегодняшний день")
     )
 }
 
