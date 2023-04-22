@@ -50,6 +50,10 @@ class StartInfoBotFunction(BotFunctionABC):
 Если необходимы какие-то токены или другие аутентификационные данные то добавляете информацию о них в файл `README.md`
 [README.md](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/README.md)
 Протестировав всё локально отправляете Pull request в основной репозиторий.
+
+Вопросы можно задавать, обсуждать в общем телеграм чате [sstmintgrtn](https://t.me/sstmintgrtn).
+Список общедоступных api можно посмотреть в [project](https://github.com/users/IHVH/projects/1) 
+либо найти подходящий в репозитории [public-apis](https://github.com/IHVH/public-apis)  
         '''        
         
         self.bot.send_message(text=txt, chat_id=message.chat.id, parse_mode='Markdown')
