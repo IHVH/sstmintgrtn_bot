@@ -52,15 +52,19 @@ class GoroskopFunction(BotFunctionABC):
     def get_response(self, link: str, re: bool = True):
         with httpx.Client(headers=self.headers, follow_redirects=True) as htx:
             result: httpx.Response = htx.get(url=link)
-            if result.status_code != 200 and re:
-                return self.get_response(link=link, re=False)
-            else:
+            if result.status_code == 200:
                 return result.text
+            else:
+                raise Exception('Плохой запрос: Код: ' + result.status_code)
             
 
     def get_text_horoscope(self, zodiac: str):
         link = self.link + f"{zodiac}/today/"
-        response_result = self.get_response(link=link)
+        try:
+          response_result = self.get_response(link=link)
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+
         beautifulsoup: BeautifulSoup = BeautifulSoup(markup=response_result, features='lxml')
         text = beautifulsoup.find(name='div', class_='article__text')
         return text.text
