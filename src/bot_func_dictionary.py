@@ -21,7 +21,7 @@ BOT_FUNCTIONS_2 = {
         authors=["IHVH"],
         about="Старт бота и помощь по командам!",
         description="Функция предназначена для информирования пользователей о возможностях бота. \n"
-        "Спросить как сдать зачёт отправь /how_pass ",
+        "Спросить как сдать зачёт отправь `/how_pass` ",
     ),
     "example_bot_function": BotFunction2(
         bot_function=ExampleBotFunction(),

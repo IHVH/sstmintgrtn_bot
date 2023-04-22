@@ -19,11 +19,16 @@ class StartInfoBotFunction(BotFunctionABC):
             if(message.text.startswith("/how_pass")):
                 self.send_how_pass(message)
             else:
-                msg = f'Привет {message.from_user.full_name}! \nВот список доступных функций:'
+                msg = f"Привет {message.from_user.full_name}! \nВот список доступных функций: \n"
+                st = self.get_slep_time(message)
+                if(self.slip_time != st):
+                    msg += f"В группе установлен slow_mode_delay = {st} \n"
+                    msg += "Сообщения доставляются с задержкой, некоторые функции могут работать неправильно!"
                 bot.send_message(text=msg, chat_id=message.chat.id)
                 self.send_messages_bf2(message)
                 self.send_messages_bf(message)
                 msg_how_pass = "Спросить как сдать зачёт отправь /how_pass "
+                time.sleep(st)
                 bot.send_message(text=msg_how_pass, chat_id=message.chat.id)
 
         @bot.callback_query_handler(func=None, config=self.start_keyboard_factory.filter())
@@ -50,28 +55,34 @@ class StartInfoBotFunction(BotFunctionABC):
 Если необходимы какие-то токены или другие аутентификационные данные то добавляете информацию о них в файл `README.md`
 [README.md](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/README.md)
 Протестировав всё локально отправляете Pull request в основной репозиторий.
+
+Вопросы можно задавать, обсуждать в общем телеграм чате [sstmintgrtn](https://t.me/sstmintgrtn).
+Список общедоступных api можно посмотреть в [project](https://github.com/users/IHVH/projects/1) 
+либо найти подходящий в репозитории [public-apis](https://github.com/IHVH/public-apis)  
         '''        
         
         self.bot.send_message(text=txt, chat_id=message.chat.id, parse_mode='Markdown')
 
 
     def send_messages_bf2(self, message: types.Message):
+        ts = self.get_slep_time(message=message)
         for key, val in bot_func_dictionary.BOT_FUNCTIONS_2.items():
             if val.state:
                 txt = f'{val.about} \n'
                 for command in val.commands:
                     txt += f' - `/{command}` \n'
                 #txt += "\n  - /".join(val.commands)
+                time.sleep(ts)
                 self.bot.send_message(text=txt, chat_id=message.chat.id, reply_markup=self.gen_markup(key), parse_mode='Markdown')
-                time.sleep(self.slip_time)
-
+                
     def send_messages_bf(self, message: types.Message):
+        ts = self.get_slep_time(message=message)
         for key, val in bot_func_dictionary.BOT_FUNCTIONS.items():
             txt = f'{val.about} \n'
             for command in val.commands:
                 txt += f' - `/{command}` \n'
+            time.sleep(ts)
             self.bot.send_message(text=txt, chat_id=message.chat.id, reply_markup=self.gen_markup(key), parse_mode='Markdown')
-            time.sleep(self.slip_time)
 
     def find_function_info(self, key: str) -> BotFunction:
         if key in bot_func_dictionary.BOT_FUNCTIONS_2:
@@ -80,6 +91,13 @@ class StartInfoBotFunction(BotFunctionABC):
         if key in bot_func_dictionary.BOT_FUNCTIONS:
             return bot_func_dictionary.BOT_FUNCTIONS[key]
         
+    def get_slep_time(self, message: types.Message) -> float:
+        chat = self.bot.get_chat(message.chat.id)
+        ts = self.slip_time
+        if(chat.slow_mode_delay):
+            ts += chat.slow_mode_delay
+        return ts
+
     def send_detail_messages(self, message: types.Message, bot_function: BotFunction):
         txt = f'*{bot_function.about}* \n'
         for command in bot_function.commands:
