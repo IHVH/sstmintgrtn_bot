@@ -49,17 +49,14 @@ class GoroskopFunction(BotFunctionABC):
       
         return markup
     
-    limit = 10 
-    i = 0
-    def get_response(self, link: str):
+    def get_response(self, link: str, re: bool = True):
         with httpx.Client(headers=self.headers, follow_redirects=True) as htx:
             result: httpx.Response = htx.get(url=link)
-            if result.status_code != 200 and self.i < self.limit:
-                self.i += 1
-                return self.get_response(link=link)
+            if result.status_code != 200 and re:
+                return self.get_response(link=link, re=False)
             else:
                 return result.text
-
+            
 
     def get_text_horoscope(self, zodiac: str):
         link = self.link + f"{zodiac}/today/"
