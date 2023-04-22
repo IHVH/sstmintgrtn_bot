@@ -16,10 +16,15 @@ class StartInfoBotFunction(BotFunctionABC):
 
         @bot.message_handler(commands=commands)
         def start_message_hendler(message: types.Message):
-            msg = f'Привет {message.from_user.full_name}! \nВот список доступных функций:'
-            bot.send_message(text=msg, chat_id=message.chat.id)
-            self.send_messages_bf2(message)
-            self.send_messages_bf(message)
+            if(message.text.startswith("/how_pass")):
+                self.send_how_pass(message)
+            else:
+                msg = f'Привет {message.from_user.full_name}! \nВот список доступных функций:'
+                bot.send_message(text=msg, chat_id=message.chat.id)
+                self.send_messages_bf2(message)
+                self.send_messages_bf(message)
+                msg_how_pass = "Спросить как сдать зачёт отправь /how_pass "
+                bot.send_message(text=msg_how_pass, chat_id=message.chat.id)
 
         @bot.callback_query_handler(func=None, config=self.start_keyboard_factory.filter())
         def start_keyboard_callback(call: types.CallbackQuery):
@@ -27,6 +32,28 @@ class StartInfoBotFunction(BotFunctionABC):
             start_f_button = callback_data['start_f_button']
             function = self.find_function_info(start_f_button)
             self.send_detail_messages(call.message, function)
+
+    def send_how_pass(self, message: types.Message):
+        txt = '''
+        Необходимо в общий проект [OEMIB_PI01_19_TBOT](https://github.com/IHVH/OEMIB_PI01_19_TBOT)
+добавить свою функцию которая используя какие либо из изученных технологий 
+реализует взаимодействие с внешней системой. Необходимо использовать только общедоступные api. 
+Функция должна выполнять какое то осмысленное (желательно полезное) действие. 
+
+Для этого в вашем аккаунте на github.com делаете fork репозитария 
+Добавляете вашу функцию отдельным фалом в папку `/src/functions/ `
+Весь код функции должен быть внутри класса унаследованного от абстрактного класса BotFunctionABC
+В репозитории есть пример `example_bot_function.py`  как организовать наследование и код внутри класса 
+[example_bot_function.py](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/src/functions/example_bot_function.py)
+Затем в фале `bot_func_dictionary.py` необходимо добавить информацию о вашей функции в словарь `BOT_FUNCTIONS_2`
+[bot_func_dictionary.py](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/src/bot_func_dictionary.py)
+Если необходимы какие-то токены или другие аутентификационные данные то добавляете информацию о них в файл `README.md`
+[README.md](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/README.md)
+Протестировав всё локально отправляете Pull request в основной репозиторий.
+        '''        
+        
+        self.bot.send_message(text=txt, chat_id=message.chat.id, parse_mode='Markdown')
+
 
     def send_messages_bf2(self, message: types.Message):
         for key, val in bot_func_dictionary.BOT_FUNCTIONS_2.items():

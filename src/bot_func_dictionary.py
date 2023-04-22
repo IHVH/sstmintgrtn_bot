@@ -12,15 +12,16 @@ from functions.soap_country import SoapCountry
 from functions.animetarelka import Animetarelka,Mangatarelka
 from functions.cat import CatFunction
 from functions.human import HumanGenerator
-
+from functions.goroskop import GoroskopFunction
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
         bot_function=StartInfoBotFunction(),
-        commands=["start", "help", "s", "h"],
+        commands=["start", "help", "s", "h", "how_pass"],
         authors=["IHVH"],
         about="Старт бота и помощь по командам!",
-        description="Функция предназначена для информирования пользователей о возможностях бота.",
+        description="Функция предназначена для информирования пользователей о возможностях бота. \n"
+        "Спросить как сдать зачёт отправь /how_pass ",
     ),
     "example_bot_function": BotFunction2(
         bot_function=ExampleBotFunction(),
@@ -115,6 +116,13 @@ BOT_FUNCTIONS_2 = {
         authors=["IMJAV"],
         about="Случайная собачка?..\n\nСлучайный котик?..\n\nА может, случайный аНеКдОт?..\n.\n.\n.\nА как насчёт...\n.\n.\n.\nСЛУЧАЙНОГО ЧЕЛОВЕКА С ЕГО ЛИЧНЫМИ ДАННЫМИ, М???\n",
         description=("\nПочувствуй себя Большим Братом! ;)")
+    ),
+    "goroskop": BotFunction2(
+        bot_function=GoroskopFunction(),
+        commands=["goroskop"],
+        authors=["livin161"],
+        about="Выводит гороско на сегодняшний день",
+        description=("/goroskop выдает гороскоп на сегодняшний день")
     )
 }
 
@@ -122,8 +130,8 @@ BOT_FUNCTIONS = {
     "get_gif": BotFunction(
         commands=["get_gif"],
         authors=["DavidShariev"],
-        description="Подбор подходящей гивки. /get_gif [строка для поиска гивки]",
         about="Подбор подходящей гивки",
+        description="Подбор подходящей гивки. `/get_gif` <строка для поиска гивки>",
     ),
     "kinopoisk": BotFunction(
         commands=["kinopoisk"],
