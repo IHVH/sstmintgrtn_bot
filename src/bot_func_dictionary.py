@@ -16,10 +16,11 @@ from functions.cat import CatFunction
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
         bot_function=StartInfoBotFunction(),
-        commands=["start", "help", "s", "h"],
+        commands=["start", "help", "s", "h", "how_pass"],
         authors=["IHVH"],
         about="Старт бота и помощь по командам!",
-        description="Функция предназначена для информирования пользователей о возможностях бота.",
+        description="Функция предназначена для информирования пользователей о возможностях бота. \n"
+        "Спросить как сдать зачёт отправь /how_pass ",
     ),
     "example_bot_function": BotFunction2(
         bot_function=ExampleBotFunction(),
