@@ -55,16 +55,12 @@ class GoroskopFunction(BotFunctionABC):
             if result.status_code == 200:
                 return result.text
             else:
-                raise Exception('Плохой запрос: Код: ' + result.status_code)
+                return 'Плохой запрос: Код: ' + result.status_code
             
 
     def get_text_horoscope(self, zodiac: str):
         link = self.link + f"{zodiac}/today/"
-        try:
-          response_result = self.get_response(link=link)
-        except Exception as err:
-            print(f"Unexpected {err=}, {type(err)=}")
-
+        response_result = self.get_response(link)
         beautifulsoup: BeautifulSoup = BeautifulSoup(markup=response_result, features='lxml')
         text = beautifulsoup.find(name='div', class_='article__text')
         return text.text
