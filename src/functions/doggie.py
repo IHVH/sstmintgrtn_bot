@@ -14,49 +14,54 @@ class RandomDogAPIFunction(BotFunctionABC):
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot
 
-        @bot.callback_query_handler(func=lambda call: True)
+        @bot.callback_query_handler(func=lambda call: call.data.startswith(self.breed_data_prefix) or call.data == self.random_dog_data)
         def callback_handler(call):
             chat_id = call.message.chat.id
             data = call.data
 
             if data.startswith(self.breed_data_prefix):
                 breed = data[len(self.breed_data_prefix):]
+                if chat_id in self.breed_dict and self.breed_dict[chat_id] != breed:
+                    return
+
                 self.breed_dict[chat_id] = breed
                 self.send_dog_photo(chat_id, breed)
             elif data == self.random_dog_data:
-                breed = self.breed_dict.get(chat_id)
-                if breed:
-                    del self.breed_dict[chat_id]
-                    self.send_dog_photo(chat_id, breed)
-                else:
-                    self.send_random_dog_photo(chat_id)
+                # breed = self.breed_dict.get(chat_id)
+                self.send_random_dog_photo(chat_id)
+                # if breed:
+                #     del self.breed_dict[chat_id]
+                #     self.send_dog_photo(chat_id, breed)
+                # else:
+                #     self.send_random_dog_photo(chat_id)
 
-        @bot.message_handler(commands=commands)
+        @bot.message_handler(commands=['d', 'breeds'])
         def random_dog_handler(message):
             chat_id = message.chat.id
-            breed = ""
-            if len(message.text.split()) > 1:
-                breed = message.text.split()[1].lower()
 
-            if breed:
-                response = requests.get(
-                    f"https://dog.ceo/api/breed/{breed}/images/random")
-                url = response.json()["message"]
-            else:
-                response = requests.get(
-                    "https://dog.ceo/api/breeds/image/random")
-                url = response.json()["message"]
+            if message.text.startswith('/d'):
+                breed = ""
+                if len(message.text.split()) > 1:
+                    breed = message.text.split()[1].lower()
 
-            markup = self.get_buttons_markup(breed)
-            bot.send_photo(chat_id=chat_id, photo=url, reply_markup=markup)
+                if breed:
+                    response = requests.get(
+                        f"https://dog.ceo/api/breed/{breed}/images/random")
+                    url = response.json()["message"]
+                else:
+                    response = requests.get(
+                        "https://dog.ceo/api/breeds/image/random")
+                    url = response.json()["message"]
 
-        @bot.message_handler(commands=['breeds'])
-        def breed_list_handler(message):
-            chat_id = message.chat.id
-            response = requests.get("https://dog.ceo/api/breeds/list/all")
-            breeds = response.json()["message"]
-            text = "list of all available dog breeds:\n\n" + "\n".join(breeds)
-            bot.send_message(chat_id, text)
+                markup = self.get_buttons_markup(breed)
+                bot.send_photo(chat_id=chat_id, photo=url, reply_markup=markup)
+
+            elif message.text.startswith('/breeds'):
+                response = requests.get("https://dog.ceo/api/breeds/list/all")
+                breeds = response.json()["message"]
+                text = "list of all available dog breeds:\n\n" + \
+                    "\n".join(breeds)
+                bot.send_message(chat_id, text)
 
     def get_buttons_markup(self, breed: str) -> telebot.types.InlineKeyboardMarkup:
         markup = telebot.types.InlineKeyboardMarkup()
@@ -64,7 +69,7 @@ class RandomDogAPIFunction(BotFunctionABC):
         if breed:
             markup.add(
                 telebot.types.InlineKeyboardButton(
-                    text="🐾 just one photo and that's it!",
+                    text="🐾 get another picture",
                     callback_data=self.random_dog_data
                 ),
                 telebot.types.InlineKeyboardButton(
@@ -76,7 +81,7 @@ class RandomDogAPIFunction(BotFunctionABC):
         else:
             markup.add(
                 telebot.types.InlineKeyboardButton(
-                    text="🐾 random breed",
+                    text="🐾 get random breed",
                     callback_data=self.random_dog_data
                 ),
             )
