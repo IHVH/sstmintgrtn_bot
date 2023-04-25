@@ -66,10 +66,12 @@ BOT_FUNCTIONS_2 = {
     ),
     "doggie": BotFunction2(
         bot_function=RandomDogAPIFunction(),
-        commands=["doggie"],
+        commands=["doggie","d","breeds"],
         authors=["may-uri"],
         about="Случайная фотография собачки, способная осчастливить любого.",
-        description="Опробуйте же!",
+        description="\n*/doggie*, */d* - вызов случайной картинки с собачкой,\n ⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀\n"
+        "/doggie *{breed}*, /d *{breed}* - вызов картинки с собачкой определенной породы, которая определяется в {breed},\n⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀\n"
+        "*/breeds* - вывод списка со всеми возможными породами",
     ),
     "youtube": BotFunction2(
         bot_function=YoutubeFinder(),
