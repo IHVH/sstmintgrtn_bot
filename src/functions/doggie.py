@@ -35,7 +35,7 @@ class RandomDogAPIFunction(BotFunctionABC):
                 # else:
                 #     self.send_random_dog_photo(chat_id)
 
-        @bot.message_handler(commands=['d', 'breeds'])
+        @bot.message_handler(commands=commands)
         def random_dog_handler(message):
             chat_id = message.chat.id
 
@@ -69,11 +69,11 @@ class RandomDogAPIFunction(BotFunctionABC):
         if breed:
             markup.add(
                 telebot.types.InlineKeyboardButton(
-                    text="🐾 get another picture",
+                    text="🐾 get random breed",
                     callback_data=self.random_dog_data
                 ),
                 telebot.types.InlineKeyboardButton(
-                    text=f"🐶 {breed.title()}",
+                    text=f"🐶 get {breed.lower()}",
                     callback_data=f"{self.breed_data_prefix}{breed.lower()}"
                 )
 
@@ -81,7 +81,7 @@ class RandomDogAPIFunction(BotFunctionABC):
         else:
             markup.add(
                 telebot.types.InlineKeyboardButton(
-                    text="🐾 get random breed",
+                    text="🐾get random breed",
                     callback_data=self.random_dog_data
                 ),
             )
