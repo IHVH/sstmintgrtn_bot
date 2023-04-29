@@ -130,7 +130,7 @@ BOT_FUNCTIONS_2 = {
     "currency_exchange_rate": BotFunction2(
         bot_function=GetCurrencyExchangeRate(),
         commands=["currency"],
-        authors=["nastya_shashkova"],
+        authors=["xeotype"],
         about="Показывает текущий курс валют к рублю",
         description="Собсна смотрим текущий курс валют, ето всё",
     ),
