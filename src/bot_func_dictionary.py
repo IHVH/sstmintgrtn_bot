@@ -13,6 +13,7 @@ from functions.animetarelka import Animetarelka,Mangatarelka
 from functions.cat import CatFunction
 from functions.human import HumanGenerator
 from functions.goroskop import GoroskopFunction
+from functions.currency_exchange_rate import GetCurrencyExchangeRate
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -66,10 +67,12 @@ BOT_FUNCTIONS_2 = {
     ),
     "doggie": BotFunction2(
         bot_function=RandomDogAPIFunction(),
-        commands=["doggie"],
+        commands=["doggie","d","breeds"],
         authors=["may-uri"],
         about="Случайная фотография собачки, способная осчастливить любого.",
-        description="Опробуйте же!",
+        description="\n*/doggie*, */d* - вызов случайной картинки с собачкой,\n ⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀\n"
+        "/doggie *{breed}*, /d *{breed}* - вызов картинки с собачкой определенной породы, которая определяется в {breed},\n⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀\n"
+        "*/breeds* - вывод списка со всеми возможными породами",
     ),
     "youtube": BotFunction2(
         bot_function=YoutubeFinder(),
@@ -123,7 +126,14 @@ BOT_FUNCTIONS_2 = {
         authors=["livin161"],
         about="Выводит гороско на сегодняшний день",
         description=("/goroskop выдает гороскоп на сегодняшний день")
-    )
+    ),
+    "currency_exchange_rate": BotFunction2(
+        bot_function=GetCurrencyExchangeRate(),
+        commands=["currency"],
+        authors=["xeotype"],
+        about="Показывает текущий курс валют к рублю",
+        description="Собсна смотрим текущий курс валют, ето всё",
+    ),
 }
 
 BOT_FUNCTIONS = {
