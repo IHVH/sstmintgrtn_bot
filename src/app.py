@@ -1,10 +1,14 @@
 import logging
 import sys
+import inspect
 import os
+from pathlib import Path
+from typing import List
 import telebot
 from bot_middleware import Middleware
 from bot_callback_filter import SystemIntegrationBotCallbackFilter
 from bot_func_dictionary import BOT_FUNCTIONS_2
+from bot_func_abc import AtomicBotFunctionABC
 
 from old_app import old_start
 
@@ -34,7 +38,7 @@ def get_bot()-> telebot.TeleBot:
     return bot
 
 def starter_functions():
-
+    print(type(load_functions()))
     for bf_key, bf_value in BOT_FUNCTIONS_2.items():
         try:
             bf_value.bot_function.set_handlers(bot=bot, commands=bf_value.commands)
@@ -50,8 +54,30 @@ def starter_functions():
     def text_messages(message):
         bot.reply_to(message, "Text = " + message.text)
         bot.send_message(text="Ваш запрос не обработан!!!", chat_id=message.chat.id)
-    
-    
+
+
+
+def load_functions() -> List[AtomicBotFunctionABC]:
+    func_dir = "functions"
+    atomic_dir = "atomic"
+    atomic_func_path = Path.cwd() / "src" / func_dir / atomic_dir
+    suffix = ".py"
+    lst = os.listdir(atomic_func_path)
+    function_objects: List[AtomicBotFunctionABC] = []
+    for fn_str in lst:
+        if suffix in fn_str:
+            mn = fn_str.removesuffix(suffix)
+            module = __import__(f"{func_dir}.{atomic_dir}.{mn}", fromlist = ["*"])
+            for name, cls in inspect.getmembers(module):
+                if inspect.isclass(cls) and cls.__base__ is AtomicBotFunctionABC:
+                    obj: AtomicBotFunctionABC = cls() 
+                    obj.set_handlers(bot)
+                    
+                    function_objects.append(obj)
+                    logger.info(f"Add object - {obj}; From module {module}; Class neme='{name}', ")
+
+    return function_objects
+
 logger = get_logger()
 bot = get_bot()
 

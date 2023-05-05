@@ -5,9 +5,40 @@ import telebot
 class BotFunctionABC(ABC):
     @abstractmethod
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
-        self.bot = bot 
-        @bot.message_handler(commands=commands)
-        def hendler(message):
-            msg = "Ваш запрос обработан в базовом абстрактном класе!!!"
-            print(msg)
-            bot.send_message(text=msg, chat_id=message.chat.id)
+        """Message handlers need to be set! """
+
+class AtomicBotFunctionABC(BotFunctionABC):
+    
+    @property
+    @abstractmethod
+    def commands(self) -> List[str]:
+        """Command list needed! """
+
+    @property
+    @abstractmethod
+    def authors(self) -> List[str]:
+        """Authors list needed! """
+
+    @property
+    @abstractmethod
+    def about(self) -> str:
+        """about list needed! """
+
+    @property
+    @abstractmethod
+    def description(self) -> str:
+        """description list needed! """
+
+    @property
+    @abstractmethod
+    def state(self) -> bool:
+        """state list needed! """
+
+    # @abstractmethod
+    # def set_handlers(self, bot: telebot.TeleBot):
+    #     """Message handlers need to be set! """
+
+    def detailed_function_description(self) -> str:
+        txt = self.about + self.description
+        return txt
+    
