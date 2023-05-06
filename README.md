@@ -31,6 +31,7 @@ OPENWEATHERTOKEN=
 DADATA_TOKEN=
 GENIUS_TOKEN=
 YTFINDERTOKEN=
+API_MUSIC=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 
@@ -73,6 +74,3 @@ you need to add information about your function to the **BOT_FUNCTIONS_2** dicti
 - description - a detailed description of the function with a description of the parameters if they are needed
 
 Explore the capabilities of the library that is used in the project [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI).
-
-
-To search for the artist's albums, use API_MUSIC=""
