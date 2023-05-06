@@ -14,6 +14,7 @@ from functions.cat import CatFunction
 from functions.human import HumanGenerator
 from functions.goroskop import GoroskopFunction
 from functions.currency_exchange_rate import GetCurrencyExchangeRate
+from src.functions.music import Music
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -126,6 +127,13 @@ BOT_FUNCTIONS_2 = {
         authors=["livin161"],
         about="Выводит гороско на сегодняшний день",
         description=("/goroskop выдает гороскоп на сегодняшний день")
+    ),
+    "music": BotFunction2(
+        bot_function=Music(),
+        commands=["music"],
+        authors=["cash3mod3l"],
+        about="Выводит 5 последних альбомов исполнителей",
+        description=("/music")
     ),
     "currency_exchange_rate": BotFunction2(
         bot_function=GetCurrencyExchangeRate(),
