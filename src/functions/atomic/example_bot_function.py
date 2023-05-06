@@ -5,7 +5,7 @@ from telebot.callback_data import CallbackData
 from typing import List
 import os
 
-class ExampleBotFunction(AtomicBotFunctionABC):
+class AtomicExampleBotFunction(AtomicBotFunctionABC):
     commands: List[str] = ["example", "ebf"]
     authors: List[str] = ["IHVH"]
     about: str = "Пример функции бота!"
@@ -20,7 +20,7 @@ class ExampleBotFunction(AtomicBotFunctionABC):
 
         @bot.message_handler(commands=self.commands)
         def example_message_hendler(message: types.Message):
-            msg = f"Ваш запрос обработан в ExampleBotFunction! \nUSER ID = {message.from_user.id} \nEXAMPLETOKEN = {self.get_example_token()}"
+            msg = f"Ваш запрос обработан в AtomicExampleBotFunction! \nUSER ID = {message.from_user.id} \nEXAMPLETOKEN = {self.get_example_token()}"
             print(msg)
             bot.send_message(text=msg, chat_id=message.chat.id, reply_markup=self.gen_markup())
 

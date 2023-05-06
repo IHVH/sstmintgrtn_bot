@@ -38,11 +38,22 @@ def get_bot()-> telebot.TeleBot:
     return bot
 
 def starter_functions():
-    print(type(load_functions()))
+    
+    for funct in atom_functions_list:
+        try:
+            funct.set_handlers(bot)
+            logger.info(f'{funct} - start OK!')
+        except Exception as e:
+            funct.state = False
+            logger.warning(f'{funct} - start EXCEPTION!')
+
     for bf_key, bf_value in BOT_FUNCTIONS_2.items():
         try:
-            bf_value.bot_function.set_handlers(bot=bot, commands=bf_value.commands)
-            logger.info(f'{bf_key} - start OK!')
+            if(bf_value.state):
+                bf_value.bot_function.set_handlers(bot=bot, commands=bf_value.commands)
+                logger.info(f'{bf_key} - start OK!')
+            else:
+                logger.info(f'{bf_key} - state FALSE!')
         except Exception as e:
             BOT_FUNCTIONS_2[bf_key].state = False
             logger.warning(f'{bf_key} - start EXCEPTION!')
@@ -71,15 +82,14 @@ def load_functions() -> List[AtomicBotFunctionABC]:
             for name, cls in inspect.getmembers(module):
                 if inspect.isclass(cls) and cls.__base__ is AtomicBotFunctionABC:
                     obj: AtomicBotFunctionABC = cls() 
-                    obj.set_handlers(bot)
-                    
                     function_objects.append(obj)
-                    logger.info(f"Add object - {obj}; From module {module}; Class neme='{name}', ")
+                    #logger.info(f"Add object - {obj}; From module {module}; Class neme='{name}', ")
 
     return function_objects
 
 logger = get_logger()
 bot = get_bot()
+atom_functions_list = load_functions()
 
 if __name__ == '__main__':
     logger.critical('-= START =-')
