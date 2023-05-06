@@ -14,6 +14,7 @@ from functions.cat import CatFunction
 from functions.human import HumanGenerator
 from functions.goroskop import GoroskopFunction
 from functions.currency_exchange_rate import GetCurrencyExchangeRate
+from functions.music import Music
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -61,10 +62,15 @@ BOT_FUNCTIONS_2 = {
     ),
     "menu_with_some_functions": BotFunction2(
         bot_function=IndividualBotWithMenu(),
-        commands=["spaceinvasion"],
+        commands=["functionalmenu"],
         authors=["strlex-dev"],
         about="Меню с разным функционалом внутри",
-        description="Введите команду - `/spaceinvasion` и выберите любую понравившуюся команду в меню.",
+        description="Введите команду - /functionalmenu и выберите любую понравившуюся функцию в меню.\n"
+                    "🛰 - Место положение МКС в реальном времени,\n"
+                    "👨‍🚀 - Кто находится на МКС и общее количество человек,\n"
+                    "🌦 - Погода в реальном времени в любом заданом городе,\n"
+                    "💸 - Вывод стоиомости запрашиваемой криптовалюты",
+
     ),
     "doggie": BotFunction2(
         bot_function=RandomDogAPIFunction(),
@@ -127,6 +133,13 @@ BOT_FUNCTIONS_2 = {
         authors=["livin161"],
         about="Выводит гороско на сегодняшний день",
         description=("/goroskop выдает гороскоп на сегодняшний день")
+    ),
+    "music": BotFunction2(
+        bot_function=Music(),
+        commands=["music"],
+        authors=["cash3mod3l"],
+        about="Выводит 5 последних альбомов исполнителей",
+        description=("/music Нужно написать имя исполнентеля и бот тебе выведет 5 последних его альбомов")
     ),
     "currency_exchange_rate": BotFunction2(
         bot_function=GetCurrencyExchangeRate(),
