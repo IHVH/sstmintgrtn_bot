@@ -31,7 +31,6 @@ def get_bot()-> telebot.TeleBot:
     token = os.environ["TBOTTOKEN"]
     telebot.logger.setLevel(get_log_level("TBOT_LOGLEVEL"))
     bot = telebot.TeleBot(token, use_class_middlewares=True)
-    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
     return bot
 
 def starter_functions():
