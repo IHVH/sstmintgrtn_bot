@@ -28,6 +28,8 @@ YAWEATHERTOKEN=
 YADICTTOKEN=
 KP_TOKEN=
 OPENWEATHERTOKEN=
+WEATHER_TOKEN=
+CRIPTO_COIN_TOKEN=
 DADATA_TOKEN=
 GENIUS_TOKEN=
 YTFINDERTOKEN=
@@ -56,6 +58,7 @@ Links to information about tokens
 
 [YTFINDERTOKEN](https://console.developers.google.com.)
 
+[CRIPTO_COIN_TOKEN](https://www.coinapi.io)
 
 ## Adding telegram bot functions.
 
