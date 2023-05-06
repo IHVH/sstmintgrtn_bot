@@ -44,7 +44,7 @@ def starter_functions():
             logger.warning(f'{bf_key} - start EXCEPTION!')
             logger.exception(e)
         
-    # old_start(bot, logger)
+    old_start(bot, logger)
 
     @bot.message_handler(func=lambda message: True)
     def text_messages(message):
