@@ -164,7 +164,7 @@ class IndividualBotWithMenu(BotFunctionABC):
                                           f"💸 Currency: {quote_currency}\n"
                                           f"⚖️ Price: {rate:.2f}\n")
         else:
-            self.bot.reply_to(message, f'❗️ Requested cryptocurrency not found ❗️')
+            self.bot.reply_to(message, f'❗️ Requested crypto currency not found ❗️')
             self.get_cripto_coin_name(message)
 
     def get_cripto_coin_token(self):
