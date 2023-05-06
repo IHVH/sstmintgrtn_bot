@@ -35,12 +35,12 @@ class IndividualBotWithMenu(BotFunctionABC):
             if button_menu == "🌦":
                 self.get_weather_agreement(call.message)
             if button_menu == "💸":
-                pass
+                self.get_cripto_coin_name(call.message)
 
         @bot.callback_query_handler(func=None, config=self.agreement_buttons.filter())
         def agree_buttons_callback(call: types.CallbackQuery):
             callback_data: dict = self.agreement_buttons.parse(callback_data=call.data)
-            agreement_button = callback_data['agreement_button']
+            agreement_button = callback_data['agreement_buttons']
             self.get_agreement(call.message, agreement_button)
 
     def create_menu_buttons(self):
@@ -83,8 +83,8 @@ class IndividualBotWithMenu(BotFunctionABC):
     def create_agreement_buttons(self):
         markup = types.InlineKeyboardMarkup()
         markup.row_width = 2
-        markup.add(types.InlineKeyboardButton("🟢", callback_data=self.agreement_buttons.new(agreement_button="🟢")),
-                   types.InlineKeyboardButton("🔴", callback_data=self.agreement_buttons.new(agreement_button="🔴")))
+        markup.add(types.InlineKeyboardButton("🟢", callback_data=self.agreement_buttons.new(agreement_buttons="🟢")),
+                   types.InlineKeyboardButton("🔴", callback_data=self.agreement_buttons.new(agreement_buttons="🔴")))
         return markup
 
     def get_agreement(self, message, txt):
@@ -101,7 +101,7 @@ class IndividualBotWithMenu(BotFunctionABC):
     def get_weather(self, message):
         try:
             request = requests.get(
-                f"https://api.openweathermap.org/data/2.5/weather?q={message.text}&appid={self.get_example_token()}&units=metric"
+                f"https://api.openweathermap.org/data/2.5/weather?q={message.text}&appid={self.get_weather_token()}&units=metric"
             )
             response = request.json()
 
@@ -132,6 +132,41 @@ class IndividualBotWithMenu(BotFunctionABC):
             error_on_city_r = self.bot.send_message(message.chat.id, "⛔️ City not found! ⛔️\nWrite city name again: ")
             self.bot.register_next_step_handler(error_on_city_r, self.get_weather)
 
-    def get_example_token(self):
-        token = os.environ["WEATHER_TOKEN"]
+    def get_weather_token(self):
+        token = os.environ['WEATHER_TOKEN']
+        return token
+
+    def get_cripto_coin_name(self, message):
+        message_from_bot = self.bot.send_message(message.chat.id, 'Write  🪙<b>CRYPTOCURRENCY  NAME</b> and 🇪🇺🇺🇸🇷🇺<b>CURRENCY</b> separated by <b>SPACE</b> (example "btc usd")', parse_mode='HTML')
+        self.bot.register_next_step_handler(message_from_bot, self.send_result)
+
+    def send_result(self, message):
+        text = message.text.upper()
+
+        parts = text.split(' ')
+
+        cripto_currency = parts[0]
+        quote_currency = parts[1] if len(parts) > 1 else 'USD'
+
+        url = f'https://rest.coinapi.io/v1/exchangerate/{cripto_currency}/{quote_currency}?apikey={self.get_cripto_coin_token()}'
+
+        response = requests.get(url).json()
+
+        if 'rate' in response:
+            rate = response['rate']
+            time_str = response['time']
+
+            time = datetime.strptime(time_str[:-2], '%Y-%m-%dT%H:%M:%S.%f')
+            time_str_formatted = time.strftime('%d-%m-%Y %H:%M:%S')
+
+            self.bot.send_message(message.chat.id, f"⏰ {time_str_formatted}\n"
+                                          f"🪙 Crypto Coin: {cripto_currency}\n"
+                                          f"💸 Currency: {quote_currency}\n"
+                                          f"⚖️ Price: {rate:.2f}\n")
+        else:
+            self.bot.reply_to(message, f'❗️ Requested crypto currency not found ❗️')
+            self.get_cripto_coin_name(message)
+
+    def get_cripto_coin_token(self):
+        token = os.environ['CRIPTO_COIN_TOKEN']
         return token
