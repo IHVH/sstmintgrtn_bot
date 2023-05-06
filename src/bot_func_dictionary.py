@@ -14,6 +14,7 @@ from functions.cat import CatFunction
 from functions.human import HumanGenerator
 from functions.goroskop import GoroskopFunction
 from functions.currency_exchange_rate import GetCurrencyExchangeRate
+from functions.fileEditBot import FileEditBotClass
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -133,6 +134,13 @@ BOT_FUNCTIONS_2 = {
         authors=["xeotype"],
         about="Показывает текущий курс валют к рублю",
         description="Собсна смотрим текущий курс валют, ето всё",
+    ),
+    "file_edit_bot": BotFunction2(
+        bot_function=FileEditBotClass(),
+        commands=["menu"],
+        authors=["KurzerName"],
+        about="Бот для работы с заметкой",
+        description="Позволяет работать со своей заметочкой",
     ),
 }
 
