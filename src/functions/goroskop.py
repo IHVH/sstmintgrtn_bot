@@ -13,12 +13,12 @@ class GoroskopFunction(BotFunctionABC):
            }
     link = f'https://horo.mail.ru/prediction/'
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
-        self.bot = bot 
+        self.bot = bot
         self.kf = CallbackData('t_key_button', prefix=commands[0])
 
         @bot.message_handler(commands=commands)
         def example_message_hendler(message: types.Message):
-            
+
             bot.send_message(text="Привет. Выбери свой знак зодиака:", chat_id=message.chat.id, reply_markup=self.gen_markup())
 
         @bot.callback_query_handler(func=None, config=self.kf.filter())
@@ -29,26 +29,26 @@ class GoroskopFunction(BotFunctionABC):
             txt = self.get_text_horoscope(zodiac)
             bot.send_message(text=txt, chat_id=call.message.chat.id)
 
-    
+
     def gen_markup(self):
         markup = types.InlineKeyboardMarkup()
         markup.row_width = 3
         markup.add(types.InlineKeyboardButton("Овен", callback_data=self.kf.new(t_key_button="aries")),
                    types.InlineKeyboardButton("Телец", callback_data=self.kf.new(t_key_button="taurus")),
-                   types.InlineKeyboardButton("Близнецы", callback_data=self.kf.new(t_key_button="gemini")), 
+                   types.InlineKeyboardButton("Близнецы", callback_data=self.kf.new(t_key_button="gemini")),
                    types.InlineKeyboardButton("Рак", callback_data=self.kf.new(t_key_button="cancer")),
                    types.InlineKeyboardButton("Лев", callback_data=self.kf.new(t_key_button="leo")),
-                   types.InlineKeyboardButton("Дева", callback_data=self.kf.new(t_key_button="virgo")), 
+                   types.InlineKeyboardButton("Дева", callback_data=self.kf.new(t_key_button="virgo")),
                    types.InlineKeyboardButton("Весы", callback_data=self.kf.new(t_key_button="libra")),
                    types.InlineKeyboardButton("Скорпион", callback_data=self.kf.new(t_key_button="scorpio")),
-                   types.InlineKeyboardButton("Стрелец", callback_data=self.kf.new(t_key_button="sagittarius")), 
+                   types.InlineKeyboardButton("Стрелец", callback_data=self.kf.new(t_key_button="sagittarius")),
                    types.InlineKeyboardButton("Козерог", callback_data=self.kf.new(t_key_button="capricorn")),
                    types.InlineKeyboardButton("Водолей", callback_data=self.kf.new(t_key_button="aquarius")),
-                   types.InlineKeyboardButton("Рыбы", callback_data=self.kf.new(t_key_button="pisces")), 
+                   types.InlineKeyboardButton("Рыбы", callback_data=self.kf.new(t_key_button="pisces")),
                    )
-      
+
         return markup
-    
+
     def get_response(self, link: str, re: bool = True):
         with httpx.Client(headers=self.headers, follow_redirects=True) as htx:
             result: httpx.Response = htx.get(url=link)
@@ -56,7 +56,7 @@ class GoroskopFunction(BotFunctionABC):
                 return result.text
             else:
                 return 'Плохой запрос: Код: ' + result.status_code
-            
+
 
     def get_text_horoscope(self, zodiac: str):
         link = self.link + f"{zodiac}/today/"

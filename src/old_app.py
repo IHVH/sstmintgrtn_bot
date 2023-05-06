@@ -1,4 +1,3 @@
-import os
 import urllib.request
 import telebot
 from telebot import types
@@ -6,22 +5,15 @@ from telebot.callback_data import CallbackData
 import re
 import json
 import logging
-import threading
-import time
 from datetime import datetime
 from pycbrf import ExchangeRates
 from bot_func_dictionary import BOT_FUNCTIONS
 
 from functions import gif, gravatar, weather, translate, numbers, exc_rates, http_cats, \
-    swear, speller, accuweather, openweather, kinopoisk, webui_interaction, config, anecdotes, wikipedia_function
+    swear, speller, accuweather, openweather, kinopoisk, anecdotes, wikipedia_function
 
 
 def old_start(bot: telebot.TeleBot, logger: logging.Logger):
-
-    loading_image_id = None
-    conf = config.load_telegram_setting()
-    msgs = config.load_telegram_msgs()
-    neural = config.load_neural()
 
     
     @bot.message_handler(commands=BOT_FUNCTIONS['accuweather'].commands)
@@ -202,135 +194,3 @@ def old_start(bot: telebot.TeleBot, logger: logging.Logger):
             obj = json.loads(req.read())
             bot.send_message(c.message.chat.id,f"отметка времени {obj['timestamp']}", reply_markup=key)
             bot.send_message(c.message.chat.id, f"долгота {obj['iss_position']['longitude']} \nширота {obj['iss_position']['latitude']}", reply_markup=key)
-
-
-    @bot.message_handler(commands=[conf.get_value("gen_cmd")])
-    def generate_handler(message):
-        try:
-            msgtext = message.text
-
-            if not msgtext:
-                bot.send_message(message.chat.id, reply_to_message_id=message.id, text=msgs.get_value("error_text"))
-                return
-
-            array = msgtext.split(" ", maxsplit=1)
-            if len(array) < 2:
-                bot.send_message(message.chat.id, reply_to_message_id=message.id, text=msgs.get_value("error_text"))
-                return
-
-            prompt_user = array[1]
-
-            logger.info(f"Generate with prompt {prompt_user}")
-            status_msg = __send_waiting(message)
-
-            filename = f"img_{prompt2filename(prompt_user)}_{time.time()}.png"
-
-            logger.info(f"Img name - {filename}")
-
-            # GENERATING
-            img = __generate(prompt_user, status_msg)
-
-            # UPSCALE
-            if neural.get_neural_setting_value(config.UPSCALE):
-                img = __upscale(img, status_msg)
-
-            img.save(os.path.join(conf.get_value(config.SAVE_FOLDER), filename))
-
-            bot.edit_message_media(
-                message_id=status_msg.message_id,
-                chat_id=status_msg.chat.id,
-                media=types.InputMediaPhoto(img.to_reader(), caption=msgs.get_value("completed")))
-
-            logger.info(f"Completed")
-
-        except Exception as e:
-            __logFatal(e, message.chat.id, message.id)
-
-
-
-    def __send_waiting(message: types.Message) -> types.Message:
-        global loading_image_id
-
-        sent_msg = None
-        if not loading_image_id:
-            with open(f"res\\loading.png", "rb") as ph:
-                sent_msg = bot.send_photo(photo=ph, chat_id=message.chat.id, reply_to_message_id=message.id,
-                                        caption=msgs.get_value("working"))
-                if sent_msg.photo:
-                    loading_image_id = sent_msg.photo[0].file_id
-        else:
-            sent_msg = bot.send_photo(photo=loading_image_id, chat_id=message.chat.id, reply_to_message_id=message.id,
-                                    caption=msgs.get_value("working"))
-
-        return sent_msg
-
-
-    def __generate(prompt_user, sent: types.Message) -> webui_interaction.Base64Img:
-
-        ret = []
-
-        logger.info(f"Generating, prompt = {prompt_user}")
-
-        def gen_func():
-            img = webui_interaction.gen_img(conf.get_value("url"), prompt_user,
-                                            neural.get_neural_setting_value(config.NEGATIVE),
-                                            neural.get_neural_setting_value(config.WIDTH),
-                                            neural.get_neural_setting_value(config.HEIGHT),
-                                            steps=neural.get_neural_setting_value(config.STEPS))
-            ret.append(img)
-
-        th_creator = threading.Thread(target=gen_func)
-        th_creator.start()
-
-        while th_creator.is_alive():
-            if neural.get_neural_setting_value(config.SHOW_PROGRESS):
-                progress = webui_interaction.get_progress(conf.get_value("url"),
-                                                        not neural.get_neural_setting_value(config.SHOW_PROGRESS_PREVIEW))
-
-                banner = msgs.get_value("progress").format(progress=progress.progress, eta=int(progress.eta_relative))
-
-                if progress.current_image:
-                    bot.edit_message_media(
-                        message_id=sent.message_id,
-                        chat_id=sent.chat.id,
-                        media=types.InputMediaPhoto(progress.current_image.to_reader(), caption=banner))
-                else:
-                    bot.edit_message_caption(
-                        message_id=sent.message_id,
-                        chat_id=sent.chat.id,
-                        caption=banner)
-            time.sleep(2)
-
-        return ret[0]
-
-
-    def __upscale(img: webui_interaction.Base64Img, sent: types.Message) -> webui_interaction.Base64Img:
-        ret = []
-        logger.info(f"Upscaling...")
-
-        bot.edit_message_caption(
-            message_id=sent.message_id,
-            chat_id=sent.chat.id,
-            caption=msgs.get_value("upscaling"))
-
-        def gen_func_ups():
-            img_big = webui_interaction.upscale(conf.get_value("url"), img, 2)
-            ret.append(img_big)
-
-        th_upscaler = threading.Thread(target=gen_func_ups)
-        th_upscaler.start()
-        th_upscaler.join()
-        return ret[0]
-
-
-    def __logFatal(e: Exception, chat_id, message_id):
-        logger.exception(e)
-        bot.send_message(chat_id, reply_to_message_id=message_id, text=msgs.get_value("error"))
-
-
-    def prompt2filename(prompt: str):
-        repl_prompt = prompt.replace("/", "_").replace("\\", "_")
-        if len(repl_prompt) > 100:
-            return repl_prompt[:100]
-        return repl_prompt
-
