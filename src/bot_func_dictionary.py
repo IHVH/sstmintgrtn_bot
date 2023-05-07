@@ -137,10 +137,12 @@ BOT_FUNCTIONS_2 = {
     ),
     "file_edit_bot": BotFunction2(
         bot_function=FileEditBotClass(),
-        commands=["menu"],
+        commands=["registration","menu", "freExit"],
         authors=["KurzerName"],
         about="Бот для работы с заметкой",
-        description="Позволяет работать со своей заметочкой",
+        description="Позволяет работать со своей заметочкой. "
+                   + "\n Для начала работы используйте команду /menu или /registration"
+                   + "\n Для выхода используйте коммандку /exit",
     ),
 }
 
