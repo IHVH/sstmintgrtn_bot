@@ -33,6 +33,7 @@ CRIPTO_COIN_TOKEN=
 DADATA_TOKEN=
 GENIUS_TOKEN=
 YTFINDERTOKEN=
+API_MUSIC=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 
