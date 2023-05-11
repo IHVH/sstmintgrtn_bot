@@ -1,12 +1,9 @@
 import os
 from typing import List
-
 import telebot
 import requests
 from telebot.callback_data import CallbackData
-
 from bot_func_abc import BotFunctionABC
-
 
 class Music(BotFunctionABC):
 
@@ -19,8 +16,7 @@ class Music(BotFunctionABC):
             message_from_bot = bot.send_message(message.chat.id, 'Привет! Введите имя артиста или название альбома, о котором хотите узнать.')
             bot.register_next_step_handler(message_from_bot, search_artist_or_album)
 
-
-        @bot.message_handler(func=lambda message: True)
+        #@bot.message_handler(func=lambda message: True)
         def search_artist_or_album(message):
             query = message.text
             search_url = f'http://ws.audioscrobbler.com/2.0/?method=album.search&album={query}&api_key={self.get_music_token()}&format=json'
