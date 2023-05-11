@@ -61,6 +61,8 @@ Links to information about tokens
 
 [CRIPTO_COIN_TOKEN](https://www.coinapi.io)
 
+[API_MUSIC](https://www.last.fm/api)
+
 ## Adding telegram bot functions.
 
 Dear students, when implementing your functions, adhere to the following recommendations.
