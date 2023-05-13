@@ -6,9 +6,15 @@ from typing import List
 import bot_func_dictionary 
 from bot_func import BotFunction
 import time
+from load_atomic import LoadAtomic
+from bot_func_abc import AtomicBotFunctionABC
 
 class StartInfoBotFunction(BotFunctionABC):
     slip_time = 0.2
+
+    def __init__(self) -> None:
+        self.atom_functions_list = LoadAtomic.load_functions()
+        
 
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot 
@@ -25,8 +31,10 @@ class StartInfoBotFunction(BotFunctionABC):
                     msg += f"В группе установлен slow_mode_delay = {st} \n"
                     msg += "Сообщения доставляются с задержкой, некоторые функции могут работать неправильно!"
                 bot.send_message(text=msg, chat_id=message.chat.id)
-                self.send_messages_bf2(message)
-                self.send_messages_bf(message)
+                
+                self.send_messages_bf_atomic(message)
+                #self.send_messages_bf2(message)
+                #self.send_messages_bf(message)
                 msg_how_pass = "Спросить как сдать зачёт отправь /how_pass "
                 time.sleep(st)
                 bot.send_message(text=msg_how_pass, chat_id=message.chat.id)
@@ -63,6 +71,18 @@ class StartInfoBotFunction(BotFunctionABC):
         
         self.bot.send_message(text=txt, chat_id=message.chat.id, parse_mode='Markdown')
 
+    def send_messages_bf_atomic(self, message: types.Message):
+        ts = self.get_slep_time(message=message)
+        for funct in self.atom_functions_list:
+            time.sleep(ts)
+            self.send_msg_about_atomic_funct(message, funct)
+
+    def send_msg_about_atomic_funct(self, message: types.Message, funct: AtomicBotFunctionABC):
+        if funct.state:
+            txt = f'{funct.about} \n'
+            for command in funct.commands:
+                txt += f' - `/{command}` \n'
+            self.bot.send_message(text=txt, chat_id=message.chat.id, reply_markup=self.gen_markup(funct.commands[0]), parse_mode='Markdown')
 
     def send_messages_bf2(self, message: types.Message):
         ts = self.get_slep_time(message=message)
@@ -85,6 +105,15 @@ class StartInfoBotFunction(BotFunctionABC):
             self.bot.send_message(text=txt, chat_id=message.chat.id, reply_markup=self.gen_markup(key), parse_mode='Markdown')
 
     def find_function_info(self, key: str) -> BotFunction:
+        for funct in self.atom_functions_list:
+            if key in funct.commands:
+                return BotFunction(
+                    commands=funct.commands,
+                    authors=funct.authors,
+                    about=funct.about,
+                    description=funct.description
+                )
+
         if key in bot_func_dictionary.BOT_FUNCTIONS_2:
             return bot_func_dictionary.BOT_FUNCTIONS_2[key]
         

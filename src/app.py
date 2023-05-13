@@ -9,6 +9,7 @@ from bot_middleware import Middleware
 from bot_callback_filter import SystemIntegrationBotCallbackFilter
 from bot_func_dictionary import BOT_FUNCTIONS_2
 from bot_func_abc import AtomicBotFunctionABC
+from load_atomic import LoadAtomic
 
 from old_app import old_start
 
@@ -70,29 +71,9 @@ def starter_functions():
         bot.send_message(text="Ваш запрос не обработан!!!", chat_id=message.chat.id)
 
 
-
-def load_functions() -> List[AtomicBotFunctionABC]:
-    func_dir = "functions"
-    atomic_dir = "atomic"
-    atomic_func_path = Path.cwd() / "src" / func_dir / atomic_dir
-    suffix = ".py"
-    lst = os.listdir(atomic_func_path)
-    function_objects: List[AtomicBotFunctionABC] = []
-    for fn_str in lst:
-        if suffix in fn_str:
-            mn = fn_str.removesuffix(suffix)
-            module = __import__(f"{func_dir}.{atomic_dir}.{mn}", fromlist = ["*"])
-            for name, cls in inspect.getmembers(module):
-                if inspect.isclass(cls) and cls.__base__ is AtomicBotFunctionABC:
-                    obj: AtomicBotFunctionABC = cls() 
-                    function_objects.append(obj)
-                    #logger.info(f"Add object - {obj}; From module {module}; Class neme='{name}', ")
-
-    return function_objects
-
 logger = get_logger()
 bot = get_bot()
-atom_functions_list = load_functions()
+atom_functions_list = LoadAtomic.load_functions()
 
 if __name__ == '__main__':
     logger.critical('-= START =-')
