@@ -15,6 +15,7 @@ from functions.human import HumanGenerator
 from functions.goroskop import GoroskopFunction
 from functions.currency_exchange_rate import GetCurrencyExchangeRate
 from functions.music import Music
+from src.functions.news_bot import NewsFeed
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -70,6 +71,14 @@ BOT_FUNCTIONS_2 = {
                     "🌦 - Погода в реальном времени в любом заданом городе,\n"
                     "💸 - Вывод стоиомости запрашиваемой криптовалюты",
 
+    ),
+    "news_bot": BotFunction2(
+        bot_function=NewsFeed(),
+        commands=["news"],
+        authors=["asaamlnk"],
+        about="Новостной буревестник!",
+        description="Введите команду - /news и выберите категорию поиска новостей. \n"
+                    "🌍 - Поиск по коду страны \n",
     ),
     "doggie": BotFunction2(
         bot_function=RandomDogAPIFunction(),
