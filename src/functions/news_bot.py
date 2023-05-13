@@ -34,6 +34,8 @@ class NewsFeed(BotFunctionABC):
 
             if button_menu == "🌍 Страна":
                 self.get_country_code(call.message)
+            if button_menu == "⌨️ Ключевое слово":
+                self.get_keyword(call.message)
 
         @bot.callback_query_handler(func=None, config=self.switch_buttons.filter())
         def switch_buttons_callback(call: types.CallbackQuery):
@@ -52,7 +54,9 @@ class NewsFeed(BotFunctionABC):
 
     def create_menu_buttons(self):
         markup = types.InlineKeyboardMarkup(row_width=2)
-        markup.add(types.InlineKeyboardButton("🌍 Страна", callback_data=self.menu_buttons.new(menu_buttons="🌍 Страна")))
+        markup.add(types.InlineKeyboardButton("🌍 Страна", callback_data=self.menu_buttons.new(menu_buttons="🌍 Страна")),
+                   types.InlineKeyboardButton("⌨️ Ключевое слово",
+                                              callback_data=self.menu_buttons.new(menu_buttons="⌨️ Ключевое слово")))
         return markup
 
     def get_country_code(self, message: types.Message):
@@ -75,9 +79,29 @@ class NewsFeed(BotFunctionABC):
         self.bot.send_message(message.chat.id, articles['url'])
         self.bot.send_message(message.chat.id, 'Переключение новостей', reply_markup=self.create_switch_buttons())
 
+    def get_keyword(self, message: types.Message):
+        message_from_bot = self.bot.send_message(message.chat.id, "Введите ключевое слово (прим. 'Биткоин'): ")
+        self.bot.register_next_step_handler(message_from_bot, self.search_by_category)
+
+    def search_by_category(self, message: types.Message):
+        global news_list
+        global current_news_index
+
+        if len(news_list) == 0:
+            request = requests.get(
+                f'https://newsapi.org/v2/everything?q={message.text}&language=ru&apiKey={get_news_token()}'
+            )
+            response = request.json()
+            news_list = response['articles']
+            current_news_index = 0
+
+        articles = news_list[current_news_index]
+        self.bot.send_message(message.chat.id, articles['url'])
+        self.bot.send_message(message.chat.id, 'Переключение новостей', reply_markup=self.create_switch_buttons())
+
     def create_switch_buttons(self):
         markup = types.InlineKeyboardMarkup(row_width=2)
         markup.add(
-            types.InlineKeyboardButton("➡️", callback_data=self.switch_buttons.new(switch_buttons="➡️")),
-            types.InlineKeyboardButton("⬅️", callback_data=self.switch_buttons.new(switch_buttons="⬅️")))
+            types.InlineKeyboardButton("⬅️", callback_data=self.switch_buttons.new(switch_buttons="⬅️")),
+            types.InlineKeyboardButton("➡️", callback_data=self.switch_buttons.new(switch_buttons="➡️")))
         return markup
