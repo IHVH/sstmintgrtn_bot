@@ -7,7 +7,7 @@ class BotFunctionABC(ABC):
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         """Message handlers need to be set! """
 
-class AtomicBotFunctionABC(BotFunctionABC):
+class AtomicBotFunctionABC(ABC):
     
     @property
     @abstractmethod
@@ -34,9 +34,9 @@ class AtomicBotFunctionABC(BotFunctionABC):
     def state(self) -> bool:
         """state list needed! """
 
-    # @abstractmethod
-    # def set_handlers(self, bot: telebot.TeleBot):
-    #     """Message handlers need to be set! """
+    @abstractmethod
+    def set_handlers(self, bot: telebot.TeleBot):
+        """Message handlers need to be set! """
 
     def detailed_function_description(self) -> str:
         txt = self.about + self.description

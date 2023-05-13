@@ -6,6 +6,7 @@ from bot_func_abc import AtomicBotFunctionABC
 
 
 class LoadAtomic():
+    @staticmethod
     def load_functions(func_dir:str = "functions", atomic_dir:str = "atomic") -> List[AtomicBotFunctionABC]:
         atomic_func_path = Path.cwd() / "src" / func_dir / atomic_dir
         suffix = ".py"
