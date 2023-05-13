@@ -100,6 +100,26 @@ class NewsFeed(BotFunctionABC):
         self.bot.send_message(message.chat.id, articles['url'])
         self.bot.send_message(message.chat.id, 'Переключение новостей', reply_markup=self.create_switch_buttons())
 
+    def get_keyword(self, message: types.Message):
+        message_from_bot = self.bot.send_message(message.chat.id, "Введите ключевое слово (прим. 'Биткоин'): ")
+        self.bot.register_next_step_handler(message_from_bot, self.search_by_category)
+
+    def search_by_category(self, message: types.Message):
+        global news_list
+        global current_news_index
+
+        if len(news_list) == 0:
+            request = requests.get(
+                f'https://newsapi.org/v2/everything?q={message.text}&language=ru&apiKey={get_news_token()}'
+            )
+            response = request.json()
+            news_list = response['articles']
+            current_news_index = 0
+
+        articles = news_list[current_news_index]
+        self.bot.send_message(message.chat.id, articles['url'])
+        self.bot.send_message(message.chat.id, 'Переключение новостей', reply_markup=self.create_switch_buttons())
+
     def create_switch_buttons(self):
         markup = types.InlineKeyboardMarkup(row_width=2)
         markup.add(
