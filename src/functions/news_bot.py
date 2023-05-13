@@ -101,6 +101,9 @@ class NewsFeed(BotFunctionABC):
         self.bot.send_message(message.chat.id, 'Переключение новостей', reply_markup=self.create_switch_buttons())
 
     def get_keyword(self, message: types.Message):
+        global news_list
+        news_list.clear()
+
         message_from_bot = self.bot.send_message(message.chat.id, "Введите ключевое слово (прим. 'Биткоин'): ")
         self.bot.register_next_step_handler(message_from_bot, self.search_by_category)
 
