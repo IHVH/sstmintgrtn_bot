@@ -87,9 +87,9 @@ class NewsFeed(BotFunctionABC):
         news_list.clear()
 
         message_from_bot = self.bot.send_message(message.chat.id, "Введите ключевое слово (прим. 'Биткоин'): ")
-        self.bot.register_next_step_handler(message_from_bot, self.search_by_category)
+        self.bot.register_next_step_handler(message_from_bot, self.search_by_keyword)
 
-    def search_by_category(self, message: types.Message):
+    def search_by_keyword(self, message: types.Message):
         global news_list
         global current_news_index
 
