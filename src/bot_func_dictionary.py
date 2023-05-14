@@ -126,6 +126,13 @@ BOT_FUNCTIONS_2 = {
         about="Случайная собачка?..\nСлучайный котик?..\nА может, случайный аНеКдОт?...\nА как насчёт...\nСЛУЧАЙНОГО ЧЕЛОВЕКА С ЕГО ЛИЧНЫМИ ДАННЫМИ, М???\n",
         description=("\nПочувствуй себя Большим Братом! ;)")
     ),
+    "AnimCitata": BotFunction2(
+        bot_function=CitataGenerator(),
+        commands=["citata"],
+        auvthors=["Lizapopa40"]
+        about="Выводит случайную цитату 'Из Японских комиксов'",
+        description=("радуйся жизни")
+    ),
     "goroskop": BotFunction2(
         bot_function=GoroskopFunction(),
         commands=["goroskop"],
