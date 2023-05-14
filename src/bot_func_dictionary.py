@@ -126,7 +126,7 @@ BOT_FUNCTIONS_2 = {
         about="Случайная собачка?..\nСлучайный котик?..\nА может, случайный аНеКдОт?...\nА как насчёт...\nСЛУЧАЙНОГО ЧЕЛОВЕКА С ЕГО ЛИЧНЫМИ ДАННЫМИ, М???\n",
         description=("\nПочувствуй себя Большим Братом! ;)")
     ),
-    "AnimCitata": BotFunction2(
+    "сitata": BotFunction2(
         bot_function=CitataGenerator(),
         commands=["citata"],
         auvthors=["Lizapopa40"]
