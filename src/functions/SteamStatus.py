@@ -1,10 +1,14 @@
 from bot_func_abc import BotFunctionABC
-from telebot import types
+import telebot
+from telebot.callback_data import CallbackData
+from typing import List
 import requests
 
 class ServerStatus(BotFunctionABC):
-    def __init__(self):
+    def set_handlers(self, bot, commands):
+        self.bot = bot
         self.url = "https://steamstat.us/"
+        self.example_keyboard_factory = CallbackData('t_key_button', prefix=commands[0])
 
         @bot.message_handler(commands=commands)
         def check_status(message: types.Message):
