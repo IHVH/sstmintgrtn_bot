@@ -15,6 +15,7 @@ from functions.human import HumanGenerator
 from functions.goroskop import GoroskopFunction
 from functions.currency_exchange_rate import GetCurrencyExchangeRate
 from functions.music import Music
+from functions.SteamStatus import ServerStatus
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
