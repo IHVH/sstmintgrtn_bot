@@ -147,6 +147,13 @@ BOT_FUNCTIONS_2 = {
         about="Показывает текущий курс валют к рублю",
         description="Собсна смотрим текущий курс валют, ето всё",
     ),
+    "SteamStatus": BotFuction2(
+        bot_function=ServerStatus(),
+        commands=['status']
+        authors=["eldorPulatov"],
+        about="Показывает стостояние серверов Steam",
+        description="Довольно часто в игре Dota 2 или CS:GO падают сервера, поэтому я создал функцию, где можно отлеживать состояние серверов",
+    )
 }
 
 BOT_FUNCTIONS = {
