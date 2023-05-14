@@ -11,4 +11,4 @@ class CitataGenerator(BotFunctionABC):
         def generate_and_answer(message: types.Message):
             res = requests.get('https://animechan.vercel.app/api/random')
             res_json = res.json()
-            content = res_json["results"][0]
+            bot.send_message(message.chat.id, {res_json["anime"] + " - " + res_json["character"] + "\n" + res_json["quote"]})
