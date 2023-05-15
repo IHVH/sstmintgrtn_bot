@@ -8,7 +8,7 @@ import requests
 class NYTimes_science(BotFunctionABC):
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot
-        self.api_key = "JOv1U7L6ISqj8jAWPIS3SUHAv33sNfEn"
+        api_key = "JOv1U7L6ISqj8jAWPIS3SUHAv33sNfEn"
         self.url = f"https://api.nytimes.com/svc/topstories/v2/science.json?api-key={api_key}"
         self.example_keyboard_factory = CallbackData('t_key_button', prefix=commands[0])
 
