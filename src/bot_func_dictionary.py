@@ -130,7 +130,7 @@ BOT_FUNCTIONS_2 = {
     "сitata": BotFunction2(
         bot_function=CitataGenerator(),
         commands=["citata"],
-        auvthors=["Lizapopa40"]
+        authors=["Lizapopa40"],
         about="Выводит случайную цитату 'Из Японских комиксов'",
         description=("радуйся жизни")
     ),
