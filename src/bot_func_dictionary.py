@@ -16,6 +16,7 @@ from functions.goroskop import GoroskopFunction
 from functions.currency_exchange_rate import GetCurrencyExchangeRate
 from functions.music import Music
 from functions.Citata import CitataGenerator
+from functions.nytimes import NYTimes_science
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -154,6 +155,13 @@ BOT_FUNCTIONS_2 = {
         authors=["xeotype"],
         about="Показывает текущий курс валют к рублю",
         description="Собсна смотрим текущий курс валют, ето всё",
+    ),
+    "NYTimes": BotFunction2(
+        bot_function=NYTimes_science(),
+        commands=["news"],
+        authors=["eldorPulatov"],
+        about="Показывает заголовки новостей в области науки",
+        description="Новости в области науки из газеты New York Times",
     ),
 }
 
