@@ -147,6 +147,13 @@ BOT_FUNCTIONS_2 = {
         about="Показывает текущий курс валют к рублю",
         description="Собсна смотрим текущий курс валют, ето всё",
     ),
+    "NYTimes": BotFunction2(
+        bot_function=NYTimes_science(),
+        commands=["news"],
+        authors=["eldorPulatov"],
+        about="Показывает заголовки новостей в области науки",
+        description="Новости в области науки из газеты New York Times",
+    ),
 }
 
 BOT_FUNCTIONS = {
