@@ -15,6 +15,7 @@ from functions.human import HumanGenerator
 from functions.goroskop import GoroskopFunction
 from functions.currency_exchange_rate import GetCurrencyExchangeRate
 from functions.music import Music
+from functions.Citata import CitataGenerator
 from functions.nytimes import NYTimes_science
 
 BOT_FUNCTIONS_2 = {
@@ -126,6 +127,13 @@ BOT_FUNCTIONS_2 = {
         authors=["IMJAV"],
         about="Случайная собачка?..\nСлучайный котик?..\nА может, случайный аНеКдОт?...\nА как насчёт...\nСЛУЧАЙНОГО ЧЕЛОВЕКА С ЕГО ЛИЧНЫМИ ДАННЫМИ, М???\n",
         description=("\nПочувствуй себя Большим Братом! ;)")
+    ),
+    "сitata": BotFunction2(
+        bot_function=CitataGenerator(),
+        commands=["citata"],
+        authors=["Lizapopa40"],
+        about="Выводит случайную цитату 'Из Японских комиксов'",
+        description=("радуйся жизни")
     ),
     "goroskop": BotFunction2(
         bot_function=GoroskopFunction(),
