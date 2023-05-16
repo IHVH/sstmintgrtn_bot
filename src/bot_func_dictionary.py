@@ -163,6 +163,13 @@ BOT_FUNCTIONS_2 = {
         about="Показывает заголовки новостей в области науки",
         description="Новости в области науки из газеты New York Times",
     ),
+    "lenta_news": BotFunction2(
+    bot_function = Lenta_news(),
+    commands = ["lenta"],
+    authors = ["Test"],
+    about = "Test",
+    description = 'Выдает топ новостей с сайта "lenta.ru"'
+    ),
 }
 
 BOT_FUNCTIONS = {
