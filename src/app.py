@@ -39,8 +39,9 @@ def starter_functions():
     for funct in atom_functions_list:
         try:
             if(funct.state):
-                funct.set_handlers(bot)
-                logger.info(f'{funct} - start OK!')
+                logger.info("SKIP")
+                #funct.set_handlers(bot)
+                #logger.info(f'{funct} - start OK!')
             else:
                 logger.info(f'{funct} - state FALSE!')
         except Exception as e:

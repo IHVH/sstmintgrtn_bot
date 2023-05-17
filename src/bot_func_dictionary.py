@@ -28,7 +28,7 @@ BOT_FUNCTIONS_2 = {
         "Спросить как сдать зачёт отправь `/how_pass` ",
     ),
     "example_bot_function": BotFunction2(
-        state=False,
+        state=True,
         bot_function=ExampleBotFunction(),
         commands=["example", "ebf"],
         authors=["IHVH"],

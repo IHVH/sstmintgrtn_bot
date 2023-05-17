@@ -32,9 +32,9 @@ class StartInfoBotFunction(BotFunctionABC):
                     msg += "Сообщения доставляются с задержкой, некоторые функции могут работать неправильно!"
                 bot.send_message(text=msg, chat_id=message.chat.id)
                 
-                self.send_messages_bf_atomic(message)
-                #self.send_messages_bf2(message)
-                #self.send_messages_bf(message)
+                #self.send_messages_bf_atomic(message)
+                self.send_messages_bf2(message)
+                self.send_messages_bf(message)
                 msg_how_pass = "Спросить как сдать зачёт отправь /how_pass "
                 time.sleep(st)
                 bot.send_message(text=msg_how_pass, chat_id=message.chat.id)
