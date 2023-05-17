@@ -6,9 +6,15 @@ from typing import List
 import bot_func_dictionary 
 from bot_func import BotFunction
 import time
+from load_atomic import LoadAtomic
+from bot_func_abc import AtomicBotFunctionABC
 
 class StartInfoBotFunction(BotFunctionABC):
     slip_time = 0.2
+
+    def __init__(self) -> None:
+        self.atom_functions_list = LoadAtomic.load_functions()
+        
 
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot 
@@ -25,6 +31,8 @@ class StartInfoBotFunction(BotFunctionABC):
                     msg += f"В группе установлен slow_mode_delay = {st} \n"
                     msg += "Сообщения доставляются с задержкой, некоторые функции могут работать неправильно!"
                 bot.send_message(text=msg, chat_id=message.chat.id)
+                
+                #self.send_messages_bf_atomic(message)
                 self.send_messages_bf2(message)
                 self.send_messages_bf(message)
                 msg_how_pass = "Спросить как сдать зачёт отправь /how_pass "
@@ -39,30 +47,22 @@ class StartInfoBotFunction(BotFunctionABC):
             self.send_detail_messages(call.message, function)
 
     def send_how_pass(self, message: types.Message):
-        txt = '''
-        Необходимо в общий проект [OEMIB_PI01_19_TBOT](https://github.com/IHVH/OEMIB_PI01_19_TBOT)
-добавить свою функцию которая используя какие либо из изученных технологий 
-реализует взаимодействие с внешней системой. Необходимо использовать только общедоступные api. 
-Функция должна выполнять какое то осмысленное (желательно полезное) действие. 
-
-Для этого в вашем аккаунте на github.com делаете fork репозитария 
-Добавляете вашу функцию отдельным фалом в папку `/src/functions/ `
-Весь код функции должен быть внутри класса унаследованного от абстрактного класса BotFunctionABC
-В репозитории есть пример `example_bot_function.py`  как организовать наследование и код внутри класса 
-[example_bot_function.py](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/src/functions/example_bot_function.py)
-Затем в фале `bot_func_dictionary.py` необходимо добавить информацию о вашей функции в словарь `BOT_FUNCTIONS_2`
-[bot_func_dictionary.py](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/src/bot_func_dictionary.py)
-Если необходимы какие-то токены или другие аутентификационные данные то добавляете информацию о них в файл `README.md`
-[README.md](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/README.md)
-Протестировав всё локально отправляете Pull request в основной репозиторий.
-
-Вопросы можно задавать, обсуждать в общем телеграм чате [sstmintgrtn](https://t.me/sstmintgrtn).
-Список общедоступных api можно посмотреть в [project](https://github.com/users/IHVH/projects/1) 
-либо найти подходящий в репозитории [public-apis](https://github.com/IHVH/public-apis)  
-        '''        
-        
+        with open("how_pass.md", "r", encoding="utf-8") as f: 
+            txt = f.read()
         self.bot.send_message(text=txt, chat_id=message.chat.id, parse_mode='Markdown')
 
+    def send_messages_bf_atomic(self, message: types.Message):
+        ts = self.get_slep_time(message=message)
+        for funct in self.atom_functions_list:
+            time.sleep(ts)
+            self.send_msg_about_atomic_funct(message, funct)
+
+    def send_msg_about_atomic_funct(self, message: types.Message, funct: AtomicBotFunctionABC):
+        if funct.state:
+            txt = f'{funct.about} \n'
+            for command in funct.commands:
+                txt += f' - `/{command}` \n'
+            self.bot.send_message(text=txt, chat_id=message.chat.id, reply_markup=self.gen_markup(funct.commands[0]), parse_mode='Markdown')
 
     def send_messages_bf2(self, message: types.Message):
         ts = self.get_slep_time(message=message)
@@ -85,6 +85,15 @@ class StartInfoBotFunction(BotFunctionABC):
             self.bot.send_message(text=txt, chat_id=message.chat.id, reply_markup=self.gen_markup(key), parse_mode='Markdown')
 
     def find_function_info(self, key: str) -> BotFunction:
+        for funct in self.atom_functions_list:
+            if key in funct.commands:
+                return BotFunction(
+                    commands=funct.commands,
+                    authors=funct.authors,
+                    about=funct.about,
+                    description=funct.description
+                )
+
         if key in bot_func_dictionary.BOT_FUNCTIONS_2:
             return bot_func_dictionary.BOT_FUNCTIONS_2[key]
         

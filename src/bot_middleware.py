@@ -49,8 +49,10 @@ class Middleware(BaseMiddleware):
         conection_string = os.environ.get("CONECTION_PGDB")
         if(conection_string):
             storage_worker = StorageWorker(conection_string)
+            self.logger.info(f"Added storage_worker with CONECTION_PGDB = {conection_string}")
             return storage_worker
         else:
+            self.logger.info("Not added storage_worker")
             return None
 
     def save_message(self, message: telebot.types.Message, data: str | None):
