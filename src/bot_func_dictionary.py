@@ -17,6 +17,7 @@ from functions.currency_exchange_rate import GetCurrencyExchangeRate
 from functions.music import Music
 from functions.Citata import CitataGenerator
 from functions.nytimes import NYTimes_science
+from functions.Jokes import Joke
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -164,6 +165,13 @@ BOT_FUNCTIONS_2 = {
         about="Показывает заголовки новостей в области науки",
         description="Новости в области науки из газеты New York Times",
     ),
+    "Joke": BotFunction2(
+        bot_function=Joke(),
+        commands=["Chack"],
+        authors=["Leonnid111"],
+        about="Выдает крутую шутку о Чак Норрисе",
+        description="Шутеечка о непобидимом Чак Норрисее йиха",    
+    ),    
 }
 
 BOT_FUNCTIONS = {
