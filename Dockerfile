@@ -1,8 +1,7 @@
 FROM python:3.11-bullseye
-WORKDIR /code/src
-#COPY requirements.txt .
+WORKDIR /code
 RUN pip install -r requirements.txt
-#COPY src/ .
+WORKDIR /code/src
 RUN ls 
 RUN ls /code
 CMD [ "python", "./app.py" ]
