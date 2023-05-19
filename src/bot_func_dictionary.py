@@ -18,6 +18,7 @@ from functions.music import Music
 from functions.Citata import CitataGenerator
 from functions.nytimes import NYTimes_science
 from functions.Jokes import Joke
+from functions.get_ip import GetBotHostIP
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -171,7 +172,14 @@ BOT_FUNCTIONS_2 = {
         authors=["Leonnid111"],
         about="Выдает крутую шутку о Чак Норрисе",
         description="Шутеечка о непобидимом Чак Норрисее йиха",    
-    ),    
+    ),
+    "Get bot host IP address": BotFunction2(
+        bot_function=GetBotHostIP(),
+        commands=["get_loc"],
+        authors=["ino943"], 
+        about="Выдаёт некоторую информацию о хосте бота",
+        description="Да, оно вычисляет по IP. Буквально. Но не вас, а хоста бота. Но если хост бота - это вы, то... То вычисляет вас по IP...",
+    ),
 }
 
 BOT_FUNCTIONS = {
