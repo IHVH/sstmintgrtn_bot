@@ -9,7 +9,7 @@ class imdbFinder(BotFunctionABC):
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot
 
-        @bot.message_handler(commands=['start'])
+        @bot.message_handler(commands=commands)
         def start_command(message: types.Message):
             bot.send_message(message.chat.id, "Напиши название фильма или сериала")
 
