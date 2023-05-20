@@ -13,7 +13,7 @@ class imdbFinder(BotFunctionABC):
         def start_command(message: types.Message):
             bot.send_message(message.chat.id, "Напиши название фильма или сериала")
 
-        @bot.message_handler()
+        #@bot.message_handler()
         def get_movie(message: types.Message):
             try:
                 r = requests.get(f"http://www.omdbapi.com/?t={message.text}&apikey=9fae2b5c")
