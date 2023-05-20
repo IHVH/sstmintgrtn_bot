@@ -19,6 +19,7 @@ from functions.Citata import CitataGenerator
 from functions.nytimes import NYTimes_science
 from functions.Jokes import Joke
 from functions.get_ip import GetBotHostIP
+from functions.movie import imdbFinder
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
