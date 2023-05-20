@@ -151,11 +151,12 @@ BOT_FUNCTIONS_2 = {
         description=("/goroskop выдает гороскоп на сегодняшний день")
     ),
     "find_cat": BotFunction2(
+        state=False,
         bot_function=FindCat(),
         commands=["find_cat"],
         authors=["Kyozzetsu"],
         about="Выводит информацию о породе кота",
-        description=("/find_cat, показывает информацию о породе кота и фотографию")
+        description=("`/find_cat`, показывает информацию о породе кота и фотографию")
     ),
     "music": BotFunction2(
         bot_function=Music(),
