@@ -21,6 +21,7 @@ from functions.nytimes import NYTimes_science
 from functions.Jokes import Joke
 from functions.get_ip import GetBotHostIP
 from functions.movie import imdbFinder
+from functions.main_weather_tg_bot import main_weather_tg_bot
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -302,4 +303,11 @@ BOT_FUNCTIONS = {
         about="Рандомный анекдот специально для Вас",
         description="Введите /anecdote с числовым аргументом",
     ),
+    "main_weather_tg_bot": BotFunction2(
+        bot_function=main_weather_tg_bot(),
+        commands=["/start"],
+        authors=["DmitryAvantura"],
+        about="Показ погоды в определенном городе",
+        description="Введите название города и увидете полную сводку погоды\n"
+                    
 }
