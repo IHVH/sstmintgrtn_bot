@@ -25,6 +25,7 @@ from functions.movie import imdbFinder
 from functions.find_cat import FindCat
 from functions.quotes import Quotes
 from functions.theBestMovieBot import TheBestMovieBot
+from funstions.news_bot import NewsFeed
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -80,7 +81,15 @@ BOT_FUNCTIONS_2 = {
                     "👨‍🚀 - Кто находится на МКС и общее количество человек,\n"
                     "🌦 - Погода в реальном времени в любом заданом городе,\n"
                     "💸 - Вывод стоиомости запрашиваемой криптовалюты",
-
+    ),
+    "news_bot": BotFunction2(
+        bot_function=NewsFeed(),
+        commands=["news"],
+        authors=["asaamlnk"],
+        about="Новостной буревестник!",
+        description="Введите команду - /news и выберите категорию поиска новостей. \n"
+                    "🌍 Страна - Поиск по аббревиатуре страны \n"
+                    "⌨️ Ключевое слово - Поиск по ключевому слову",
     ),
     "doggie": BotFunction2(
         bot_function=RandomDogAPIFunction(),
