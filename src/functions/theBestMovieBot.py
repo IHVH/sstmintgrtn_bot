@@ -5,7 +5,6 @@ from typing import List
 import requests
 import json
 
-
 class TheBestMovieBot(BotFunctionABC):
 
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
@@ -22,15 +21,13 @@ class TheBestMovieBot(BotFunctionABC):
 
         @bot.message_handler(commands=[commands[0]])
         def start(message):
-            bot.send_message(message.chat.id,
-                             "Привет! Хотите узнать, какой фильм самый лучший? Вот, это САМЫЙ ЛУЧШИЙ фильм:")
+            bot.send_message(message.chat.id, "Привет! Хотите узнать, какой фильм самый лучший? Вот, это САМЫЙ ЛУЧШИЙ фильм:")
 
             movie_handler(message, True)
 
         @bot.message_handler(commands=[commands[1]])
         def recommendation(message):
-            bot.send_message(message.chat.id,
-                             "Вы действительно хотите посмотреть что-то другое? Ну ладно. Вводите название (На английском):")
+            bot.send_message(message.chat.id, "Вы действительно хотите посмотреть что-то другое? Ну ладно. Вводите название (На английском):")
 
             bot.register_next_step_handler(message, movie_handler)
 
@@ -43,8 +40,9 @@ class TheBestMovieBot(BotFunctionABC):
                              + "\n 4. Нападение на рио браво (gunfight at rio bravo)"
                              )
 
+
         # Обработчик сообщений с названием фильма
-        def movie_handler(message, theBestFilm=False):
+        def movie_handler(message, theBestFilm = False):
             movie_title = message.text
 
             if theBestFilm:
