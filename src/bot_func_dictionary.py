@@ -25,7 +25,7 @@ from functions.movie import imdbFinder
 from functions.find_cat import FindCat
 from functions.quotes import Quotes
 from functions.theBestMovieBot import TheBestMovieBot
-from funstions.news_bot import NewsFeed
+from functions.news_bot import NewsFeed
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
