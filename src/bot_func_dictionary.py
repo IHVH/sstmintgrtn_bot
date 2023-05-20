@@ -15,6 +15,11 @@ from functions.human import HumanGenerator
 from functions.goroskop import GoroskopFunction
 from functions.currency_exchange_rate import GetCurrencyExchangeRate
 from functions.fileEditBot import FileEditBotClass
+from functions.music import Music
+from functions.Citata import CitataGenerator
+from functions.nytimes import NYTimes_science
+from functions.Jokes import Joke
+from functions.get_ip import GetBotHostIP
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -26,6 +31,7 @@ BOT_FUNCTIONS_2 = {
         "Спросить как сдать зачёт отправь `/how_pass` ",
     ),
     "example_bot_function": BotFunction2(
+        state=True,
         bot_function=ExampleBotFunction(),
         commands=["example", "ebf"],
         authors=["IHVH"],
@@ -61,10 +67,15 @@ BOT_FUNCTIONS_2 = {
     ),
     "menu_with_some_functions": BotFunction2(
         bot_function=IndividualBotWithMenu(),
-        commands=["spaceinvasion"],
+        commands=["functionalmenu"],
         authors=["strlex-dev"],
         about="Меню с разным функционалом внутри",
-        description="Введите команду - `/spaceinvasion` и выберите любую понравившуюся команду в меню.",
+        description="Введите команду - /functionalmenu и выберите любую понравившуюся функцию в меню.\n"
+                    "🛰 - Место положение МКС в реальном времени,\n"
+                    "👨‍🚀 - Кто находится на МКС и общее количество человек,\n"
+                    "🌦 - Погода в реальном времени в любом заданом городе,\n"
+                    "💸 - Вывод стоиомости запрашиваемой криптовалюты",
+
     ),
     "doggie": BotFunction2(
         bot_function=RandomDogAPIFunction(),
@@ -118,8 +129,15 @@ BOT_FUNCTIONS_2 = {
         bot_function=HumanGenerator(),
         commands=["human"],
         authors=["IMJAV"],
-        about="Случайная собачка?..\n\nСлучайный котик?..\n\nА может, случайный аНеКдОт?..\n.\n.\n.\nА как насчёт...\n.\n.\n.\nСЛУЧАЙНОГО ЧЕЛОВЕКА С ЕГО ЛИЧНЫМИ ДАННЫМИ, М???\n",
+        about="Случайная собачка?..\nСлучайный котик?..\nА может, случайный аНеКдОт?...\nА как насчёт...\nСЛУЧАЙНОГО ЧЕЛОВЕКА С ЕГО ЛИЧНЫМИ ДАННЫМИ, М???\n",
         description=("\nПочувствуй себя Большим Братом! ;)")
+    ),
+    "сitata": BotFunction2(
+        bot_function=CitataGenerator(),
+        commands=["citata"],
+        authors=["Lizapopa40"],
+        about="Выводит случайную цитату 'Из Японских комиксов'",
+        description=("радуйся жизни")
     ),
     "goroskop": BotFunction2(
         bot_function=GoroskopFunction(),
@@ -127,6 +145,13 @@ BOT_FUNCTIONS_2 = {
         authors=["livin161"],
         about="Выводит гороско на сегодняшний день",
         description=("/goroskop выдает гороскоп на сегодняшний день")
+    ),
+    "music": BotFunction2(
+        bot_function=Music(),
+        commands=["music"],
+        authors=["cash3mod3l"],
+        about="Выводит 5 последних альбомов исполнителей",
+        description=("/music Нужно написать имя исполнентеля и бот тебе выведет 5 последних его альбомов")
     ),
     "currency_exchange_rate": BotFunction2(
         bot_function=GetCurrencyExchangeRate(),
@@ -143,6 +168,27 @@ BOT_FUNCTIONS_2 = {
         description="Позволяет работать со своей заметочкой. "
                    + "\n Для начала работы используйте команду /menu или /registration"
                    + "\n Для выхода используйте коммандку /exit",
+    ),
+    "NYTimes": BotFunction2(
+        bot_function=NYTimes_science(),
+        commands=["news"],
+        authors=["eldorPulatov"],
+        about="Показывает заголовки новостей в области науки",
+        description="Новости в области науки из газеты New York Times",
+    ),
+    "Joke": BotFunction2(
+        bot_function=Joke(),
+        commands=["Chack"],
+        authors=["Leonnid111"],
+        about="Выдает крутую шутку о Чак Норрисе",
+        description="Шутеечка о непобидимом Чак Норрисее йиха",    
+    ),
+    "Get bot host IP address": BotFunction2(
+        bot_function=GetBotHostIP(),
+        commands=["get_loc"],
+        authors=["ino943"], 
+        about="Выдаёт некоторую информацию о хосте бота",
+        description="Да, оно вычисляет по IP. Буквально. Но не вас, а хоста бота. Но если хост бота - это вы, то... То вычисляет вас по IP...",
     ),
 }
 

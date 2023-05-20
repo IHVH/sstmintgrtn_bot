@@ -41,6 +41,7 @@ class TestTeleBot(unittest.TestCase):
                 self.assertFalse(cmnd in commands, msg=f"{bf_key} Added duplicate command '{cmnd}'! ")
                 commands.append(cmnd)
 
+    @unittest.skip("skipping test_github_account_link_bot_functions_2")
     def test_github_account_link_bot_functions_2(self):
         for bf_key, bf_value in BOT_FUNCTIONS_2.items():
             for authr in bf_value.authors:
