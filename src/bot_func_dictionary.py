@@ -20,6 +20,7 @@ from functions.Citata import CitataGenerator
 from functions.nytimes import NYTimes_science
 from functions.Jokes import Joke
 from functions.get_ip import GetBotHostIP
+from functions.Plane_Search import PlaneSearchClass
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -189,6 +190,13 @@ BOT_FUNCTIONS_2 = {
         authors=["ino943"], 
         about="Выдаёт некоторую информацию о хосте бота",
         description="Да, оно вычисляет по IP. Буквально. Но не вас, а хоста бота. Но если хост бота - это вы, то... То вычисляет вас по IP...",
+    ),
+    "Plane search": BotFunction2(
+        bot_function=PlaneSearchClass(),
+        commands=["goGuguGagaGugu", "site", "website"],
+        authors=["GuguGagaGugu"],
+        about="Выводит информацию по рейсам",
+        description= "Выполняет поиск рейсов по названию рейса и вывод информации о рейсе, редиректит на сайт ru.flightaware.com",
     ),
 }
 
