@@ -22,6 +22,7 @@ from functions.Jokes import Joke
 from functions.get_ip import GetBotHostIP
 from functions.Plane_Search import PlaneSearchClass
 from functions.movie import imdbFinder
+from functions.theBestMovieBot import TheBestMovieBot
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -205,6 +206,13 @@ BOT_FUNCTIONS_2 = {
         authors=["Lokadv"],
         about="Выводит информацию с imdb по введенному названию фильма или сериала", 
         description="/find продолжительность, жанр, описание и т.д. интересующего фильма или сериала", 
+    ),
+    "TheBestMovieBot": BotFunction2(
+        bot_function=TheBestMovieBot(),
+        commands=["findTheBestMovie", "findOtherMovie", "theBestMovieList"],
+        authors=["defaultxddd"],
+        about="Бот выводит самый лучший фильм",
+        description="Бот выводит самый лучший фильм, ну может и остальные вывести",
     ),
 }
 
