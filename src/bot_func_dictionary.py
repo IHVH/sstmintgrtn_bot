@@ -21,6 +21,7 @@ from functions.nytimes import NYTimes_science
 from functions.Jokes import Joke
 from functions.get_ip import GetBotHostIP
 from functions.Plane_Search import PlaneSearchClass
+from functions.movie import imdbFinder
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -182,12 +183,12 @@ BOT_FUNCTIONS_2 = {
         commands=["Chack"],
         authors=["Leonnid111"],
         about="Выдает крутую шутку о Чак Норрисе",
-        description="Шутеечка о непобидимом Чак Норрисее йиха",    
+        description="Шутеечка о непобидимом Чак Норрисее йиха",
     ),
     "Get bot host IP address": BotFunction2(
         bot_function=GetBotHostIP(),
         commands=["get_loc"],
-        authors=["ino943"], 
+        authors=["ino943"],
         about="Выдаёт некоторую информацию о хосте бота",
         description="Да, оно вычисляет по IP. Буквально. Но не вас, а хоста бота. Но если хост бота - это вы, то... То вычисляет вас по IP...",
     ),
@@ -197,6 +198,13 @@ BOT_FUNCTIONS_2 = {
         authors=["GuguGagaGugu"],
         about="Выводит информацию по рейсам",
         description= "Выполняет поиск рейсов по названию рейса и вывод информации о рейсе, редиректит на сайт ru.flightaware.com",
+    ),
+    "imdbFinder": BotFunction2(
+        bot_function=imdbFinder(),
+        commands=["find"],
+        authors=["Lokadv"],
+        about="Выводит информацию с imdb по введенному названию фильма или сериала",
+        description="/find продолжительность, жанр, описание и т.д. интересующего фильма или сериала",
     ),
 }
 
