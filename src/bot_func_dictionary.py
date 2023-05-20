@@ -14,6 +14,7 @@ from functions.cat import CatFunction
 from functions.human import HumanGenerator
 from functions.goroskop import GoroskopFunction
 from functions.currency_exchange_rate import GetCurrencyExchangeRate
+from functions.fileEditBot import FileEditBotClass
 from functions.music import Music
 from functions.Citata import CitataGenerator
 from functions.nytimes import NYTimes_science
@@ -158,6 +159,15 @@ BOT_FUNCTIONS_2 = {
         authors=["xeotype"],
         about="Показывает текущий курс валют к рублю",
         description="Собсна смотрим текущий курс валют, ето всё",
+    ),
+    "file_edit_bot": BotFunction2(
+        bot_function=FileEditBotClass(),
+        commands=["registration","menu", "freExit"],
+        authors=["KurzerName"],
+        about="Бот для работы с заметкой",
+        description="Позволяет работать со своей заметочкой. "
+                   + "\n Для начала работы используйте команду /menu или /registration"
+                   + "\n Для выхода используйте коммандку /exit",
     ),
     "NYTimes": BotFunction2(
         bot_function=NYTimes_science(),
