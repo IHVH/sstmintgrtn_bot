@@ -12,6 +12,7 @@ class imdbFinder(BotFunctionABC):
         @bot.message_handler(commands=commands)
         def start_command(message: types.Message):
             bot.send_message(message.chat.id, "Напиши название фильма или сериала")
+            bot.register_next_step_handler(message.chat.id, get_movie
 
         #@bot.message_handler()
         def get_movie(message: types.Message):
