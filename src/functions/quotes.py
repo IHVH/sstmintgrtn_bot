@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from telebot.callback_data import CallbackData
 
-from src.bot_func_abc import BotFunctionABC
+from bot_func_abc import BotFunctionABC
 
 
 class Quotes(BotFunctionABC):
