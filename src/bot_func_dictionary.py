@@ -22,6 +22,7 @@ from functions.Jokes import Joke
 from functions.get_ip import GetBotHostIP
 from functions.Plane_Search import PlaneSearchClass
 from functions.movie import imdbFinder
+from functions.find_cat import FindCat
 from functions.quotes import Quotes
 
 BOT_FUNCTIONS_2 = {
@@ -148,6 +149,13 @@ BOT_FUNCTIONS_2 = {
         authors=["livin161"],
         about="Выводит гороско на сегодняшний день",
         description=("/goroskop выдает гороскоп на сегодняшний день")
+    ),
+    "find_cat": BotFunction2(
+        bot_function=FindCat(),
+        commands=["find_cat"],
+        authors=["Kyozzetsu"],
+        about="Выводит информацию о породе кота",
+        description=("/find_cat, показывает информацию о породе кота и фотографию")
     ),
     "music": BotFunction2(
         bot_function=Music(),
