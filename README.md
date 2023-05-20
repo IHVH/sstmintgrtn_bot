@@ -35,6 +35,7 @@ GENIUS_TOKEN=
 YTFINDERTOKEN=
 API_MUSIC=
 FIND_CAT_TOKEN=
+NEWS_API=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 
@@ -63,6 +64,8 @@ Links to information about tokens
 [CRIPTO_COIN_TOKEN](https://www.coinapi.io)
 
 [API_MUSIC](https://www.last.fm/api)
+
+[NEWS_API](https://newsapi.org)
 
 ## Adding telegram bot functions.
 
