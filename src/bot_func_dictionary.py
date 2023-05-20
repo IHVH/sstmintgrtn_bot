@@ -221,14 +221,7 @@ BOT_FUNCTIONS_2 = {
         authors=["defaultxddd"],
         about="Бот выводит самый лучший фильм",
         description="Бот выводит самый лучший фильм, ну может и остальные вывести",
-    ),
-    "TheBestMovieBot": BotFunction2(
-        bot_function=TheBestMovieBot(),
-        commands=["findTheBestMovie", "findOtherMovie", "theBestMovieList"],
-        authors=["defaultxddd"],
-        about="Бот выводит самый лучший фильм",
-        description="Бот выводит самый лучший фильм, ну может и остальные вывести",
-    ),
+    )
 }
 
 BOT_FUNCTIONS = {
