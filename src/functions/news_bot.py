@@ -10,11 +10,6 @@ news_list = []
 current_news_index = 0
 
 
-def get_news_token():
-    token = os.environ['NEWS_API_TOKEN']
-    return token
-
-
 class NewsFeed(BotFunctionABC):
     def set_handlers(self, bot: telebot.TeleBot, commands: List[str]):
         self.bot = bot
@@ -72,7 +67,7 @@ class NewsFeed(BotFunctionABC):
 
         if len(news_list) == 0:
             request = requests.get(
-                f'https://newsapi.org/v2/top-headlines?country={message.text}&apiKey={get_news_token()}'
+                f'https://newsapi.org/v2/top-headlines?country={message.text}&apiKey={self.get_news_token()}'
             )
             response = request.json()
             news_list = response['articles']
@@ -95,7 +90,7 @@ class NewsFeed(BotFunctionABC):
 
         if len(news_list) == 0:
             request = requests.get(
-                f'https://newsapi.org/v2/everything?q={message.text}&language=ru&apiKey={get_news_token()}'
+                f'https://newsapi.org/v2/everything?q={message.text}&language=ru&apiKey={self.get_news_token()}'
             )
             response = request.json()
             news_list = response['articles']
@@ -111,3 +106,8 @@ class NewsFeed(BotFunctionABC):
             types.InlineKeyboardButton("⬅️", callback_data=self.switch_buttons.new(switch_buttons="⬅️")),
             types.InlineKeyboardButton("➡️", callback_data=self.switch_buttons.new(switch_buttons="➡️")))
         return markup
+
+    def get_news_token(self):
+        token = os.environ['NEWS_API_TOKEN']
+        return token
+
