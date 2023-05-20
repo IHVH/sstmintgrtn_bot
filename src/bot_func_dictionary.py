@@ -9,7 +9,7 @@ from functions.menu_with_some_functions import IndividualBotWithMenu
 from functions.doggie import RandomDogAPIFunction
 from functions.youtube import YoutubeFinder
 from functions.soap_country import SoapCountry
-from functions.animetarelka import Animetarelka,Mangatarelka
+from functions.animetarelka import Animetarelka, Mangatarelka
 from functions.cat import CatFunction
 from functions.human import HumanGenerator
 from functions.goroskop import GoroskopFunction
@@ -21,6 +21,7 @@ from functions.nytimes import NYTimes_science
 from functions.Jokes import Joke
 from functions.get_ip import GetBotHostIP
 from functions.movie import imdbFinder
+from functions.find_cat import FindCat
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -29,7 +30,7 @@ BOT_FUNCTIONS_2 = {
         authors=["IHVH"],
         about="Старт бота и помощь по командам!",
         description="Функция предназначена для информирования пользователей о возможностях бота. \n"
-        "Спросить как сдать зачёт отправь `/how_pass` ",
+                    "Спросить как сдать зачёт отправь `/how_pass` ",
     ),
     "example_bot_function": BotFunction2(
         state=True,
@@ -38,8 +39,8 @@ BOT_FUNCTIONS_2 = {
         authors=["IHVH"],
         about="Пример функции бота!",
         description="В поле  *description* поместите подробную информацию о работе функции. "
-        "Описание способов использования, логики работы. Примеры вызова функции - /ebf \n"
-        "Возможные параметры функции `/example` ",
+                    "Описание способов использования, логики работы. Примеры вызова функции - /ebf \n"
+                    "Возможные параметры функции `/example` ",
     ),
     "github": BotFunction2(
         bot_function=GitHubFunctions(),
@@ -47,7 +48,7 @@ BOT_FUNCTIONS_2 = {
         authors=["IHVH"],
         about="Получение информации о коммитах",
         description="Получение информации из репозитория [OEMIB_PI01_19_TBOT](https://github.com/IHVH/OEMIB_PI01_19_TBOT) \n"
-        "Передайте в качестве параметра количество записей. Например `/commits 5` ",
+                    "Передайте в качестве параметра количество записей. Например `/commits 5` ",
     ),
     "dadata": BotFunction2(
         bot_function=DadataFunctionClass(),
@@ -80,12 +81,12 @@ BOT_FUNCTIONS_2 = {
     ),
     "doggie": BotFunction2(
         bot_function=RandomDogAPIFunction(),
-        commands=["doggie","d","breeds"],
+        commands=["doggie", "d", "breeds"],
         authors=["may-uri"],
         about="Случайная фотография собачки, способная осчастливить любого.",
         description="\n*/doggie*, */d* - вызов случайной картинки с собачкой,\n ⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀\n"
-        "/doggie *{breed}*, /d *{breed}* - вызов картинки с собачкой определенной породы, которая определяется в {breed},\n⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀\n"
-        "*/breeds* - вывод списка со всеми возможными породами",
+                    "/doggie *{breed}*, /d *{breed}* - вызов картинки с собачкой определенной породы, которая определяется в {breed},\n⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀⇀\n"
+                    "*/breeds* - вывод списка со всеми возможными породами",
     ),
     "youtube": BotFunction2(
         bot_function=YoutubeFinder(),
@@ -100,10 +101,10 @@ BOT_FUNCTIONS_2 = {
         authors=["IHVH"],
         about="Информация о странах.",
         description=("Получение информации о странах по названию, ISO коду, emoji флагу или телефонному коду. \n "
-        "Передайте в качестве параметра \n - emoji флаг страны `/country \U0001F1F7\U0001F1FA` \n"
-        " - название страны `/country Russia` \n" 
-        " - iso код страны `/country RU` \n - или телефонный код страны `/country 7` \n"
-        "Для получения доступных *ISO* кодов стран передайте в качестве параметра строку *ALL*. Например `/country ALL` ")
+                     "Передайте в качестве параметра \n - emoji флаг страны `/country \U0001F1F7\U0001F1FA` \n"
+                     " - название страны `/country Russia` \n"
+                     " - iso код страны `/country RU` \n - или телефонный код страны `/country 7` \n"
+                     "Для получения доступных *ISO* кодов стран передайте в качестве параметра строку *ALL*. Например `/country ALL` ")
     ),
     "animetarelka": BotFunction2(
         bot_function=Animetarelka(),
@@ -147,6 +148,13 @@ BOT_FUNCTIONS_2 = {
         about="Выводит гороско на сегодняшний день",
         description=("/goroskop выдает гороскоп на сегодняшний день")
     ),
+    "find_cat": BotFunction2(
+        bot_function=FindCat(),
+        commands=["find_cat"],
+        authors=["Kyozzetsu"],
+        about="Выводит информацию о породе кота",
+        description=("/find_cat, показывает информацию о породе кота и фотографию")
+    ),
     "music": BotFunction2(
         bot_function=Music(),
         commands=["music"],
@@ -163,12 +171,12 @@ BOT_FUNCTIONS_2 = {
     ),
     "file_edit_bot": BotFunction2(
         bot_function=FileEditBotClass(),
-        commands=["registration","menu", "freExit"],
+        commands=["registration", "menu", "freExit"],
         authors=["KurzerName"],
         about="Бот для работы с заметкой",
         description="Позволяет работать со своей заметочкой. "
-                   + "\n Для начала работы используйте команду /menu или /registration"
-                   + "\n Для выхода используйте коммандку /exit",
+                    + "\n Для начала работы используйте команду /menu или /registration"
+                    + "\n Для выхода используйте коммандку /exit",
     ),
     "NYTimes": BotFunction2(
         bot_function=NYTimes_science(),
@@ -182,12 +190,12 @@ BOT_FUNCTIONS_2 = {
         commands=["Chack"],
         authors=["Leonnid111"],
         about="Выдает крутую шутку о Чак Норрисе",
-        description="Шутеечка о непобидимом Чак Норрисее йиха",    
+        description="Шутеечка о непобидимом Чак Норрисее йиха",
     ),
     "Get bot host IP address": BotFunction2(
         bot_function=GetBotHostIP(),
         commands=["get_loc"],
-        authors=["ino943"], 
+        authors=["ino943"],
         about="Выдаёт некоторую информацию о хосте бота",
         description="Да, оно вычисляет по IP. Буквально. Но не вас, а хоста бота. Но если хост бота - это вы, то... То вычисляет вас по IP...",
     ),
@@ -195,8 +203,8 @@ BOT_FUNCTIONS_2 = {
         bot_function=imdbFinder(),
         commands=["find"],
         authors=["Lokadv"],
-        about="Выводит информацию с imdb по введенному названию фильма или сериала", 
-        description="/find продолжительность, жанр, описание и т.д. интересующего фильма или сериала", 
+        about="Выводит информацию с imdb по введенному названию фильма или сериала",
+        description="/find продолжительность, жанр, описание и т.д. интересующего фильма или сериала",
     ),
 }
 
@@ -212,14 +220,14 @@ BOT_FUNCTIONS = {
         authors=["kagayato"],
         about="Получение информации о фильмах в кинопоиске",
         description="Получение информации о фильмах \n "
-        + 'Передать информацию о фильме . Например "/kinopoisk фильм" ',
+                    + 'Передать информацию о фильме . Например "/kinopoisk фильм" ',
     ),
     "openweather": BotFunction(
         commands=["openweather"],
         authors=["doppler"],
         about="Получение информации о погоде",
         description="Получение информации о погоде \n "
-        + 'Передать информацию о погоде . Например "/openweather город" ',
+                    + 'Передать информацию о погоде . Например "/openweather город" ',
     ),
     "grav": BotFunction(
         commands=["grav", "gravatar"],
@@ -244,10 +252,10 @@ BOT_FUNCTIONS = {
         authors=["lanaveta0104"],
         about="Перевод слова на английский или русский язык, а также вывод синонимов слова",
         description='Введите язык перевода в виде "en" - английский или "ru" - русский и затем необходимое "слово"\n'
-        + "Слово должно быть в начальной форме!\n"
-        + "Например, для перевода на английский - /translate en Привет\n"
-        + "Для перевода на русский - /translate ru Hello\n"
-        + "Остальные символы после введенного слова игнорируются!",
+                    + "Слово должно быть в начальной форме!\n"
+                    + "Например, для перевода на английский - /translate en Привет\n"
+                    + "Для перевода на русский - /translate ru Hello\n"
+                    + "Остальные символы после введенного слова игнорируются!",
     ),
     "excrate": BotFunction(
         commands=["excrate"],
@@ -260,9 +268,9 @@ BOT_FUNCTIONS = {
         authors=["myrlifox"],
         about="Забавные факты о числах и датах",
         description="Получение факта по числу или дате \n "
-        + 'Для получения факта по числу в качестве параметра укажите число. Например "/digit 15" \n '
-        + 'Для получения факта по дате в качестве параметра укажите название месяца и число из этого месяца. Например "/date Август 14" \n '
-        + "Для получения случайного факта укажите команду /random",
+                    + 'Для получения факта по числу в качестве параметра укажите число. Например "/digit 15" \n '
+                    + 'Для получения факта по дате в качестве параметра укажите название месяца и число из этого месяца. Например "/date Август 14" \n '
+                    + "Для получения случайного факта укажите команду /random",
     ),
     "http": BotFunction(
         commands=["http"],
@@ -281,14 +289,14 @@ BOT_FUNCTIONS = {
         authors=["maria21-hub"],
         about="Проверка орфографии",
         description='Введите слово после команды /speller, например "/speller Превет"\n'
-        + "Бот выдаст исправленное слово. Остальные слова после первого игнорируются.",
+                    + "Бот выдаст исправленное слово. Остальные слова после первого игнорируются.",
     ),
     "Wikipedia": BotFunction(
         commands=["Wikipedia"],
         authors=["iznopa"],
         about="Быстрый поиск определения с помощью Wikipedia",
         description='Введи любое слово после /Wikipedia, например "/Wikipedia Java"\n'
-        + "Бот выдаст определение которое нашел.",
+                    + "Бот выдаст определение которое нашел.",
     ),
     "mks": BotFunction(
         commands=["mks"],

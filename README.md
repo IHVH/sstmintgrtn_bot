@@ -34,6 +34,7 @@ DADATA_TOKEN=
 GENIUS_TOKEN=
 YTFINDERTOKEN=
 API_MUSIC=
+FIND_CAT_TOKEN=
 ```
 The prefix for the discord bot is permanently ` ! ` set to `cfx.json`
 
