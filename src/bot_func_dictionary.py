@@ -20,8 +20,10 @@ from functions.Citata import CitataGenerator
 from functions.nytimes import NYTimes_science
 from functions.Jokes import Joke
 from functions.get_ip import GetBotHostIP
+from functions.Plane_Search import PlaneSearchClass
 from functions.movie import imdbFinder
 from functions.find_cat import FindCat
+from functions.quotes import Quotes
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -162,6 +164,13 @@ BOT_FUNCTIONS_2 = {
         about="Выводит 5 последних альбомов исполнителей",
         description=("/music Нужно написать имя исполнентеля и бот тебе выведет 5 последних его альбомов")
     ),
+    "quotes": BotFunction2(
+        bot_function=Quotes(),
+        commands=["quotes"],
+        authors=["AnnaKonoplya"],
+        about="Выводит рандомные цитаты",
+        description=("Нужно ввести команду /quotes, чтобы вывелась рандомная цитата")
+    ),
     "currency_exchange_rate": BotFunction2(
         bot_function=GetCurrencyExchangeRate(),
         commands=["currency"],
@@ -198,6 +207,13 @@ BOT_FUNCTIONS_2 = {
         authors=["ino943"],
         about="Выдаёт некоторую информацию о хосте бота",
         description="Да, оно вычисляет по IP. Буквально. Но не вас, а хоста бота. Но если хост бота - это вы, то... То вычисляет вас по IP...",
+    ),
+    "Plane search": BotFunction2(
+        bot_function=PlaneSearchClass(),
+        commands=["goGuguGagaGugu", "site", "website"],
+        authors=["GuguGagaGugu"],
+        about="Выводит информацию по рейсам",
+        description= "Выполняет поиск рейсов по названию рейса и вывод информации о рейсе, редиректит на сайт ru.flightaware.com",
     ),
     "imdbFinder": BotFunction2(
         bot_function=imdbFinder(),
