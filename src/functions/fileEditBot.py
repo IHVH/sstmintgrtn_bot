@@ -5,8 +5,6 @@ from typing import List
 import httpx
 import json
 
-from bs4 import BeautifulSoup
-
 API_BOT_URL = 'https://jeporab409.pagekite.me/api/'
 
 class FileEditBotClass(BotFunctionABC):
