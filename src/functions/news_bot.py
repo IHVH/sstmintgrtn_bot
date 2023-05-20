@@ -110,3 +110,7 @@ class NewsFeed(BotFunctionABC):
     def get_news_token(self):
         token = os.environ['NEWS_API_TOKEN']
         return token
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/Amulenko_News_Feed
