@@ -46,7 +46,7 @@ class imdbFinder(BotFunctionABC):
                         "Описание: " + data["Plot"] +"\n"
                     }
 
-                bot.send_message(message.from_user.id, series_info)
+                    bot.send_message(message.from_user.id, series_info)
     
             except:
                 bot.send_message(message.chat.id, "Неверное название")
