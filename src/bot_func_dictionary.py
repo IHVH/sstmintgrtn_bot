@@ -21,6 +21,7 @@ from functions.nytimes import NYTimes_science
 from functions.Jokes import Joke
 from functions.get_ip import GetBotHostIP
 from functions.movie import imdbFinder
+from functions.main import ConvertionBot
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -40,6 +41,7 @@ BOT_FUNCTIONS_2 = {
         description="В поле  *description* поместите подробную информацию о работе функции. "
         "Описание способов использования, логики работы. Примеры вызова функции - /ebf \n"
         "Возможные параметры функции `/example` ",
+        
     ),
     "github": BotFunction2(
         bot_function=GitHubFunctions(),
@@ -302,4 +304,12 @@ BOT_FUNCTIONS = {
         about="Рандомный анекдот специально для Вас",
         description="Введите /anecdote с числовым аргументом",
     ),
+    "convertor": BotFunction(
+        commands=["start"],
+        authors=["alekseichistyakov"],
+        about="Конвертор валют на любой вкус",
+        description="Введите /start далее бот расскажет что делать" ,
+     ),
+        
+        
 }
