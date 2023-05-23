@@ -26,6 +26,7 @@ from functions.find_cat import FindCat
 from functions.quotes import Quotes
 from functions.theBestMovieBot import TheBestMovieBot
 from functions.news_bot import NewsFeed
+from functions.meow import meowfact
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -226,6 +227,13 @@ BOT_FUNCTIONS_2 = {
         about="Выводит информацию по рейсам",
         description= "Выполняет поиск рейсов по названию рейса и вывод информации о рейсе, редиректит на сайт ru.flightaware.com",
     ),
+    "meow": BotFunction2(
+        bot_function=meowfact(),
+        commands=["meow"],
+        authors=["tayeho"],
+        about="Различные факты о котиках на английском языке",
+        description="Введите /meow чтобы прочитать удивительный факти о котиках",
+),
     "imdbFinder": BotFunction2(
         bot_function=imdbFinder(),
         commands=["find"],
