@@ -26,6 +26,9 @@ from functions.find_cat import FindCat
 from functions.quotes import Quotes
 from functions.theBestMovieBot import TheBestMovieBot
 from functions.news_bot import NewsFeed
+from functions.meow import meowfact
+
+
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -71,6 +74,13 @@ BOT_FUNCTIONS_2 = {
         about="Поиск слов трека",
         description="Введите /genius исполнитель - трек",
     ),
+    "meow": BotFunction2(
+        bot_function=meowfact(),
+        commands=["meow"],
+        authors=["tayeho"],
+        about="Различные факты о котиках на английском языке",
+        description="Введите /meow чтобы прочитать удивительный факти о котиках",
+),
     "menu_with_some_functions": BotFunction2(
         bot_function=IndividualBotWithMenu(),
         commands=["functionalmenu"],
