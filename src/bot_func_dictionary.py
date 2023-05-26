@@ -26,8 +26,10 @@ from functions.find_cat import FindCat
 from functions.quotes import Quotes
 from functions.theBestMovieBot import TheBestMovieBot
 from functions.news_bot import NewsFeed
+from functions.randomactivity import Randomactivity 
 from functions.meow import meowfact
 from functions.password import RandomPassword
+
 
 
 BOT_FUNCTIONS_2 = {
@@ -176,6 +178,13 @@ BOT_FUNCTIONS_2 = {
         authors=["livin161"],
         about="Выводит гороско на сегодняшний день",
         description=("/goroskop выдает гороскоп на сегодняшний день")
+    ),
+     "Activity": BotFunction2(
+        bot_function=Randomactivity(),
+        commands=["Activity"],
+        authors=["YoruNoru"],
+        about="Выводит случайную активность если незнаешь чем заняться",
+        description=("давай делай")
     ),
     "find_cat": BotFunction2(
         state=False,
