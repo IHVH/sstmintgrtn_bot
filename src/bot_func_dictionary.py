@@ -28,6 +28,7 @@ from functions.theBestMovieBot import TheBestMovieBot
 from functions.news_bot import NewsFeed
 from functions.meow import meowfact
 from functions.password import RandomPassword
+from functions.randomactivity import Randomactivity 
 
 
 BOT_FUNCTIONS_2 = {
@@ -169,6 +170,13 @@ BOT_FUNCTIONS_2 = {
         authors=["Lizapopa40"],
         about="Выводит случайную цитату 'Из Японских комиксов'",
         description=("радуйся жизни")
+    ),
+     "Activity": BotFunction2(
+        bot_function=Randomactivity(),
+        commands=["Activity"],
+        authors=["YoruNoru"],
+        about="Выводит случайную активность если незнаешь чем заняться",
+        description=("давай делай")
     ),
     "goroskop": BotFunction2(
         bot_function=GoroskopFunction(),
