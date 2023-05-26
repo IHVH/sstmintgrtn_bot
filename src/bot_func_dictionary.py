@@ -29,8 +29,7 @@ from functions.news_bot import NewsFeed
 from functions.randomactivity import Randomactivity 
 from functions.meow import meowfact
 from functions.password import RandomPassword
-
-
+from functions.currencyConversion import CurrencyConversion
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -40,6 +39,13 @@ BOT_FUNCTIONS_2 = {
         about="Старт бота и помощь по командам!",
         description="Функция предназначена для информирования пользователей о возможностях бота. \n"
                     "Спросить как сдать зачёт отправь `/how_pass` ",
+    ),
+    "currencyConversion": BotFunction2(
+        bot_function=CurrencyConversion(),
+        commands=["convert"],
+        authors=["Tamoe001"],
+        about="Конвертирует валюту",
+        description="Введите команду /convert после чего вводите любую сумму после чего выберите валюту в которую хотите конвертировать"
     ),
     "example_bot_function": BotFunction2(
         state=True,
