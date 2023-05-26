@@ -11,7 +11,7 @@ on:
       - '!main'
 
 jobs:
-  main_test:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:

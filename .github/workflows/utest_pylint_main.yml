@@ -1,4 +1,4 @@
-name: Unittest and pylint
+name: Unittest and pylint for main
 run-name: ${{ github.actor }} Analysing the code with unittest and pylint
 on: 
   push:
