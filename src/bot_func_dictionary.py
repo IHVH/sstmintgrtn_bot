@@ -77,7 +77,7 @@ BOT_FUNCTIONS_2 = {
     "meow": BotFunction2(
         bot_function=meowfact(),
         commands=["meow"],
-        authors=["tayeho"],
+        authors=["may-uri"],
         about="Различные факты о котиках на английском языке",
         description="Введите /meow чтобы прочитать удивительный факти о котиках",
     ),
@@ -232,9 +232,10 @@ BOT_FUNCTIONS_2 = {
     "Get bot host IP address": BotFunction2(
         bot_function=GetBotHostIP(),
         commands=["get_loc"],
-        authors=["ino943"],
-        about="Выдаёт некоторую информацию о хосте бота",
-        description="Да, оно вычисляет по IP. Буквально. Но не вас, а хоста бота. Но если хост бота - это вы, то... То вычисляет вас по IP...",
+        #authors=["ino943"], #Page not available test fails (return this string when the page is available)
+        authors=["IHVH"],
+        about="Гео данные по ip адресу",
+        description="Да, оно вычисляет по IP. Буквально. Передайте в качестве параметра ip адрес например `/get_loc 192.168.0.1`",
     ),
     "Plane search": BotFunction2(
         bot_function=PlaneSearchClass(),

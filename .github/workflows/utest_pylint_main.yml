@@ -3,12 +3,10 @@ run-name: ${{ github.actor }} Analysing the code with unittest and pylint
 on: 
   push:
     branches:
-      - '*'
-      - '!main'
+      - main
   pull_request:
     branches:
-      - '*'
-      - '!main'
+      - main
 
 jobs:
   main_test:
@@ -32,4 +30,4 @@ jobs:
         pylint $(git ls-files 'src/*.py')
     - name: Run Test
       run: |
-        python -m unittest discover -s src -p "test_all_branches_*" -v
+        python -m unittest discover -s src -v
