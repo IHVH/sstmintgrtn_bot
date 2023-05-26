@@ -29,8 +29,7 @@ from functions.news_bot import NewsFeed
 from functions.randomactivity import Randomactivity 
 from functions.meow import meowfact
 from functions.password import RandomPassword
-
-
+from functions.weatherForecast import WeatherForecast
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -58,6 +57,13 @@ BOT_FUNCTIONS_2 = {
         about="Получение информации о коммитах",
         description="Получение информации из репозитория [OEMIB_PI01_19_TBOT](https://github.com/IHVH/OEMIB_PI01_19_TBOT) \n"
                     "Передайте в качестве параметра количество записей. Например `/commits 5` ",
+    ),
+    "weatherForecast": BotFunction2(
+        bot_function=WeatherForecast(),
+        commands=['/weather'],
+        authors=["DmitryAvantura"],
+        about="Прогноз погоды",
+        description="Введите команду /weather, после чего напишите любой существующий город и вам покажет на сегодня прогноз погоды"
     ),
     "dadata": BotFunction2(
         bot_function=DadataFunctionClass(),
