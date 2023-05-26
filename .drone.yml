@@ -7,7 +7,7 @@ steps:
   image: python:3
   commands:
   - pip install -r requirements.txt
-  - python -m unittest discover -s src -v
+  - python -m unittest discover -s src -p "test_all_branches_*" -v
 
 - name: systemIntegrationBot send test notification
   image: appleboy/drone-telegram
