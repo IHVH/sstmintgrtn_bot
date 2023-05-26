@@ -27,7 +27,7 @@ from functions.quotes import Quotes
 from functions.theBestMovieBot import TheBestMovieBot
 from functions.news_bot import NewsFeed
 from functions.meow import meowfact
-
+from functions.password import RandomPassword
 
 
 BOT_FUNCTIONS_2 = {
@@ -81,6 +81,13 @@ BOT_FUNCTIONS_2 = {
         about="Различные факты о котиках на английском языке",
         description="Введите /meow чтобы прочитать удивительный факти о котиках",
 ),
+"password": BotFunction2(
+        bot_function=RandomPassword(),
+        commands=["password"],
+        authors=["SamSouls"],
+        about="Генерация случайного пароля",
+        description="Введите /password для получения случайного пароля",
+    ),
     "menu_with_some_functions": BotFunction2(
         bot_function=IndividualBotWithMenu(),
         commands=["functionalmenu"],
