@@ -80,8 +80,8 @@ BOT_FUNCTIONS_2 = {
         authors=["tayeho"],
         about="Различные факты о котиках на английском языке",
         description="Введите /meow чтобы прочитать удивительный факти о котиках",
-),
-"password": BotFunction2(
+    ),
+    "password": BotFunction2(
         bot_function=RandomPassword(),
         commands=["password"],
         authors=["SamSouls"],

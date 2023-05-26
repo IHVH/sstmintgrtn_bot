@@ -8,7 +8,7 @@
 # *Используйте только программные интерфейсы парсинг страниц не подходит!*
 
 - В вашем аккаунте на github.com делаете fork репозитория.
-- Добавляете вашу функцию отдельным фалом в папку `/src/functions/`. Весь код функции должен быть внутри класса унаследованного от абстрактного класса `BotFunctionABC`. В репозитории есть пример [example_bot_function.py](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/src/functions/example_bot_function.py) как организовать наследование и код внутри класса. 
+- Добавляете вашу функцию отдельным файлом в папку `/src/functions/`. Весь код функции должен быть внутри класса унаследованного от абстрактного класса `BotFunctionABC`. В репозитории есть пример [example_bot_function.py](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/src/functions/example_bot_function.py) как организовать наследование и код внутри класса. 
 - Затем необходимо добавить информацию о вашей функции в словарь `BOT_FUNCTIONS_2` в файле [bot_func_dictionary.py](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/src/bot_func_dictionary.py). 
 - Если необходимы токены или другие аутентификационные данные, добавляйте информацию о них в файл [README.md](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/README.md). 
 - Новые зависимости добавляйте в [requirements.txt](https://github.com/IHVH/OEMIB_PI01_19_TBOT/blob/main/requirements.txt)
