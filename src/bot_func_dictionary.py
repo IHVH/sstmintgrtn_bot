@@ -29,8 +29,7 @@ from functions.news_bot import NewsFeed
 from functions.randomactivity import Randomactivity 
 from functions.meow import meowfact
 from functions.password import RandomPassword
-
-
+from functions.random_user import RandomUser
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -266,7 +265,14 @@ BOT_FUNCTIONS_2 = {
         authors=["defaultxddd"],
         about="Бот выводит самый лучший фильм",
         description="Бот выводит самый лучший фильм, ну может и остальные вывести",
-    )
+    ),
+    "random_user": BotFunction2(
+        bot_function=RandomUser(),
+        commands=["random_user"],
+        authors=["Bogpiva"],
+        about="Генерация рандомного пользователя",
+        description="Бот выводит фотографию и некоторое количество данных о сгенерированном человеке",
+    ),
 }
 
 BOT_FUNCTIONS = {
@@ -370,5 +376,11 @@ BOT_FUNCTIONS = {
         authors=["alekseikornyushko"],
         about="Рандомный анекдот специально для Вас",
         description="Введите /anecdote с числовым аргументом",
+    ),
+    "random_user": BotFunction(
+        commands=["random_user"],
+        authors=["Bogpiva"],
+        about="Генерация рандомного пользователя",
+        description="Введите /random_user",
     ),
 }
