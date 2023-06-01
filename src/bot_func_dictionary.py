@@ -29,6 +29,7 @@ from functions.news_bot import NewsFeed
 from functions.randomactivity import Randomactivity 
 from functions.meow import meowfact
 from functions.password import RandomPassword
+from functions.cards import RandomCard
 
 
 
@@ -266,7 +267,14 @@ BOT_FUNCTIONS_2 = {
         authors=["defaultxddd"],
         about="Бот выводит самый лучший фильм",
         description="Бот выводит самый лучший фильм, ну может и остальные вывести",
-    )
+    ),
+    "Cards": BotFunction2(
+        bot_function=RandomCard(),
+        commands=["card"],
+        authors=["polfckz"],
+        about="Мини-игра с картами",
+        description="Два игрока, каждый должен взять карту(выдается рандомно), у кого карта больше, тот победил",
+    ),
 }
 
 BOT_FUNCTIONS = {
