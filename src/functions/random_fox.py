@@ -2,7 +2,7 @@ import telebot
 import requests
 from telebot import types
 from typing import List
-from src.bot_func_abc import BotFunctionABC
+from bot_func_abc import BotFunctionABC
 
 
 class RandomFox(BotFunctionABC):
