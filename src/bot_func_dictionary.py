@@ -31,7 +31,7 @@ from functions.meow import meowfact
 from functions.password import RandomPassword
 from functions.random_fox import RandomFox
 from functions.cards import RandomCard
-
+from functions.kanye import kanyequote
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -70,19 +70,27 @@ BOT_FUNCTIONS_2 = {
             "компании для получения краткой информации по имени, адресу и тд. Например /dadata 7707083893"
         ),
     ),
-    "genius": BotFunction2(
+       "genius": BotFunction2(
         bot_function=GeniusFunction(),
         commands=["genius"],
         authors=["GradoboevPavel"],
         about="Поиск слов трека",
         description="Введите /genius исполнитель - трек",
-    ),
+       ),
+
     "meow": BotFunction2(
         bot_function=meowfact(),
         commands=["meow"],
         authors=["may-uri"],
         about="Различные факты о котиках на английском языке",
         description="Введите /meow чтобы прочитать удивительный факти о котиках",
+    ),
+    "kanyequote": BotFunction2(
+        bot_function=kanyequote(),
+        commands=["kanye"],
+        authors=["Captain21Owl"],
+        about="Случайная цитата Kanye West",
+        description="Введите /kanye для получения случайной цитаты",
     ),
     "password": BotFunction2(
         bot_function=RandomPassword(),
