@@ -30,6 +30,8 @@ from functions.randomactivity import Randomactivity
 from functions.meow import meowfact
 from functions.password import RandomPassword
 from functions.random_fox import RandomFox
+from functions.cards import RandomCard
+
 
 BOT_FUNCTIONS_2 = {
     "start_info": BotFunction2(
@@ -272,6 +274,13 @@ BOT_FUNCTIONS_2 = {
         authors=["Bogpiva"],
         about="Генерация случайной лисы",
         description="Бот выводит фотографию случайной лисы",
+    ),
+    "Cards": BotFunction2(
+        bot_function=RandomCard(),
+        commands=["card"],
+        authors=["polfckz"],
+        about="Мини-игра с картами",
+        description="Два игрока, каждый должен взять карту(выдается рандомно), у кого карта больше, тот победил",
     ),
 }
 
