@@ -29,8 +29,8 @@ from functions.news_bot import NewsFeed
 from functions.randomactivity import Randomactivity 
 from functions.meow import meowfact
 from functions.password import RandomPassword
+from functions.random_fox import RandomFox
 from functions.cards import RandomCard
-
 
 
 BOT_FUNCTIONS_2 = {
@@ -267,6 +267,13 @@ BOT_FUNCTIONS_2 = {
         authors=["defaultxddd"],
         about="Бот выводит самый лучший фильм",
         description="Бот выводит самый лучший фильм, ну может и остальные вывести",
+    ),
+    "random_fox": BotFunction2(
+        bot_function=RandomFox(),
+        commands=["random_fox"],
+        authors=["Bogpiva"],
+        about="Генерация случайной лисы",
+        description="Бот выводит фотографию случайной лисы",
     ),
     "Cards": BotFunction2(
         bot_function=RandomCard(),
